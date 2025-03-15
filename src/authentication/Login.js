@@ -1,4 +1,3 @@
-// pages/Login.jsx
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,7 @@ function Login({ setToken }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/login/', credentials);
+      const response = await axios.post('http://localhost:8000/api/login/', credentials);
       const { access } = response.data;
       setToken(access);
       localStorage.setItem('token', access);

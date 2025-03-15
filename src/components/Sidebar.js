@@ -1,7 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
-function Sidebar() {
+function Sidebar({ onLogout }) {
+  const navigate = useNavigate();
+
   const menuItems = [
     { path: '/', name: 'Dashboard' },
     { path: '/staff', name: 'Staff' },
@@ -11,6 +13,11 @@ function Sidebar() {
     { path: '/attendance', name: 'Attendance' },
     { path: '/settings', name: 'Settings' },
   ];
+
+  const handleLogout = () => {
+    onLogout(); // Call the logout function passed from the parent
+    navigate('/login'); // Redirect to login page
+  };
 
   return (
     <div className="w-64 bg-white shadow-md h-full p-4 hidden md:block">
@@ -26,6 +33,13 @@ function Sidebar() {
             {item.name}
           </NavLink>
         ))}
+        {/* Logout Button */}
+        <button
+          onClick={handleLogout}
+          className="block w-full text-left p-2 rounded hover:bg-red-100 text-red-600 mt-4"
+        >
+          Logout
+        </button>
       </nav>
     </div>
   );

@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 
-function Schedule() {
+function Schedule({ token }) {
   const [schedules, setSchedules] = useState([]);
   const [staffList, setStaffList] = useState([]);
   const [newSchedule, setNewSchedule] = useState({ staff: '', date: new Date(), shift: 'Morning', location: '' });
@@ -15,6 +15,12 @@ function Schedule() {
 
   // Fetch schedules and staff on component mount
   useEffect(() => {
+    if (!token) {
+      setError('Please log in to access this page.');
+      return;
+    }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
     const fetchData = async () => {
       try {
         const [scheduleResponse, staffResponse] = await Promise.all([
@@ -25,11 +31,11 @@ function Schedule() {
         setStaffList(staffResponse.data);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setError('Failed to fetch data. Please ensure the backend server is running.');
+        setError('Failed to fetch data. Please ensure the backend server is running or check your login credentials.');
       }
     };
     fetchData();
-  }, []);
+  }, [token]);
 
   // Handle adding a new schedule
   const handleAddSchedule = async (e) => {
@@ -150,6 +156,10 @@ function Schedule() {
     setStaffSearch(staff.name);
     setShowStaffDropdown(false);
   };
+
+  if (!token) {
+    return <p className="text-red-600">Please log in to access this page.</p>;
+  }
 
   return (
     <div className="container mx-auto p-4">

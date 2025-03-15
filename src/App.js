@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -14,9 +14,19 @@ import Login from './authentication/Login';
 function App() {
   const [token, setToken] = useState(localStorage.getItem('token') || null);
 
+  // Sync token state with localStorage on mount
+  useEffect(() => {
+    const storedToken = localStorage.getItem('token');
+    if (storedToken && !token) {
+      setToken(storedToken);
+    }
+  }, [token]);
+
+  // Handle logout
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
+    setToken(null); // Reset token state
+    localStorage.removeItem('token'); // Remove token from localStorage
+    // No need to navigate here; let the PrivateRoute handle redirection
   };
 
   // PrivateRoute component to protect routes
@@ -29,7 +39,7 @@ function App() {
       <div className="flex flex-col h-screen">
         {token && <Navbar onLogout={handleLogout} />}
         <div className="flex flex-1 overflow-hidden">
-          {token && <Sidebar />}
+          {token && <Sidebar onLogout={handleLogout} />}
           <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
             <Routes>
               <Route path="/login" element={<Login setToken={setToken} />} />
@@ -89,7 +99,7 @@ function App() {
                   </PrivateRoute>
                 }
               />
-              <Route path="*" element={<Navigate to={token ? "/" : "/login"} />} />
+              <Route path="*" element={<Navigate to={token ? '/' : '/login'} />} />
             </Routes>
           </main>
         </div>

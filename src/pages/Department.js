@@ -1,25 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function Department() {
+function Department({ token }) {
   const [departments, setDepartments] = useState([]);
   const [newDept, setNewDept] = useState({ name: '', manager: '', staff_count: '' }); // Changed to string to allow typing
   const [editingDept, setEditingDept] = useState(null);
   const [error, setError] = useState(''); // For error messages
-  const [searchTerm, setSearchTerm] = useState(''); // New state for search
+  const [searchTerm, setSearchTerm] = useState(''); // State for search
 
   useEffect(() => {
+    if (!token) {
+      setError('Please log in to access this page.');
+      return;
+    }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
     const fetchDepartments = async () => {
       try {
         const response = await axios.get('http://localhost:8000/api/departments/');
         setDepartments(response.data);
       } catch (error) {
         console.error('Error fetching departments:', error);
-        alert('Failed to load data. Check console for details.');
+        setError('Failed to load data. Please ensure the backend server is running or check your login credentials.');
       }
     };
     fetchDepartments();
-  }, []);
+  }, [token]);
 
   const handleAddDept = async (e) => {
     e.preventDefault();
@@ -39,7 +45,7 @@ function Department() {
       setNewDept({ name: '', manager: '', staff_count: '' });
     } catch (error) {
       console.error('Error adding department:', error.response?.data || error.message);
-      alert('Failed to add department: ' + (error.response?.data?.detail || error.message));
+      setError('Failed to add department: ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -72,7 +78,7 @@ function Department() {
       setNewDept({ name: '', manager: '', staff_count: '' });
     } catch (error) {
       console.error('Error updating department:', error.response?.data || error.message);
-      alert('Failed to update department: ' + (error.response?.data?.detail || error.message));
+      setError('Failed to update department: ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -84,7 +90,7 @@ function Department() {
         setDepartments(departments.filter(dept => dept.id !== id));
       } catch (error) {
         console.error('Error deleting department:', error);
-        alert('Failed to delete department. Check console for details.');
+        setError('Failed to delete department: ' + (error.response?.data?.detail || error.message));
       }
     }
   };
@@ -116,6 +122,10 @@ function Department() {
     dept.manager.toLowerCase().includes(searchTerm.toLowerCase()) ||
     dept.staff_count.toString().includes(searchTerm)
   );
+
+  if (!token) {
+    return <p className="text-red-600">Please log in to access this page.</p>;
+  }
 
   return (
     <div className="container mx-auto">

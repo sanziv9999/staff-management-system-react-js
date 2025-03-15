@@ -13,6 +13,7 @@ function Staff() {
 
   // Fetch staff and departments on component mount
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
         const [staffResponse, deptResponse] = await Promise.all([
