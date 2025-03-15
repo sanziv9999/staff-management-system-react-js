@@ -1,24 +1,100 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
+import Dashboard from './pages/Dashboard';
+import Staff from './pages/Staff';
+import Department from './pages/Department';
+import Schedule from './pages/Schedule';
+import Settings from './pages/Settings';
+import SalaryDetails from './pages/SalaryDetails';
+import Attendance from './pages/Attendance';
+import Login from './authentication/Login';
 
 function App() {
+  const [token, setToken] = useState(localStorage.getItem('token') || null);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+  };
+
+  // PrivateRoute component to protect routes
+  const PrivateRoute = ({ children }) => {
+    return token ? children : <Navigate to="/login" />;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="flex flex-col h-screen">
+        {token && <Navbar onLogout={handleLogout} />}
+        <div className="flex flex-1 overflow-hidden">
+          {token && <Sidebar />}
+          <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
+            <Routes>
+              <Route path="/login" element={<Login setToken={setToken} />} />
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute>
+                    <Dashboard token={token} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/staff"
+                element={
+                  <PrivateRoute>
+                    <Staff token={token} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/department"
+                element={
+                  <PrivateRoute>
+                    <Department token={token} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/schedule"
+                element={
+                  <PrivateRoute>
+                    <Schedule token={token} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <PrivateRoute>
+                    <Settings token={token} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/salary"
+                element={
+                  <PrivateRoute>
+                    <SalaryDetails token={token} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/attendance"
+                element={
+                  <PrivateRoute>
+                    <Attendance token={token} />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="*" element={<Navigate to={token ? "/" : "/login"} />} />
+            </Routes>
+          </main>
+        </div>
+      </div>
+    </Router>
   );
 }
 
