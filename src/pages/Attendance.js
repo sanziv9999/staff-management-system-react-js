@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,11 +21,15 @@ function Attendance({ token }) {
   const [fetchError, setFetchError] = useState('');
   const [loading, setLoading] = useState(true);
 
+  const navigate = useNavigate(); // Hook for navigation
+
   useEffect(() => {
+    // Redirect to login if no token is provided
     if (!token) {
-      setError('Please log in to access this page.');
+      navigate('/login'); // Redirect to login page
       return;
     }
+
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     const fetchData = async () => {
@@ -51,7 +56,7 @@ function Attendance({ token }) {
       }
     };
     fetchData();
-  }, [token, selectedDate]);
+  }, [token, selectedDate, navigate]); // Added navigate to dependency array
 
   const handleAddAttendance = async (e) => {
     e.preventDefault();
@@ -64,7 +69,6 @@ function Attendance({ token }) {
       ...newAttendance,
       staff_id: parseInt(newAttendance.staff),
       date: selectedDate.toISOString().split('T')[0],
-      // Set time_in and time_out to null if status is Absent or Leave
       time_in: newAttendance.status === 'Present' && newAttendance.time_in ? `${newAttendance.time_in}:00` : null,
       time_out: newAttendance.status === 'Present' && newAttendance.time_out ? `${newAttendance.time_out}:00` : null,
     };
@@ -108,7 +112,6 @@ function Attendance({ token }) {
       ...newAttendance,
       staff_id: parseInt(newAttendance.staff),
       date: selectedDate.toISOString().split('T')[0],
-      // Set time_in and time_out to null if status is Absent or Leave
       time_in: newAttendance.status === 'Present' && newAttendance.time_in ? `${newAttendance.time_in}:00` : null,
       time_out: newAttendance.status === 'Present' && newAttendance.time_out ? `${newAttendance.time_out}:00` : null,
     };
@@ -160,7 +163,6 @@ function Attendance({ token }) {
 
   const handleStatusChange = (e) => {
     const status = e.target.value;
-    // Reset time_in and time_out when status is Absent or Leave
     setNewAttendance({
       ...newAttendance,
       status,
@@ -171,10 +173,7 @@ function Attendance({ token }) {
 
   const isTimeInputVisible = newAttendance.status === 'Present';
 
-  if (!token) {
-    return <p className="text-red-600">Please log in to access this page.</p>;
-  }
-
+  // No need for the token check here since useEffect handles the redirect
   return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4">Attendance Management</h2>

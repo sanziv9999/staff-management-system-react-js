@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import axios from 'axios';
 
 function Dashboard({ token }) {
@@ -10,11 +11,15 @@ function Dashboard({ token }) {
   });
   const [error, setError] = useState('');
 
+  const navigate = useNavigate(); // Hook for navigation
+
   useEffect(() => {
+    // Redirect to login if no token is provided
     if (!token) {
-      setError('Please log in to access this page.');
+      navigate('/login'); // Redirect to login page
       return;
     }
+
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
     const fetchStats = async () => {
@@ -32,20 +37,26 @@ function Dashboard({ token }) {
           totalStaff: staffRes.data.length,
           departments: deptRes.data.length,
           presentToday: attendanceRes.data.filter(a => a.status === 'Present').length,
-          totalSalary: salaryRes.data.reduce((sum, s) => sum + (parseFloat(s.base_salary) || 0) + (parseFloat(s.bonus) || 0) - (parseFloat(s.deductions) || 0), 0),
+          totalSalary: salaryRes.data.reduce(
+            (sum, s) =>
+              sum +
+              (parseFloat(s.base_salary) || 0) +
+              (parseFloat(s.bonus) || 0) -
+              (parseFloat(s.deductions) || 0),
+            0
+          ),
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
-        setError('Failed to load dashboard stats. Please ensure the backend server is running or check your login credentials.');
+        setError(
+          'Failed to load dashboard stats. Please ensure the backend server is running or check your login credentials.'
+        );
       }
     };
     fetchStats();
-  }, [token]);
+  }, [token, navigate]); // Added navigate to dependency array
 
-  if (!token) {
-    return <p className="text-red-600">Please log in to access this page.</p>;
-  }
-
+  // No need for token check here since useEffect handles the redirect
   return (
     <div className="container mx-auto">
       <h2 className="text-2xl font-bold mb-4">Dashboard</h2>

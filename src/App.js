@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react'; // Removed useEffect since it's not needed
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -10,43 +10,50 @@ import Settings from './pages/Settings';
 import SalaryDetails from './pages/SalaryDetails';
 import Attendance from './pages/Attendance';
 import Login from './authentication/Login';
+import UserDashboard from './pages/UserDashboard';
 
 function App() {
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
-
-  // Sync token state with localStorage on mount
-  useEffect(() => {
+  const [token, setToken] = useState(() => {
     const storedToken = localStorage.getItem('token');
-    if (storedToken && !token) {
-      setToken(storedToken);
-    }
-  }, [token]);
+    return storedToken || null;
+  });
+  const [isAdmin, setIsAdmin] = useState(() => {
+    return localStorage.getItem('is_admin') === 'true';
+  });
 
-  // Handle logout
   const handleLogout = () => {
-    setToken(null); // Reset token state
-    localStorage.removeItem('token'); // Remove token from localStorage
-    // No need to navigate here; let the PrivateRoute handle redirection
+    setToken(null);
+    setIsAdmin(false);
+    localStorage.removeItem('token');
+    localStorage.removeItem('is_admin');
   };
 
-  // PrivateRoute component to protect routes
-  const PrivateRoute = ({ children }) => {
-    return token ? children : <Navigate to="/login" />;
+  const PrivateRoute = ({ children, adminOnly = false }) => {
+    if (!token) {
+      return <Navigate to="/login" />;
+    }
+    if (adminOnly && !isAdmin) {
+      return <Navigate to="/user-dashboard" />;
+    }
+    return children;
   };
 
   return (
     <Router>
       <div className="flex flex-col h-screen">
-        {token && <Navbar onLogout={handleLogout} />}
+        {token && <Navbar onLogout={handleLogout} isAdmin={isAdmin} />}
         <div className="flex flex-1 overflow-hidden">
-          {token && <Sidebar onLogout={handleLogout} />}
+          {token && isAdmin && <Sidebar onLogout={handleLogout} />}
           <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
             <Routes>
-              <Route path="/login" element={<Login setToken={setToken} />} />
+              <Route
+                path="/login"
+                element={<Login setToken={setToken} setIsAdmin={setIsAdmin} />}
+              />
               <Route
                 path="/"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly={true}>
                     <Dashboard token={token} />
                   </PrivateRoute>
                 }
@@ -54,7 +61,7 @@ function App() {
               <Route
                 path="/staff"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly={true}>
                     <Staff token={token} />
                   </PrivateRoute>
                 }
@@ -62,7 +69,7 @@ function App() {
               <Route
                 path="/department"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly={true}>
                     <Department token={token} />
                   </PrivateRoute>
                 }
@@ -70,7 +77,7 @@ function App() {
               <Route
                 path="/schedule"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly={true}>
                     <Schedule token={token} />
                   </PrivateRoute>
                 }
@@ -78,7 +85,7 @@ function App() {
               <Route
                 path="/settings"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly={true}>
                     <Settings token={token} />
                   </PrivateRoute>
                 }
@@ -86,7 +93,7 @@ function App() {
               <Route
                 path="/salary"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly={true}>
                     <SalaryDetails token={token} />
                   </PrivateRoute>
                 }
@@ -94,12 +101,25 @@ function App() {
               <Route
                 path="/attendance"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly={true}>
                     <Attendance token={token} />
                   </PrivateRoute>
                 }
               />
-              <Route path="*" element={<Navigate to={token ? '/' : '/login'} />} />
+              <Route
+                path="/user-dashboard"
+                element={
+                  <PrivateRoute>
+                    <UserDashboard token={token} isAdmin={isAdmin} />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="*"
+                element={
+                  <Navigate to={token ? (isAdmin ? '/' : '/user-dashboard') : '/login'} />
+                }
+              />
             </Routes>
           </main>
         </div>
