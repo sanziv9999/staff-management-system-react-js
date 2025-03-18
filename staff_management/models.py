@@ -56,3 +56,22 @@ class Attendance(models.Model):
 
     def __str__(self):
         return f"{self.staff.name} - {self.date}"
+    
+class Settings(models.Model):
+    company_name = models.CharField(max_length=100, default="Tokyo Business International")
+    working_hours = models.CharField(max_length=50, default="9:00 - 17:00")
+    currency = models.CharField(max_length=10, default="Yen-¥")
+    overtime_rate = models.FloatField(default=1.5)
+
+    class Meta:
+        verbose_name = "Settings"
+        verbose_name_plural = "Settings"
+
+    def save(self, *args, **kwargs):
+        # Ensure only one instance of Settings exists
+        if Settings.objects.exists() and not self.pk:
+            raise ValueError("Settings instance already exists. Use the existing instance to update settings.")
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return "Company Settings"

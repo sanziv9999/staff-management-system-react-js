@@ -1,7 +1,7 @@
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny,IsAuthenticated, IsAdminUser
 from django.contrib.auth import authenticate
 from rest_framework.response import Response
 from rest_framework.exceptions import ValidationError
@@ -68,3 +68,18 @@ class LoginView(APIView):
                 'is_admin': user.is_superuser,  # Add is_admin flag to the response
             }, status=status.HTTP_200_OK)
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+
+class SettingsViewSet(viewsets.ModelViewSet):
+    queryset = Settings.objects.all()
+    serializer_class = SettingsSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        # Disallow creation of new settings
+        return Response({"detail": "Creating new settings is not allowed. Update the existing settings instead."}, 
+                       status=status.HTTP_403_FORBIDDEN)
+
+    def get_object(self):
+        # Always return the first (and only) settings instance
+        obj, created = Settings.objects.get_or_create(pk=1)  # Ensure one instance exists
+        return obj

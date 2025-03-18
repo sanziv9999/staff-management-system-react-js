@@ -44,3 +44,28 @@ class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
         fields = ['id', 'staff', 'staff_id', 'date', 'status', 'time_in', 'time_out']
+
+class SettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Settings
+        fields = ['id', 'company_name', 'working_hours', 'currency', 'overtime_rate']
+
+    def validate_currency(self, value):
+        valid_currencies = [
+            'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+            'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+            'ZAR-R', 'KRW-₩'
+        ]
+        if value not in valid_currencies:
+            raise serializers.ValidationError(f"Currency must be one of {', '.join(valid_currencies)}.")
+        return value
+
+    def validate_overtime_rate(self, value):
+        if value <= 0:
+            raise serializers.ValidationError("Overtime rate must be greater than 0.")
+        return value
+
+    def validate(self, data):
+        if not data.get('company_name') or not data.get('working_hours') or not data.get('currency'):
+            raise serializers.ValidationError("All fields are required.")
+        return data

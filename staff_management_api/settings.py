@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-cof%@olks21h1mji^p6gxutg@!)l*^bcvbwcw+%ec4z%zsec_x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['admin-staff-management.tbic.jobs', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -57,8 +57,29 @@ MIDDLEWARE = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # React frontend URL
+    "http://localhost:3000",
+    "https://staff-management.tbic.jobs",  # React frontend URL
+    "http://staff-management.tbic.jobs",   # React frontend URL
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+    "GET",
+    "POST",
+    "PUT",
+    "PATCH",
+    "DELETE",
+    "OPTIONS",
+]
+
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+    "x-csrftoken",
+    "accept",
+    "origin",
+]
+
 
 ROOT_URLCONF = 'staff_management_api.urls'
 
