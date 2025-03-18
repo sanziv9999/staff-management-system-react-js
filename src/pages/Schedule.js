@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 
 function Schedule({ token }) {
   const [schedules, setSchedules] = useState([]);
@@ -24,8 +25,8 @@ function Schedule({ token }) {
     const fetchData = async () => {
       try {
         const [scheduleResponse, staffResponse] = await Promise.all([
-          axios.get('http://localhost:8000/api/schedules/'),
-          axios.get('http://localhost:8000/api/staff/')
+          axios.get(`${API_BASE_URL}/schedules/`),
+          axios.get(`${API_BASE_URL}/staff/`)
         ]);
         setSchedules(scheduleResponse.data);
         setStaffList(staffResponse.data);
@@ -57,7 +58,7 @@ function Schedule({ token }) {
     };
     console.log('Adding schedule payload:', payload); // Debug log
     try {
-      const response = await axios.post('http://localhost:8000/api/schedules/', payload);
+      const response = await axios.post( `${API_BASE_URL}/schedules/`, payload);
       setSchedules([...schedules, response.data]);
       setNewSchedule({ staff: '', date: new Date(), shift: 'Morning', location: '' });
       setStaffSearch('');
@@ -101,7 +102,7 @@ function Schedule({ token }) {
     };
     console.log('Updating schedule payload:', payload); // Debug log
     try {
-      const response = await axios.put(`http://localhost:8000/api/schedules/${editingSchedule.id}/`, payload);
+      const response = await axios.put(`${API_BASE_URL}/schedules/${editingSchedule.id}/`, payload);
       setSchedules(schedules.map(s => s.id === editingSchedule.id ? response.data : s));
       setEditingSchedule(null);
       setNewSchedule({ staff: '', date: new Date(), shift: 'Morning', location: '' });
@@ -118,7 +119,7 @@ function Schedule({ token }) {
     const confirmed = window.confirm(`Are you sure you want to delete schedule for ${staffName}?`);
     if (confirmed) {
       try {
-        await axios.delete(`http://localhost:8000/api/schedules/${id}/`);
+        await axios.delete(`${API_BASE_URL}/schedules/${id}/`);
         setSchedules(schedules.filter(schedule => schedule.id !== id));
       } catch (error) {
         console.error('Error deleting schedule:', error);

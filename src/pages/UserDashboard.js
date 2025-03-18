@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import API_BASE_URL from '../api';
 
 function UserDashboard({ token, isAdmin }) {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -26,8 +27,8 @@ function UserDashboard({ token, isAdmin }) {
     const fetchData = async () => {
       try {
         const [attendanceResponse, salaryResponse] = await Promise.all([
-          axios.get('http://localhost:8000/api/attendance/'),
-          axios.get('http://localhost:8000/api/salaries/'),
+          axios.get(`${API_BASE_URL}/attendance/`),
+          axios.get(`${API_BASE_URL}/salaries/`),
         ]);
         setAttendanceRecords(attendanceResponse.data || []);
         setSalaryRecords(salaryResponse.data || []);
@@ -54,7 +55,7 @@ function UserDashboard({ token, isAdmin }) {
       time_out: newAttendance.status === 'Present' && newAttendance.time_out ? `${newAttendance.time_out}:00` : null,
     };
     try {
-      const response = await axios.post('http://localhost:8000/api/attendance/', payload);
+      const response = await axios.post(`${API_BASE_URL}/attendance/`, payload);
       setAttendanceRecords([...attendanceRecords, response.data]);
       setNewAttendance({ date: new Date(), status: 'Present', time_in: '', time_out: '' });
       setFetchError('');

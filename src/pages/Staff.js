@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import API_BASE_URL from '../api';
 function Staff() {
   const [staffList, setStaffList] = useState([]);
   const [departments, setDepartments] = useState([]);
@@ -17,8 +17,8 @@ function Staff() {
     const fetchData = async () => {
       try {
         const [staffResponse, deptResponse] = await Promise.all([
-          axios.get('http://localhost:8000/api/staff/'),
-          axios.get('http://localhost:8000/api/departments/')
+          axios.get(`${API_BASE_URL}/staff/`),
+          axios.get(`${API_BASE_URL}/departments/`)
         ]);
         setStaffList(staffResponse.data);
         setDepartments(deptResponse.data);
@@ -43,7 +43,7 @@ function Staff() {
     }
     setError('');
     try {
-      const response = await axios.post('http://localhost:8000/api/staff/', newStaff, {
+      const response = await axios.post(`${API_BASE_URL}/staff/`, newStaff, {
         headers: { 'Content-Type': 'application/json' },
       });
       setStaffList([...staffList, response.data]);
@@ -86,7 +86,7 @@ function Staff() {
     }
     setError('');
     try {
-      const response = await axios.put(`http://localhost:8000/api/staff/${editingStaff.id}/`, newStaff, {
+      const response = await axios.put(`${API_BASE_URL}/staff/${editingStaff.id}/`, newStaff, {
         headers: { 'Content-Type': 'application/json' },
       });
       setStaffList(staffList.map(staff => staff.id === editingStaff.id ? response.data : staff));
@@ -105,7 +105,7 @@ function Staff() {
     const confirmed = window.confirm(`Are you sure you want to delete ${name}?`);
     if (confirmed) {
       try {
-        await axios.delete(`http://localhost:8000/api/staff/${id}/`);
+        await axios.delete(`${API_BASE_URL}/staff/${id}/`);
         setStaffList(staffList.filter(staff => staff.id !== id));
       } catch (error) {
         console.error('Error deleting staff:', error);

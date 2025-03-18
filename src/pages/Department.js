@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 
 function Department({ token }) {
   const [departments, setDepartments] = useState([]);
@@ -17,7 +18,7 @@ function Department({ token }) {
 
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/departments/');
+        const response = await axios.get(`${API_BASE_URL}departments/`);
         setDepartments(response.data);
       } catch (error) {
         console.error('Error fetching departments:', error);
@@ -37,7 +38,7 @@ function Department({ token }) {
     }
     setError('');
     try {
-      const response = await axios.post('http://localhost:8000/api/departments/', {
+      const response = await axios.post( `${API_BASE_URL}/departments/`, {
         ...newDept,
         staff_count: staffCount, // Ensure staff_count is an integer
       });
@@ -69,7 +70,7 @@ function Department({ token }) {
     }
     setError('');
     try {
-      const response = await axios.put(`http://localhost:8000/api/departments/${editingDept.id}/`, {
+      const response = await axios.put(`${API_BASE_URL}/departments/${editingDept.id}/`, {
         ...newDept,
         staff_count: staffCount, // Ensure staff_count is an integer
       });
@@ -86,7 +87,7 @@ function Department({ token }) {
     const confirmed = window.confirm(`Are you sure you want to delete ${name}?`);
     if (confirmed) {
       try {
-        await axios.delete(`http://localhost:8000/api/departments/${id}/`);
+        await axios.delete( `${API_BASE_URL}/departments/${id}/`);
         setDepartments(departments.filter(dept => dept.id !== id));
       } catch (error) {
         console.error('Error deleting department:', error);

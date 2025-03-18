@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import API_BASE_URL from '../api';
 
 function Login({ setToken, setIsAdmin }) {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -12,7 +13,7 @@ function Login({ setToken, setIsAdmin }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/login/', credentials);
+      const response = await axios.post(`${API_BASE_URL}/login/`, credentials);
       const { access, is_admin } = response.data;
       setToken(access);
       setIsAdmin(is_admin);

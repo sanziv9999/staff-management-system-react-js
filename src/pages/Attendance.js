@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate for redire
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+import API_BASE_URL from '../api';
 
 function Attendance({ token }) {
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -36,10 +37,10 @@ function Attendance({ token }) {
       setLoading(true);
       try {
         const [attendanceResponse, staffResponse] = await Promise.all([
-          axios.get('http://localhost:8000/api/attendance/', {
+          axios.get(`${API_BASE_URL}/attendance/`, {
             params: { date: selectedDate.toISOString().split('T')[0] },
           }),
-          axios.get('http://localhost:8000/api/staff/'),
+          axios.get(`${API_BASE_URL}/staff/`),
         ]);
         console.log('Attendance Response:', attendanceResponse.data);
         console.log('Staff List Response:', staffResponse.data);
@@ -75,7 +76,7 @@ function Attendance({ token }) {
     delete payload.staff;
     console.log('Adding attendance payload:', payload);
     try {
-      const response = await axios.post('http://localhost:8000/api/attendance/', payload);
+      const response = await axios.post(`${API_BASE_URL}/attendance/`, payload);
       setAttendanceRecords([...attendanceRecords, response.data]);
       setNewAttendance({ staff: '', status: 'Present', time_in: '', time_out: '' });
       setStaffSearch('');
@@ -119,7 +120,7 @@ function Attendance({ token }) {
     console.log('Updating attendance payload:', payload);
     try {
       const response = await axios.put(
-        `http://localhost:8000/api/attendance/${editingAttendance.id}/`,
+        `${API_BASE_URL}/attendance/${editingAttendance.id}/`,
         payload
       );
       setAttendanceRecords(attendanceRecords.map(a => a.id === editingAttendance.id ? response.data : a));
@@ -137,7 +138,7 @@ function Attendance({ token }) {
     const confirmed = window.confirm(`Are you sure you want to delete attendance for ${staffName}?`);
     if (confirmed) {
       try {
-        await axios.delete(`http://localhost:8000/api/attendance/${id}/`);
+        await axios.delete(`${API_BASE_URL}/attendance/${id}/`);
         setAttendanceRecords(attendanceRecords.filter(record => record.id !== id));
       } catch (error) {
         console.error('Error deleting attendance:', error);

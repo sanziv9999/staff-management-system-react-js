@@ -1,6 +1,7 @@
 // pages/SalaryDetails.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import API_BASE_URL from '../api';
 
 function SalaryDetails({ token }) {
   const [salaries, setSalaries] = useState([]);
@@ -32,8 +33,8 @@ function SalaryDetails({ token }) {
       setLoading(true);
       try {
         const [salariesResponse, staffResponse] = await Promise.all([
-          axios.get('http://localhost:8000/api/salaries/'),
-          axios.get('http://localhost:8000/api/staff/'),
+          axios.get( `${API_BASE_URL}/salaries/`),
+          axios.get( `${API_BASE_URL}/staff/`),
         ]);
         setSalaries(salariesResponse.data || []);
         setStaffList(staffResponse.data || []);
@@ -76,7 +77,7 @@ function SalaryDetails({ token }) {
         payment_date: newSalary.payment_date,
         status: newSalary.status,
       };
-      const response = await axios.post('http://localhost:8000/api/salaries/', payload);
+      const response = await axios.post(`${API_BASE_URL}/salaries/`, payload);
       setSalaries([...salaries, response.data]);
       setNewSalary({
         staff: '',
@@ -131,7 +132,7 @@ function SalaryDetails({ token }) {
         payment_date: newSalary.payment_date,
         status: newSalary.status,
       };
-      const response = await axios.put(`http://localhost:8000/api/salaries/${editingSalary.id}/`, payload);
+      const response = await axios.put(`${API_BASE_URL}/salaries/${editingSalary.id}/`, payload);
       setSalaries(salaries.map(s => s.id === editingSalary.id ? response.data : s));
       setEditingSalary(null);
       setNewSalary({
@@ -154,7 +155,7 @@ function SalaryDetails({ token }) {
     const confirmed = window.confirm(`Are you sure you want to delete salary for ${staffName || 'Unknown'}?`);
     if (confirmed) {
       try {
-        await axios.delete(`http://localhost:8000/api/salaries/${id}/`);
+        await axios.delete(`${API_BASE_URL}/salaries/${id}/`);
         setSalaries(salaries.filter(salary => salary.id !== id));
       } catch (error) {
         console.error('Error deleting salary:', error);
