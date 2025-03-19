@@ -16,7 +16,7 @@ function Sidebar({ onLogout }) {
 
   const handleLogout = () => {
     onLogout(); // Call the logout function passed from the parent
-    navigate('/login'); // Redirect to login page
+    navigate('/'); // Redirect to login page
   };
 
   return (

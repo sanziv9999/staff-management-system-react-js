@@ -1,4 +1,3 @@
-// pages/SalaryDetails.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../api';
@@ -14,6 +13,7 @@ function SalaryDetails({ token }) {
     payment_date: new Date().toISOString().split('T')[0],
     status: 'Pending',
   });
+  const [currency, setCurrency] = useState('¥'); // Default currency symbol
   const [searchTerm, setSearchTerm] = useState('');
   const [editingSalary, setEditingSalary] = useState(null);
   const [staffSearch, setStaffSearch] = useState('');
@@ -32,9 +32,12 @@ function SalaryDetails({ token }) {
     const fetchData = async () => {
       setLoading(true);
       try {
+        const settingsRes = await axios.get(`${API_BASE_URL}/settings/1/`);
+        const currencySymbol = settingsRes.data.currency.split('-')[1] || '¥'; // Fallback to ¥ if split fails
+        setCurrency(currencySymbol);
         const [salariesResponse, staffResponse] = await Promise.all([
-          axios.get( `${API_BASE_URL}/salaries/`),
-          axios.get( `${API_BASE_URL}/staff/`),
+          axios.get(`${API_BASE_URL}/salaries/`),
+          axios.get(`${API_BASE_URL}/staff/`),
         ]);
         setSalaries(salariesResponse.data || []);
         setStaffList(staffResponse.data || []);
@@ -246,30 +249,39 @@ function SalaryDetails({ token }) {
               </ul>
             )}
           </div>
-          <input
-            type="text"
-            placeholder="Base Salary"
-            value={newSalary.base_salary}
-            onChange={handleNumberChange('base_salary')}
-            className="p-2 border rounded"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Bonus"
-            value={newSalary.bonus}
-            onChange={handleNumberChange('bonus')}
-            className="p-2 border rounded"
-            required
-          />
-          <input
-            type="text"
-            placeholder="Deductions"
-            value={newSalary.deductions}
-            onChange={handleNumberChange('deductions')}
-            className="p-2 border rounded"
-            required
-          />
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Base Salary"
+              value={newSalary.base_salary}
+              onChange={handleNumberChange('base_salary')}
+              className="p-2 border rounded w-full pl-8"
+              required
+            />
+            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">{currency}</span>
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Bonus"
+              value={newSalary.bonus}
+              onChange={handleNumberChange('bonus')}
+              className="p-2 border rounded w-full pl-8"
+              required
+            />
+            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">{currency}</span>
+          </div>
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="Deductions"
+              value={newSalary.deductions}
+              onChange={handleNumberChange('deductions')}
+              className="p-2 border rounded w-full pl-8"
+              required
+            />
+            <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500">{currency}</span>
+          </div>
           <select
             value={newSalary.status}
             onChange={handleStatusChange}
@@ -318,10 +330,10 @@ function SalaryDetails({ token }) {
             {filteredSalaries.map((salary) => (
               <tr key={salary.id} className="border-t">
                 <td className="p-2">{salary.staff?.name || 'Unknown'}</td>
-                <td className="p-2">${salary.base_salary}</td>
-                <td className="p-2">${salary.bonus}</td>
-                <td className="p-2">${salary.deductions}</td>
-                <td className="p-2">${calculateNetSalary(salary)}</td>
+                <td className="p-2">{currency}{salary.base_salary}</td>
+                <td className="p-2">{currency}{salary.bonus}</td>
+                <td className="p-2">{currency}{salary.deductions}</td>
+                <td className="p-2">{currency}{calculateNetSalary(salary)}</td>
                 <td className="p-2">{salary.payment_date}</td>
                 <td className="p-2">
                   <span className={`px-2 py-1 rounded ${salary.status === 'Paid' ? 'bg-green-200' : 'bg-yellow-200'}`}>

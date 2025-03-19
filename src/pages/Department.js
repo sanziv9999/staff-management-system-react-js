@@ -18,7 +18,7 @@ function Department({ token }) {
 
     const fetchDepartments = async () => {
       try {
-        const response = await axios.get(`${API_BASE_URL}departments/`);
+        const response = await axios.get(`${API_BASE_URL}/departments/`);
         setDepartments(response.data);
       } catch (error) {
         console.error('Error fetching departments:', error);

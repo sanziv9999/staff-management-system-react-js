@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Removed useEffect since it's not needed
+import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -11,6 +11,8 @@ import SalaryDetails from './pages/SalaryDetails';
 import Attendance from './pages/Attendance';
 import Login from './authentication/Login';
 import UserDashboard from './pages/UserDashboard';
+import StaffLogin from './authentication/StaffLogin';
+import StaffRegistration from './authentication/StaffRegistration';
 
 function App() {
   const [token, setToken] = useState(() => {
@@ -20,20 +22,31 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(() => {
     return localStorage.getItem('is_admin') === 'true';
   });
+  const [isStaff, setIsStaff] = useState(() => {
+    return localStorage.getItem('is_staff') === 'true';
+  });
 
   const handleLogout = () => {
     setToken(null);
     setIsAdmin(false);
+    setIsStaff(false);
     localStorage.removeItem('token');
     localStorage.removeItem('is_admin');
+    localStorage.removeItem('is_staff');
+    localStorage.removeItem('staff_id');
+    localStorage.removeItem('user_name');
+    localStorage.removeItem('department');
   };
 
-  const PrivateRoute = ({ children, adminOnly = false }) => {
+  const PrivateRoute = ({ children, adminOnly = false, staffOnly = false }) => {
     if (!token) {
-      return <Navigate to="/login" />;
+      return <Navigate to="/staff-login" />;  // Changed default redirect to staff-login
     }
     if (adminOnly && !isAdmin) {
       return <Navigate to="/user-dashboard" />;
+    }
+    if (staffOnly && !isStaff) {
+      return <Navigate to="/staff-login" />;  // Changed redirect to staff-login
     }
     return children;
   };
@@ -41,15 +54,38 @@ function App() {
   return (
     <Router>
       <div className="flex flex-col h-screen">
-        {token && <Navbar onLogout={handleLogout} isAdmin={isAdmin} />}
+        {token && <Navbar onLogout={handleLogout} isAdmin={isAdmin} isStaff={isStaff} />}
         <div className="flex flex-1 overflow-hidden">
           {token && isAdmin && <Sidebar onLogout={handleLogout} />}
           <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
             <Routes>
+              {/* Authentication Routes */}
+              <Route 
+                path="/staff-login" 
+                element={
+                  token && isStaff ? 
+                  <Navigate to="/staff-dashboard" /> : 
+                  <StaffLogin setToken={setToken} setIsStaff={setIsStaff} />
+                } 
+              />
+              <Route 
+                path="/staff-registration" 
+                element={
+                  token && isStaff ? 
+                  <Navigate to="/staff-dashboard" /> : 
+                  <StaffRegistration setToken={setToken} setIsStaff={setIsStaff} />
+                } 
+              />
               <Route
                 path="/login"
-                element={<Login setToken={setToken} setIsAdmin={setIsAdmin} />}
+                element={
+                  token ? 
+                  <Navigate to={isAdmin ? "/dashboard" : "/user-dashboard"} /> : 
+                  <Login setToken={setToken} setIsAdmin={setIsAdmin} />
+                }
               />
+
+              {/* Admin Routes */}
               <Route
                 path="/"
                 element={
@@ -106,6 +142,8 @@ function App() {
                   </PrivateRoute>
                 }
               />
+
+              {/* User/Staff Routes */}
               <Route
                 path="/user-dashboard"
                 element={
@@ -115,9 +153,29 @@ function App() {
                 }
               />
               <Route
+                path="/staff-dashboard"
+                element={
+                  <PrivateRoute staffOnly={true}>
+                    <UserDashboard token={token} isStaff={isStaff} />
+                  </PrivateRoute>
+                }
+              />
+
+              {/* Default Route (Root path) */}
+              <Route 
+                path="/" 
+                element={<Navigate to="/staff-login" />} 
+              />
+
+              {/* Fallback Route */}
+              <Route
                 path="*"
                 element={
-                  <Navigate to={token ? (isAdmin ? '/' : '/user-dashboard') : '/login'} />
+                  <Navigate to={
+                    token ? 
+                      (isAdmin ? '/' : isStaff ? '/staff-dashboard' : '/user-dashboard') 
+                      : '/staff-login'  // Changed default redirect to staff-login
+                  } />
                 }
               />
             </Routes>

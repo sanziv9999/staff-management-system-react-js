@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../api';
+
 function Staff() {
   const [staffList, setStaffList] = useState([]);
   const [departments, setDepartments] = useState([]);
-  const [newStaff, setNewStaff] = useState({ name: '', role: '', department: '', email: '' });
+  const [newStaff, setNewStaff] = useState({ name: '', department: '', email: '' });
   const [editingStaff, setEditingStaff] = useState(null);
   const [deptSearch, setDeptSearch] = useState('');
   const [showDeptDropdown, setShowDeptDropdown] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(''); // New state for search
-  const [error, setError] = useState(''); // For error messages
+  const [searchTerm, setSearchTerm] = useState('');
+  const [error, setError] = useState('');
 
   // Fetch staff and departments on component mount
   useEffect(() => {
-    
     const fetchData = async () => {
       try {
         const [staffResponse, deptResponse] = await Promise.all([
           axios.get(`${API_BASE_URL}/staff/`),
-          axios.get(`${API_BASE_URL}/departments/`)
+          axios.get(`${API_BASE_URL}/departments/`),
         ]);
         setStaffList(staffResponse.data);
         setDepartments(deptResponse.data);
@@ -33,7 +33,7 @@ function Staff() {
   // Handle adding a new staff member
   const handleAddStaff = async (e) => {
     e.preventDefault();
-    if (!newStaff.name || !newStaff.role || !newStaff.department || !newStaff.email) {
+    if (!newStaff.name || !newStaff.department || !newStaff.email) {
       setError('All fields are required');
       return;
     }
@@ -47,7 +47,7 @@ function Staff() {
         headers: { 'Content-Type': 'application/json' },
       });
       setStaffList([...staffList, response.data]);
-      setNewStaff({ name: '', role: '', department: '', email: '' });
+      setNewStaff({ name: '', department: '', email: '' });
       setDeptSearch('');
       setShowDeptDropdown(false);
     } catch (error) {
@@ -61,12 +61,10 @@ function Staff() {
     setEditingStaff(staff);
     setNewStaff({
       name: staff.name,
-      role: staff.role,
-      department: staff.department, // Should be ID
-      email: staff.email
+      department: staff.department,
+      email: staff.email,
     });
-    // Set department search to the name for display
-    const dept = departments.find(d => d.id === staff.department);
+    const dept = departments.find((d) => d.id === staff.department);
     setDeptSearch(dept ? dept.name : '');
     setShowDeptDropdown(false);
     setError('');
@@ -76,7 +74,7 @@ function Staff() {
   const handleUpdateStaff = async (e) => {
     e.preventDefault();
     if (!editingStaff) return;
-    if (!newStaff.name || !newStaff.role || !newStaff.department || !newStaff.email) {
+    if (!newStaff.name || !newStaff.department || !newStaff.email) {
       setError('All fields are required');
       return;
     }
@@ -89,9 +87,9 @@ function Staff() {
       const response = await axios.put(`${API_BASE_URL}/staff/${editingStaff.id}/`, newStaff, {
         headers: { 'Content-Type': 'application/json' },
       });
-      setStaffList(staffList.map(staff => staff.id === editingStaff.id ? response.data : staff));
+      setStaffList(staffList.map((staff) => (staff.id === editingStaff.id ? response.data : staff)));
       setEditingStaff(null);
-      setNewStaff({ name: '', role: '', department: '', email: '' });
+      setNewStaff({ name: '', department: '', email: '' });
       setDeptSearch('');
       setShowDeptDropdown(false);
     } catch (error) {
@@ -106,7 +104,7 @@ function Staff() {
     if (confirmed) {
       try {
         await axios.delete(`${API_BASE_URL}/staff/${id}/`);
-        setStaffList(staffList.filter(staff => staff.id !== id));
+        setStaffList(staffList.filter((staff) => staff.id !== id));
       } catch (error) {
         console.error('Error deleting staff:', error);
         setError('Failed to delete staff: ' + (error.response?.data?.detail || error.message));
@@ -126,8 +124,8 @@ function Staff() {
 
   // Filter departments based on search term, use top 3 if search is empty
   const filteredDepartments = deptSearch
-    ? departments.filter(dept => dept.name.toLowerCase().includes(deptSearch.toLowerCase()))
-    : departments.sort((a, b) => b.id - a.id).slice(0, 3); // Top 3 by descending ID (simulating recency)
+    ? departments.filter((dept) => dept.name.toLowerCase().includes(deptSearch.toLowerCase()))
+    : departments.sort((a, b) => b.id - a.id).slice(0, 3);
 
   // Handle department selection
   const handleDeptSelect = (dept) => {
@@ -137,11 +135,10 @@ function Staff() {
   };
 
   // Filter staff based on search term
-  const filteredStaff = staffList.filter(staff => {
-    const departmentName = staff.department_name || (departments.find(d => d.id === staff.department)?.name) || '';
+  const filteredStaff = staffList.filter((staff) => {
+    const departmentName = staff.department_name || (departments.find((d) => d.id === staff.department)?.name) || '';
     return (
       staff.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      staff.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
       departmentName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       staff.email.toLowerCase().includes(searchTerm.toLowerCase())
     );
@@ -160,14 +157,6 @@ function Staff() {
             className="p-2 border rounded"
             required
           />
-          <input
-            type="text"
-            placeholder="Role"
-            value={newStaff.role}
-            onChange={(e) => setNewStaff({ ...newStaff, role: e.target.value })}
-            className="p-2 border rounded"
-            required
-          />
           <div className="relative">
             <input
               type="text"
@@ -178,7 +167,7 @@ function Staff() {
                 setShowDeptDropdown(true);
               }}
               onFocus={() => setShowDeptDropdown(true)}
-              onBlur={() => setTimeout(() => setShowDeptDropdown(false), 200)} // Delay to allow click
+              onBlur={() => setTimeout(() => setShowDeptDropdown(false), 200)}
               className="p-2 border rounded w-full"
               required
             />
@@ -189,7 +178,7 @@ function Staff() {
                     <li
                       key={dept.id}
                       onClick={() => handleDeptSelect(dept)}
-                      onMouseDown={(e) => e.preventDefault()} // Prevent onBlur from closing
+                      onMouseDown={(e) => e.preventDefault()}
                       className="p-2 hover:bg-gray-100 cursor-pointer"
                     >
                       {dept.name}
@@ -230,8 +219,8 @@ function Staff() {
         <table className="w-full">
           <thead className="bg-gray-100">
             <tr>
+              <th className="p-2 text-left">ID</th> {/* Added ID column */}
               <th className="p-2 text-left">Name</th>
-              <th className="p-2 text-left">Role</th>
               <th className="p-2 text-left">Department</th>
               <th className="p-2 text-left">Email</th>
               <th className="p-2 text-left">Actions</th>
@@ -240,9 +229,9 @@ function Staff() {
           <tbody>
             {filteredStaff.map((staff) => (
               <tr key={staff.id} className="border-t">
+                <td className="p-2">{staff.id}</td> {/* Display the ID */}
                 <td className="p-2">{staff.name}</td>
-                <td className="p-2">{staff.role}</td>
-                <td className="p-2">{staff.department_name || (departments.find(d => d.id === staff.department)?.name) || 'N/A'}</td>
+                <td className="p-2">{staff.department_name || (departments.find((d) => d.id === staff.department)?.name) || 'N/A'}</td>
                 <td className="p-2">{staff.email}</td>
                 <td className="p-2">
                   <button
