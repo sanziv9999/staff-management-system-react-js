@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
@@ -40,15 +40,36 @@ function App() {
 
   const PrivateRoute = ({ children, adminOnly = false, staffOnly = false }) => {
     if (!token) {
-      return <Navigate to="/staff-login" />;  // Changed default redirect to staff-login
+      return <Navigate to="/staff-login" />;
     }
     if (adminOnly && !isAdmin) {
       return <Navigate to="/user-dashboard" />;
     }
     if (staffOnly && !isStaff) {
-      return <Navigate to="/staff-login" />;  // Changed redirect to staff-login
+      return <Navigate to="/staff-login" />;
     }
     return children;
+  };
+
+  // A wrapper component to handle initial redirection based on auth state
+  const AuthRedirect = () => {
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    useEffect(() => {
+      // Only redirect if the current path is the root ("/")
+      if (location.pathname === '/') {
+        if (localStorage.getItem('is_admin') === 'true') {
+          navigate('/dashboard');
+        } else if (localStorage.getItem('is_staff') === 'true') {
+          navigate('/staff-dashboard');
+        } else if (!token) {
+          navigate('/staff-login');
+        }
+      }
+    }, [navigate, location.pathname]);
+
+    return null; // This component doesn't render anything
   };
 
   return (
@@ -58,11 +79,14 @@ function App() {
         <div className="flex flex-1 overflow-hidden">
           {token && isAdmin && <Sidebar onLogout={handleLogout} />}
           <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
+            <AuthRedirect />
             <Routes>
               {/* Authentication Routes */}
               <Route 
                 path="/staff-login" 
                 element={
+                  token && isAdmin ? 
+                  <Navigate to="/dashboard" /> : 
                   token && isStaff ? 
                   <Navigate to="/staff-dashboard" /> : 
                   <StaffLogin setToken={setToken} setIsStaff={setIsStaff} />
@@ -71,6 +95,8 @@ function App() {
               <Route 
                 path="/staff-registration" 
                 element={
+                  token && isAdmin ? 
+                  <Navigate to="/dashboard" /> : 
                   token && isStaff ? 
                   <Navigate to="/staff-dashboard" /> : 
                   <StaffRegistration setToken={setToken} setIsStaff={setIsStaff} />
@@ -79,15 +105,17 @@ function App() {
               <Route
                 path="/login"
                 element={
-                  token ? 
-                  <Navigate to={isAdmin ? "/dashboard" : "/user-dashboard"} /> : 
+                  token && isAdmin ? 
+                  <Navigate to="/dashboard" /> : 
+                  token && isStaff ? 
+                  <Navigate to="/staff-dashboard" /> : 
                   <Login setToken={setToken} setIsAdmin={setIsAdmin} />
                 }
               />
 
               {/* Admin Routes */}
               <Route
-                path="/"
+                path="/dashboard"
                 element={
                   <PrivateRoute adminOnly={true}>
                     <Dashboard token={token} />
@@ -161,10 +189,16 @@ function App() {
                 }
               />
 
-              {/* Default Route (Root path) */}
+              {/* Default Route */}
               <Route 
                 path="/" 
-                element={<Navigate to="/staff-login" />} 
+                element={
+                  token && isAdmin ? 
+                  <Navigate to="/dashboard" /> : 
+                  token && isStaff ? 
+                  <Navigate to="/staff-dashboard" /> : 
+                  <Navigate to="/staff-login" />
+                } 
               />
 
               {/* Fallback Route */}
@@ -172,9 +206,11 @@ function App() {
                 path="*"
                 element={
                   <Navigate to={
-                    token ? 
-                      (isAdmin ? '/' : isStaff ? '/staff-dashboard' : '/user-dashboard') 
-                      : '/staff-login'  // Changed default redirect to staff-login
+                    token && isAdmin ? 
+                    '/dashboard' : 
+                    token && isStaff ? 
+                    '/staff-dashboard' : 
+                    '/staff-login'
                   } />
                 }
               />
