@@ -3,15 +3,42 @@ from .models import *
 from django.contrib.auth.hashers import check_password
 from .models import Staff
 import logging
+from rest_framework_simplejwt.tokens import RefreshToken
 logger = logging.getLogger(__name__)
 
 class StaffSerializer(serializers.ModelSerializer):
-    department = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all())
-    department_name = serializers.CharField(source='department.name', read_only=True)  # Optional for display
-
     class Meta:
         model = Staff
-        fields = ['id', 'name', 'department', 'department_name', 'email']
+        fields = [
+            'first_name', 'middle_name', 'last_name', 'username', 'email', 'password',
+            'department', 'dob', 'location_lat', 'location_lng', 'location_address',
+            'profile_picture', 'cv'
+        ]
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def validate(self, data):
+        if data.get('password') != self.initial_data.get('confirm_password'):
+            raise serializers.ValidationError("Passwords do not match")
+        return data
+
+    def create(self, validated_data):
+        password = validated_data.pop('password')
+        staff = Staff.objects.create_staff(
+            email=validated_data['email'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
+            password=password,
+            department=validated_data['department'],
+            username=validated_data['username'],
+            middle_name=validated_data.get('middle_name'),
+            dob=validated_data.get('dob'),
+            location_lat=validated_data.get('location_lat'),
+            location_lng=validated_data.get('location_lng'),
+            location_address=validated_data.get('location_address'),
+            profile_picture=validated_data.get('profile_picture'),
+            cv=validated_data.get('cv'),
+        )
+        return staff
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -77,26 +104,67 @@ class SettingsSerializer(serializers.ModelSerializer):
 
 class StaffRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
+    confirm_password = serializers.CharField(write_only=True, required=True)
     department = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all(), required=True)
+    profile_picture = serializers.ImageField(required=False, allow_null=True)
+    cv = serializers.FileField(required=False, allow_null=True)
 
     class Meta:
         model = Staff
-        fields = ['name', 'email', 'password', 'department']
+        fields = [
+            'first_name', 'middle_name', 'last_name', 'username', 'email', 'password', 'confirm_password',
+            'department', 'dob', 'location_lat', 'location_lng', 'location_address', 'profile_picture', 'cv'
+        ]
 
     def validate_email(self, value):
         if Staff.objects.filter(email=value).exists():
             raise serializers.ValidationError("A staff member with this email already exists.")
         return value
 
+    def validate_username(self, value):
+        if Staff.objects.filter(username=value).exists():
+            raise serializers.ValidationError("A staff member with this username already exists.")
+        return value
+
+    def validate(self, data):
+        # Check if password and confirm_password match
+        if data['password'] != data['confirm_password']:
+            raise serializers.ValidationError({"confirm_password": "Passwords do not match."})
+        return data
+
     def create(self, validated_data):
+        # Remove confirm_password since it's not part of the model
+        validated_data.pop('confirm_password')
+
         # Create staff user using the custom manager method
         staff = Staff.objects.create_staff(
             email=validated_data['email'],
-            name=validated_data['name'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name'],
             password=validated_data['password'],
-            department=validated_data['department']
+            department=validated_data['department'],
+            username=validated_data['username'],
+            middle_name=validated_data.get('middle_name'),
+            dob=validated_data.get('dob'),
+            location_lat=validated_data.get('location_lat'),
+            location_lng=validated_data.get('location_lng'),
+            location_address=validated_data.get('location_address'),
+            profile_picture=validated_data.get('profile_picture'),
+            cv=validated_data.get('cv'),
         )
         return staff
+
+    def to_representation(self, instance):
+        # Customize the response to match frontend expectations
+        refresh = RefreshToken.for_user(instance)  # Requires rest_framework_simplejwt
+        return {
+            'access': str(refresh.access_token),
+            'is_staff': instance.is_staff,
+            'department': instance.department.id,
+            'staff_id': instance.id,
+            'user_name': instance.username,
+        }
+    
     
 
 class StaffLoginSerializer(serializers.Serializer):

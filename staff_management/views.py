@@ -172,13 +172,13 @@ class StaffRegistrationView(APIView):
         serializer = StaffRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             staff = serializer.save()
-            refresh = RefreshToken.for_user(staff)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-                'is_staff': True,
-                'department': staff.department.id,
-                'message': 'Staff member registered successfully'
-            }, status=status.HTTP_201_CREATED)
+            # Let the serializer handle the response format
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         logger.error(f"Serializer errors: {serializer.errors}")
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(
+            {
+                "error": "Registration failed",
+                "details": serializer.errors
+            },
+            status=status.HTTP_400_BAD_REQUEST
+        )
