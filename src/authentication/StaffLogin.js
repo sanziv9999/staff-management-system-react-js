@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
-import API_BASE_URL from '../api'; // Ensure this points to your API base URL
+import API_BASE_URL from '../api';
 
 function StaffLogin({ setToken, setIsStaff }) {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -14,10 +14,8 @@ function StaffLogin({ setToken, setIsStaff }) {
     e.preventDefault();
     try {
       const response = await axios.post(`${API_BASE_URL}/staff/login/`, credentials);
-      const { access, is_staff, department, staff_id, user_name} = response.data;
-      // Clear old localStorage data
+      const { access, is_staff, department, staff_id, user_name } = response.data;
       localStorage.clear();
-      // Set new values
       setToken(access);
       setIsStaff(is_staff);
       localStorage.setItem('token', access);
@@ -39,12 +37,12 @@ function StaffLogin({ setToken, setIsStaff }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Staff Login</h2>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center p-6">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-8">
+        <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-8">Staff Login</h2>
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div>
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1">
               Email
             </label>
             <input
@@ -53,12 +51,12 @@ function StaffLogin({ setToken, setIsStaff }) {
               placeholder="Enter your email"
               value={credentials.email}
               onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition placeholder-gray-400"
               required
             />
           </div>
-          <div className="mb-6 relative">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
+          <div className="relative">
+            <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1">
               Password
             </label>
             <input
@@ -67,28 +65,28 @@ function StaffLogin({ setToken, setIsStaff }) {
               placeholder="Enter your password"
               value={credentials.password}
               onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
+              className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition placeholder-gray-400"
               required
             />
             <button
               type="button"
               onClick={toggleShowPassword}
-              className="absolute right-3 top-12 text-gray-600 hover:text-gray-800 focus:outline-none"
+              className="absolute right-3 top-10 text-gray-500 hover:text-gray-700 transition"
             >
               {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
             </button>
           </div>
-          {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
+          {error && <p className="text-red-500 text-center font-medium">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-200"
+            className="w-full p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md hover:from-blue-700 hover:to-purple-700 transition font-semibold"
           >
             Login
           </button>
         </form>
         <p className="text-center text-gray-600 mt-4">
-          Don't have an account?{' '}
-          <a href="/staff-registration" className="text-blue-600 hover:underline">
+          Don’t have an account?{' '}
+          <a href="/staff-registration" className="text-blue-600 hover:underline font-medium">
             Register here
           </a>
         </p>
