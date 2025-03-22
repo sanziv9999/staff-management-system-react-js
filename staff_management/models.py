@@ -51,6 +51,9 @@ class Staff(AbstractBaseUser, PermissionsMixin):
     certificate_description = models.TextField(blank=True, null=True)
     certificate_issue_date = models.DateField(blank=True, null=True)
     certificate_file = models.FileField(upload_to='certificates/', blank=True, null=True)  # Supports all file types
+
+    # Add this field for password reset
+    password_reset_token = models.CharField(max_length=100, blank=True, null=True)  # Increased length for token
     
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)  # All Staff instances are staff

@@ -17,4 +17,6 @@ urlpatterns = [
     path('attendance/<int:pk>/', AttendanceViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='attendance-detail'),
     path('staff/', StaffViewSet.as_view({'get': 'list', 'post': 'create'}), name='staff-list'),
     path('staff/<int:pk>/', StaffViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='staff-detail'),
+    path('staff/password_reset/', PasswordResetRequestView.as_view(), name='password_reset'),
+    path('staff/password_reset/confirm/', PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
 ]

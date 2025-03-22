@@ -205,3 +205,33 @@ class StaffLoginSerializer(serializers.Serializer):
         logger.info(f"Validated user: {user.email}")
         data['user'] = user
         return data
+    
+#Password Reset
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate_email(self, value):
+        if not Staff.objects.filter(email=value).exists():
+            raise serializers.ValidationError("No staff found with this email.")
+        return value    
+    
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    new_password = serializers.CharField(write_only=True)
+    confirm_password = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+        if data['new_password'] != data['confirm_password']:
+            raise serializers.ValidationError("Passwords do not match.")
+        try:
+            staff = Staff.objects.get(password_reset_token=data['token'])
+        except Staff.DoesNotExist:
+            raise serializers.ValidationError("Invalid or expired reset token.")
+        return data
+
+    def save(self):
+        staff = Staff.objects.get(password_reset_token=self.validated_data['token'])
+        staff.set_password(self.validated_data['new_password'])
+        staff.password_reset_token = None  # Clear token after use
+        staff.save()
+        return staff    
