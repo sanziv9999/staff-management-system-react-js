@@ -179,255 +179,280 @@ function StaffRegistration({ setToken, setIsStaff }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Staff Registration</h2>
-        <form onSubmit={handleRegistration}>
-          {/* Existing Fields */}
-          <div className="mb-4">
-            <label htmlFor="first_name" className="block text-gray-700 font-medium mb-2">First Name</label>
-            <input
-              type="text"
-              id="first_name"
-              name="first_name"
-              value={formData.first_name}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-              required
-            />
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center p-6">
+      <div className="bg-white rounded-xl shadow-2xl w-full max-w-5xl p-8">
+        <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-8">Staff Registration</h2>
+        <form onSubmit={handleRegistration} className="space-y-6">
+          {/* Personal Info */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label htmlFor="first_name" className="block text-sm font-semibold text-gray-700 mb-1">First Name</label>
+              <input
+                type="text"
+                id="first_name"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="middle_name" className="block text-sm font-semibold text-gray-700 mb-1">Middle Name</label>
+              <input
+                type="text"
+                id="middle_name"
+                name="middle_name"
+                value={formData.middle_name}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              />
+            </div>
+            <div>
+              <label htmlFor="last_name" className="block text-sm font-semibold text-gray-700 mb-1">Last Name</label>
+              <input
+                type="text"
+                id="last_name"
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                required
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="middle_name" className="block text-gray-700 font-medium mb-2">Middle Name</label>
-            <input
-              type="text"
-              id="middle_name"
-              name="middle_name"
-              value={formData.middle_name}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-            />
+
+          {/* Credentials */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-1">Username</label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="dob" className="block text-sm font-semibold text-gray-700 mb-1">Date of Birth</label>
+              <input
+                type="date"
+                id="dob"
+                name="dob"
+                value={formData.dob}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="last_name" className="block text-gray-700 font-medium mb-2">Last Name</label>
-            <input
-              type="text"
-              id="last_name"
-              name="last_name"
-              value={formData.last_name}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-              required
-            />
+
+          {/* Password */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative">
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1">Password</label>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                required
+              />
+              <button
+                type="button"
+                onClick={toggleShowPassword}
+                className="absolute right-3 top-10 text-gray-500 hover:text-gray-700 transition"
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
+            </div>
+            <div className="relative">
+              <label htmlFor="confirm_password" className="block text-sm font-semibold text-gray-700 mb-1">Confirm Password</label>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="confirm_password"
+                name="confirm_password"
+                value={formData.confirm_password}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                required
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700 font-medium mb-2">Username</label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-700 font-medium mb-2">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-              required
-            />
-          </div>
-          <div className="mb-4 relative">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">Password</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-              required
-            />
-            <button
-              type="button"
-              onClick={toggleShowPassword}
-              className="absolute right-3 top-12 text-gray-600"
-            >
-              {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
-            </button>
-          </div>
-          <div className="mb-4">
-            <label htmlFor="confirm_password" className="block text-gray-700 font-medium mb-2">Confirm Password</label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="confirm_password"
-              name="confirm_password"
-              value={formData.confirm_password}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="dob" className="block text-gray-700 font-medium mb-2">Date of Birth</label>
-            <input
-              type="date"
-              id="dob"
-              name="dob"
-              value={formData.dob}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="department" className="block text-gray-700 font-medium mb-2">Department</label>
-            <select
-              id="department"
-              name="department"
-              value={formData.department}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-              required
-            >
-              <option value="">Select a department</option>
-              {departments.map((dept) => (
-                <option key={dept.id} value={dept.id}>{dept.name}</option>
-              ))}
-            </select>
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 font-medium mb-2">Location</label>
-            <button
-              type="button"
-              onClick={handleLocationClick}
-              className="mb-2 bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-            >
-              Use My Current Location
-            </button>
-            <div className="mb-2">
-              <label htmlFor="location_address" className="block text-gray-700">Address</label>
+
+          {/* Department and Location */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="department" className="block text-sm font-semibold text-gray-700 mb-1">Department</label>
+              <select
+                id="department"
+                name="department"
+                value={formData.department}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+                required
+              >
+                <option value="">Select a department</option>
+                {departments.map((dept) => (
+                  <option key={dept.id} value={dept.id}>{dept.name}</option>
+                ))}
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-1">Location</label>
+              <button
+                type="button"
+                onClick={handleLocationClick}
+                className="w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+              >
+                Use My Current Location
+              </button>
               <input
                 type="text"
                 id="location_address"
                 name="location_address"
                 value={formData.location_address}
                 onChange={handleChange}
-                className="w-full p-3 border rounded-lg"
+                className="w-full p-3 mt-2 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
                 readOnly
               />
             </div>
-            {isMapReady && (
+          </div>
+
+          {/* Map */}
+          {isMapReady && (
+            <div className="w-full">
               <MapContainer
                 center={[formData.location_lat, formData.location_lng]}
                 zoom={13}
-                style={{ height: '200px', width: '100%' }}
+                style={{ height: '250px', width: '100%', borderRadius: '8px' }}
+                className="shadow-md"
               >
                 <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                 <LocationMarker />
                 <RecenterMap lat={formData.location_lat} lng={formData.location_lng} />
               </MapContainer>
-            )}
-          </div>
-          <div className="mb-4">
-            <label htmlFor="profile_picture" className="block text-gray-700 font-medium mb-2">Profile Picture</label>
-            <input
-              type="file"
-              id="profile_picture"
-              name="profile_picture"
-              onChange={handleChange}
-              className="w-full p-3"
-              accept="image/*"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="cv" className="block text-gray-700 font-medium mb-2">CV</label>
-            <input
-              type="file"
-              id="cv"
-              name="cv"
-              onChange={handleChange}
-              className="w-full p-3"
-              accept=".pdf,.doc,.docx"
-            />
+            </div>
+          )}
+
+          {/* File Uploads */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+              <label htmlFor="profile_picture" className="block text-sm font-semibold text-gray-700 mb-1">Profile Picture</label>
+              <input
+                type="file"
+                id="profile_picture"
+                name="profile_picture"
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 transition"
+                accept="image/*"
+              />
+            </div>
+            <div>
+              <label htmlFor="cv" className="block text-sm font-semibold text-gray-700 mb-1">CV</label>
+              <input
+                type="file"
+                id="cv"
+                name="cv"
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 transition"
+                accept=".pdf,.doc,.docx"
+              />
+            </div>
+            <div>
+              <label htmlFor="certificate_file" className="block text-sm font-semibold text-gray-700 mb-1">Certificate File</label>
+              <input
+                type="file"
+                id="certificate_file"
+                name="certificate_file"
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600 transition"
+              />
+            </div>
           </div>
 
-          {/* New Certificate Fields */}
-          <div className="mb-4">
-            <label htmlFor="certificate_type" className="block text-gray-700 font-medium mb-2">Certificate Type</label>
-            <select
-              id="certificate_type"
-              name="certificate_type"
-              value={formData.certificate_type}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-            >
-              <option value="">Select Type (Optional)</option>
-              <option value="Experience">Experience</option>
-              <option value="Training">Training</option>
-              <option value="Achievement">Achievement</option>
-            </select>
+          {/* Certificate Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="certificate_type" className="block text-sm font-semibold text-gray-700 mb-1">Certificate Type</label>
+              <select
+                id="certificate_type"
+                name="certificate_type"
+                value={formData.certificate_type}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              >
+                <option value="">Select Type (Optional)</option>
+                <option value="Experience">Experience</option>
+                <option value="Training">Training</option>
+                <option value="Achievement">Achievement</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="certificate_title" className="block text-sm font-semibold text-gray-700 mb-1">Certificate Title</label>
+              <input
+                type="text"
+                id="certificate_title"
+                name="certificate_title"
+                value={formData.certificate_title}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              />
+            </div>
           </div>
-          <div className="mb-4">
-            <label htmlFor="certificate_title" className="block text-gray-700 font-medium mb-2">Certificate Title</label>
-            <input
-              type="text"
-              id="certificate_title"
-              name="certificate_title"
-              value={formData.certificate_title}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="certificate_description" className="block text-gray-700 font-medium mb-2">Certificate Description</label>
-            <textarea
-              id="certificate_description"
-              name="certificate_description"
-              value={formData.certificate_description}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="certificate_issue_date" className="block text-gray-700 font-medium mb-2">Certificate Issue Date</label>
-            <input
-              type="date"
-              id="certificate_issue_date"
-              name="certificate_issue_date"
-              value={formData.certificate_issue_date}
-              onChange={handleChange}
-              className="w-full p-3 border rounded-lg"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="certificate_file" className="block text-gray-700 font-medium mb-2">Certificate File</label>
-            <input
-              type="file"
-              id="certificate_file"
-              name="certificate_file"
-              onChange={handleChange}
-              className="w-full p-3"
-            />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label htmlFor="certificate_description" className="block text-sm font-semibold text-gray-700 mb-1">Certificate Description</label>
+              <textarea
+                id="certificate_description"
+                name="certificate_description"
+                value={formData.certificate_description}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              />
+            </div>
+            <div>
+              <label htmlFor="certificate_issue_date" className="block text-sm font-semibold text-gray-700 mb-1">Certificate Issue Date</label>
+              <input
+                type="date"
+                id="certificate_issue_date"
+                name="certificate_issue_date"
+                value={formData.certificate_issue_date}
+                onChange={handleChange}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition"
+              />
+            </div>
           </div>
 
-          {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
-          {success && <p className="text-green-600 mb-4 text-center">{success}</p>}
+          {/* Messages and Submit */}
+          {error && <p className="text-red-500 text-center font-medium">{error}</p>}
+          {success && <p className="text-green-500 text-center font-medium">{success}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700"
+            className="w-full p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md hover:from-blue-700 hover:to-purple-700 transition font-semibold"
           >
             Register
           </button>
         </form>
         <p className="text-center text-gray-600 mt-4">
           Already have an account?{' '}
-          <a href="/staff-login" className="text-blue-600 hover:underline">Login here</a>
+          <a href="/staff-login" className="text-blue-600 hover:underline font-medium">Login here</a>
         </p>
       </div>
     </div>
