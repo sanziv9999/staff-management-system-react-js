@@ -13,6 +13,7 @@ import Login from './authentication/Login';
 import UserDashboard from './pages/UserDashboard';
 import StaffLogin from './authentication/StaffLogin';
 import StaffRegistration from './authentication/StaffRegistration';
+import ResetPassword from './authentication/ResetPassword';
 
 function App() {
   const [token, setToken] = useState(() => {
@@ -92,6 +93,7 @@ function App() {
                   <StaffLogin setToken={setToken} setIsStaff={setIsStaff} />
                 } 
               />
+              <Route path="/reset-password/:token" element={<ResetPassword />} />
               <Route 
                 path="/staff-registration" 
                 element={
