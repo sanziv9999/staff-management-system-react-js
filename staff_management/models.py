@@ -41,6 +41,16 @@ class Staff(AbstractBaseUser, PermissionsMixin):
     location_address = models.TextField(blank=True, null=True)
     profile_picture = models.ImageField(upload_to='staff_profiles/', null=True, blank=True)
     cv = models.FileField(upload_to='staff_cvs/', null=True, blank=True)
+    # New certificate fields
+    certificate_type = models.CharField(
+        max_length=50,
+        choices=[('Experience', 'Experience'), ('Training', 'Training'), ('Achievement', 'Achievement')],
+        blank=True, null=True
+    )
+    certificate_title = models.CharField(max_length=200, blank=True, null=True)
+    certificate_description = models.TextField(blank=True, null=True)
+    certificate_issue_date = models.DateField(blank=True, null=True)
+    certificate_file = models.FileField(upload_to='certificates/', blank=True, null=True)  # Supports all file types
     
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=True)  # All Staff instances are staff

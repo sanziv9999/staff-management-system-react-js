@@ -12,7 +12,8 @@ class StaffSerializer(serializers.ModelSerializer):
         fields = [
             'first_name', 'middle_name', 'last_name', 'username', 'email', 'password',
             'department', 'dob', 'location_lat', 'location_lng', 'location_address',
-            'profile_picture', 'cv'
+            'profile_picture', 'cv', 'certificate_type', 'certificate_title',
+            'certificate_description', 'certificate_issue_date', 'certificate_file'
         ]
         extra_kwargs = {'password': {'write_only': True}}
 
@@ -102,18 +103,21 @@ class SettingsSerializer(serializers.ModelSerializer):
         return data
 
 
+# serializers.py
 class StaffRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
     confirm_password = serializers.CharField(write_only=True, required=True)
     department = serializers.PrimaryKeyRelatedField(queryset=Department.objects.all(), required=True)
     profile_picture = serializers.ImageField(required=False, allow_null=True)
     cv = serializers.FileField(required=False, allow_null=True)
+    certificate_file = serializers.FileField(required=False, allow_null=True)  # Optional certificate file
 
     class Meta:
         model = Staff
         fields = [
             'first_name', 'middle_name', 'last_name', 'username', 'email', 'password', 'confirm_password',
-            'department', 'dob', 'location_lat', 'location_lng', 'location_address', 'profile_picture', 'cv'
+            'department', 'dob', 'location_lat', 'location_lng', 'location_address', 'profile_picture', 'cv',
+            'certificate_type', 'certificate_title', 'certificate_description', 'certificate_issue_date', 'certificate_file'
         ]
 
     def validate_email(self, value):
@@ -127,16 +131,12 @@ class StaffRegistrationSerializer(serializers.ModelSerializer):
         return value
 
     def validate(self, data):
-        # Check if password and confirm_password match
         if data['password'] != data['confirm_password']:
             raise serializers.ValidationError({"confirm_password": "Passwords do not match."})
         return data
 
     def create(self, validated_data):
-        # Remove confirm_password since it's not part of the model
         validated_data.pop('confirm_password')
-
-        # Create staff user using the custom manager method
         staff = Staff.objects.create_staff(
             email=validated_data['email'],
             first_name=validated_data['first_name'],
@@ -151,12 +151,16 @@ class StaffRegistrationSerializer(serializers.ModelSerializer):
             location_address=validated_data.get('location_address'),
             profile_picture=validated_data.get('profile_picture'),
             cv=validated_data.get('cv'),
+            certificate_type=validated_data.get('certificate_type'),
+            certificate_title=validated_data.get('certificate_title'),
+            certificate_description=validated_data.get('certificate_description'),
+            certificate_issue_date=validated_data.get('certificate_issue_date'),
+            certificate_file=validated_data.get('certificate_file'),
         )
         return staff
 
     def to_representation(self, instance):
-        # Customize the response to match frontend expectations
-        refresh = RefreshToken.for_user(instance)  # Requires rest_framework_simplejwt
+        refresh = RefreshToken.for_user(instance)
         return {
             'access': str(refresh.access_token),
             'is_staff': instance.is_staff,
