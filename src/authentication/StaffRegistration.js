@@ -31,12 +31,17 @@ function StaffRegistration({ setToken, setIsStaff }) {
     location_address: '',
     profile_picture: null,
     cv: null,
+    certificate_type: '',
+    certificate_title: '',
+    certificate_description: '',
+    certificate_issue_date: '',
+    certificate_file: null,
   });
   const [departments, setDepartments] = useState([]);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [isMapReady, setIsMapReady] = useState(false); // Prevent map render issues
+  const [isMapReady, setIsMapReady] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,9 +51,9 @@ function StaffRegistration({ setToken, setIsStaff }) {
         setDepartments(response.data);
       } catch (err) {
         console.error('Error fetching departments:', err);
-        setError('Failed to load departments. Please try again.');
+        setError('Failed to load departments.');
       } finally {
-        setIsMapReady(true); // Map renders after initial load
+        setIsMapReady(true);
       }
     };
     fetchDepartments();
@@ -73,7 +78,6 @@ function StaffRegistration({ setToken, setIsStaff }) {
             location_lat: latitude,
             location_lng: longitude,
           }));
-
           try {
             const response = await axios.get(
               `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
@@ -91,7 +95,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
         }
       );
     } else {
-      setError('Geolocation is not supported by your browser.');
+      setError('Geolocation not supported.');
     }
   };
 
@@ -122,7 +126,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
             }));
           })
           .catch((err) => {
-            setError('Could not retrieve address from map click.');
+            setError('Could not retrieve address from map.');
           });
       },
     });
@@ -145,11 +149,6 @@ function StaffRegistration({ setToken, setIsStaff }) {
       }
     }
 
-    console.log('Payload being sent:');
-    for (let [key, value] of data.entries()) {
-      console.log(`${key}: ${value}`);
-    }
-
     try {
       const response = await axios.post(`${API_BASE_URL}/staff/register/`, data, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -162,7 +161,6 @@ function StaffRegistration({ setToken, setIsStaff }) {
       localStorage.setItem('department', department);
       localStorage.setItem('staff_id', staff_id);
       localStorage.setItem('user_name', user_name);
-      setError('');
       setSuccess('Registration successful! Redirecting...');
       setTimeout(() => navigate('/staff-login'), 1500);
     } catch (error) {
@@ -170,7 +168,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
       const errorMsg = error.response?.data?.detail || 
                        error.response?.data?.email?.[0] || 
                        error.response?.data?.username?.[0] || 
-                       'Registration failed. Please try again.';
+                       'Registration failed.';
       setError(errorMsg);
       setSuccess('');
     }
@@ -185,6 +183,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Staff Registration</h2>
         <form onSubmit={handleRegistration}>
+          {/* Existing Fields */}
           <div className="mb-4">
             <label htmlFor="first_name" className="block text-gray-700 font-medium mb-2">First Name</label>
             <input
@@ -198,7 +197,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="middle_name" className="block text-gray-700 font-medium mb-2">Middle Name (Optional)</label>
+            <label htmlFor="middle_name" className="block text-gray-700 font-medium mb-2">Middle Name</label>
             <input
               type="text"
               id="middle_name"
@@ -259,7 +258,6 @@ function StaffRegistration({ setToken, setIsStaff }) {
               type="button"
               onClick={toggleShowPassword}
               className="absolute right-3 top-12 text-gray-600"
-              aria-label={showPassword ? 'Hide password' : 'Show password'}
             >
               {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
             </button>
@@ -358,6 +356,66 @@ function StaffRegistration({ setToken, setIsStaff }) {
               accept=".pdf,.doc,.docx"
             />
           </div>
+
+          {/* New Certificate Fields */}
+          <div className="mb-4">
+            <label htmlFor="certificate_type" className="block text-gray-700 font-medium mb-2">Certificate Type</label>
+            <select
+              id="certificate_type"
+              name="certificate_type"
+              value={formData.certificate_type}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-lg"
+            >
+              <option value="">Select Type (Optional)</option>
+              <option value="Experience">Experience</option>
+              <option value="Training">Training</option>
+              <option value="Achievement">Achievement</option>
+            </select>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="certificate_title" className="block text-gray-700 font-medium mb-2">Certificate Title</label>
+            <input
+              type="text"
+              id="certificate_title"
+              name="certificate_title"
+              value={formData.certificate_title}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-lg"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="certificate_description" className="block text-gray-700 font-medium mb-2">Certificate Description</label>
+            <textarea
+              id="certificate_description"
+              name="certificate_description"
+              value={formData.certificate_description}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-lg"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="certificate_issue_date" className="block text-gray-700 font-medium mb-2">Certificate Issue Date</label>
+            <input
+              type="date"
+              id="certificate_issue_date"
+              name="certificate_issue_date"
+              value={formData.certificate_issue_date}
+              onChange={handleChange}
+              className="w-full p-3 border rounded-lg"
+            />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="certificate_file" className="block text-gray-700 font-medium mb-2">Certificate File</label>
+            <input
+              type="file"
+              id="certificate_file"
+              name="certificate_file"
+              onChange={handleChange}
+              className="w-full p-3"
+            />
+          </div>
+
           {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
           {success && <p className="text-green-600 mb-4 text-center">{success}</p>}
           <button
