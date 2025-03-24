@@ -12,7 +12,7 @@ function Schedule({ token }) {
   const [searchTerm, setSearchTerm] = useState('');
   const [staffSearch, setStaffSearch] = useState('');
   const [showStaffDropdown, setShowStaffDropdown] = useState(false);
-  const [error, setError] = useState(''); // Add error state for user feedback
+  const [error, setError] = useState('');
 
   // Fetch schedules and staff on component mount
   useEffect(() => {
@@ -28,15 +28,23 @@ function Schedule({ token }) {
           axios.get(`${API_BASE_URL}/schedules/`),
           axios.get(`${API_BASE_URL}/staff/`)
         ]);
+        console.log('Schedules Response:', scheduleResponse.data);
+        console.log('Staff Response:', staffResponse.data);
         setSchedules(scheduleResponse.data);
         setStaffList(staffResponse.data);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching data:', error.response?.status, error.response?.data);
         setError('Failed to fetch data. Please ensure the backend server is running or check your login credentials.');
       }
     };
     fetchData();
   }, [token]);
+
+  // Helper function to get staff name from staff ID
+  const getStaffName = (staffId) => {
+    const staff = staffList.find(s => s.id === staffId);
+    return staff ? (staff.name || `${staff.first_name || ''} ${staff.middle_name || ''} ${staff.last_name || ''}`.trim()) : 'N/A';
+  };
 
   // Handle adding a new schedule
   const handleAddSchedule = async (e) => {
@@ -51,14 +59,14 @@ function Schedule({ token }) {
     }
     setError('');
     const payload = {
-      staff_id: parseInt(newSchedule.staff), // Send staff_id instead of staff
+      staff_id: parseInt(newSchedule.staff),
       date: newSchedule.date.toISOString().split('T')[0],
       shift: newSchedule.shift,
       location: newSchedule.location
     };
-    console.log('Adding schedule payload:', payload); // Debug log
+    console.log('Adding schedule payload:', payload);
     try {
-      const response = await axios.post( `${API_BASE_URL}/schedules/`, payload);
+      const response = await axios.post(`${API_BASE_URL}/schedules/`, payload);
       setSchedules([...schedules, response.data]);
       setNewSchedule({ staff: '', date: new Date(), shift: 'Morning', location: '' });
       setStaffSearch('');
@@ -72,13 +80,14 @@ function Schedule({ token }) {
   // Handle editing a schedule
   const handleEditSchedule = (schedule) => {
     setEditingSchedule(schedule);
+    const staffId = typeof schedule.staff === 'object' ? schedule.staff?.id : schedule.staff;
     setNewSchedule({
-      staff: schedule.staff.id.toString(),
+      staff: staffId?.toString() || '',
       date: new Date(schedule.date),
-      shift: schedule.shift,
-      location: schedule.location
+      shift: schedule.shift || 'Morning',
+      location: schedule.location || ''
     });
-    setStaffSearch(schedule.staff.name);
+    setStaffSearch(typeof schedule.staff === 'object' ? schedule.staff?.name : getStaffName(schedule.staff) || '');
     setShowStaffDropdown(false);
   };
 
@@ -95,12 +104,12 @@ function Schedule({ token }) {
     }
     setError('');
     const payload = {
-      staff_id: parseInt(newSchedule.staff), // Send staff_id instead of staff
+      staff_id: parseInt(newSchedule.staff),
       date: newSchedule.date.toISOString().split('T')[0],
       shift: newSchedule.shift,
       location: newSchedule.location
     };
-    console.log('Updating schedule payload:', payload); // Debug log
+    console.log('Updating schedule payload:', payload);
     try {
       const response = await axios.put(`${API_BASE_URL}/schedules/${editingSchedule.id}/`, payload);
       setSchedules(schedules.map(s => s.id === editingSchedule.id ? response.data : s));
@@ -116,7 +125,7 @@ function Schedule({ token }) {
 
   // Handle deleting a schedule
   const handleDeleteSchedule = async (id, staffName) => {
-    const confirmed = window.confirm(`Are you sure you want to delete schedule for ${staffName}?`);
+    const confirmed = window.confirm(`Are you sure you want to delete schedule for ${staffName || 'this staff'}?`);
     if (confirmed) {
       try {
         await axios.delete(`${API_BASE_URL}/schedules/${id}/`);
@@ -139,22 +148,31 @@ function Schedule({ token }) {
   };
 
   // Filter schedules based on search term
-  const filteredSchedules = schedules.filter(schedule =>
-    schedule.staff.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    schedule.date.includes(searchTerm) ||
-    schedule.shift.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    schedule.location.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredSchedules = schedules.filter(schedule => {
+    const staffName = typeof schedule.staff === 'object' ? schedule.staff?.name : getStaffName(schedule.staff) || '';
+    const date = schedule.date || '';
+    const shift = schedule.shift || '';
+    const location = schedule.location || '';
+    const search = searchTerm.toLowerCase();
+
+    return (
+      staffName.toLowerCase().includes(search) ||
+      date.includes(search) ||
+      shift.toLowerCase().includes(search) ||
+      location.toLowerCase().includes(search)
+    );
+  });
 
   // Filter staff based on search input
-  const filteredStaff = staffList.filter(staff =>
-    staff.name.toLowerCase().includes(staffSearch.toLowerCase())
-  );
+  const filteredStaff = staffList.filter(staff => {
+    const name = staff.name || `${staff.first_name || ''} ${staff.middle_name || ''} ${staff.last_name || ''}`.trim();
+    return name.toLowerCase().includes(staffSearch.toLowerCase());
+  });
 
   // Handle staff selection from dropdown
   const handleStaffSelect = (staff) => {
     setNewSchedule({ ...newSchedule, staff: staff.id.toString() });
-    setStaffSearch(staff.name);
+    setStaffSearch(staff.name || `${staff.first_name || ''} ${staff.middle_name || ''} ${staff.last_name || ''}`.trim());
     setShowStaffDropdown(false);
   };
 
@@ -191,7 +209,7 @@ function Schedule({ token }) {
                       onClick={() => handleStaffSelect(staff)}
                       className="p-2 hover:bg-gray-100 cursor-pointer"
                     >
-                      {staff.name}
+                      {staff.name || `${staff.first_name || ''} ${staff.middle_name || ''} ${staff.last_name || ''}`.trim()}
                     </li>
                   ))
                 ) : (
@@ -256,10 +274,10 @@ function Schedule({ token }) {
           <tbody>
             {filteredSchedules.map((schedule) => (
               <tr key={schedule.id} className="border-t">
-                <td className="p-2">{schedule.staff.name}</td>
-                <td className="p-2">{schedule.date}</td>
-                <td className="p-2">{schedule.shift}</td>
-                <td className="p-2">{schedule.location}</td>
+                <td className="p-2">{typeof schedule.staff === 'object' ? schedule.staff?.name : getStaffName(schedule.staff) || 'N/A'}</td>
+                <td className="p-2">{schedule.date || 'N/A'}</td>
+                <td className="p-2">{schedule.shift || 'N/A'}</td>
+                <td className="p-2">{schedule.location || 'N/A'}</td>
                 <td className="p-2">
                   <button
                     onClick={() => handleEditSchedule(schedule)}
@@ -268,7 +286,7 @@ function Schedule({ token }) {
                     Edit
                   </button>
                   <button
-                    onClick={() => handleDeleteSchedule(schedule.id, schedule.staff.name)}
+                    onClick={() => handleDeleteSchedule(schedule.id, typeof schedule.staff === 'object' ? schedule.staff?.name : getStaffName(schedule.staff))}
                     className="text-red-600 hover:underline"
                   >
                     Delete
