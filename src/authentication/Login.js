@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API_BASE_URL from '../api';
 
 function Login({ setToken, setIsAdmin }) {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
+  const [forgotMessage, setForgotMessage] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
@@ -20,10 +25,13 @@ function Login({ setToken, setIsAdmin }) {
       localStorage.setItem('token', access);
       localStorage.setItem('is_admin', is_admin);
       setError('');
+      toast.success('Login successful!', { autoClose: 2000 });
       navigate(is_admin ? '/' : '/user-dashboard');
     } catch (error) {
       console.error('Login error:', error.response?.data || error.message);
-      setError('Invalid credentials or server error: ' + (error.response?.data?.error || error.message));
+      const errorMsg = error.response?.data?.non_field_errors?.[0] || error.response?.data?.error || error.message;
+      setError('Login failed: ' + errorMsg);
+      toast.error('Login failed: ' + errorMsg, { autoClose: 3000 });
     }
   };
 
@@ -31,55 +39,135 @@ function Login({ setToken, setIsAdmin }) {
     setShowPassword(!showPassword);
   };
 
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (!forgotEmail) {
+      setError('Please enter your email.');
+      toast.error('Please enter your email.', { autoClose: 3000 });
+      return;
+    }
+    try {
+      const response = await axios.post(`${API_BASE_URL}/password_reset/`, { email: forgotEmail });
+      setForgotMessage(response.data.message || 'Password reset link sent to your email.');
+      setError('');
+      toast.success(response.data.message || 'Password reset link sent to your email.', { autoClose: 2000 });
+      setForgotEmail('');
+      setTimeout(() => setShowForgotPassword(false), 2000);
+    } catch (error) {
+      console.error('Forgot password error:', error.response?.data || error.message);
+      const errorMsg = error.response?.data?.email?.[0] || error.response?.data?.detail || error.message;
+      setError('Failed to send reset link: ' + errorMsg);
+      toast.error('Failed to send reset link: ' + errorMsg, { autoClose: 3000 });
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">Login</h2>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              placeholder="Enter your username"
-              value={credentials.username}
-              onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-              required
-            />
-          </div>
-          <div className="mb-6 relative">
-            <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
-              Password
-            </label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              id="password"
-              placeholder="Enter your password"
-              value={credentials.password}
-              onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
-              className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600"
-              required
-            />
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center p-6">
+      <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-8 relative">
+        <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
+          {showForgotPassword ? 'Reset Password' : 'Login'}
+        </h2>
+
+        {/* Login Form */}
+        {!showForgotPassword ? (
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label htmlFor="username" className="block text-sm font-semibold text-gray-700 mb-1">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                placeholder="Enter your username"
+                value={credentials.username}
+                onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition placeholder-gray-400"
+                required
+              />
+            </div>
+            <div className="relative">
+              <label htmlFor="password" className="block text-sm font-semibold text-gray-700 mb-1">
+                Password
+              </label>
+              <input
+                type={showPassword ? 'text' : 'password'}
+                id="password"
+                placeholder="Enter your password"
+                value={credentials.password}
+                onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition placeholder-gray-400"
+                required
+              />
+              <button
+                type="button"
+                onClick={toggleShowPassword}
+                className="absolute right-3 top-10 text-gray-500 hover:text-gray-700 transition"
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
+            </div>
+            {error && <p className="text-red-500 text-center font-medium">{error}</p>}
             <button
-              type="button"
-              onClick={toggleShowPassword}
-              className="absolute right-3 top-12 text-gray-600 hover:text-gray-800 focus:outline-none"
+              type="submit"
+              className="w-full p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md hover:from-blue-700 hover:to-purple-700 transition font-semibold"
             >
-              {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              Login
             </button>
-          </div>
-          {error && <p className="text-red-600 mb-4 text-center">{error}</p>}
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-200"
-          >
-            Login
-          </button>
-        </form>
+            <p className="text-center text-gray-600">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowForgotPassword(true);
+                  setError('');
+                }}
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Forgot Password?
+              </button>
+            </p>
+          </form>
+        ) : (
+          /* Forgot Password Form */
+          <form onSubmit={handleForgotPassword} className="space-y-6">
+            <div>
+              <label htmlFor="forgot_email" className="block text-sm font-semibold text-gray-700 mb-1">
+                Enter your email
+              </label>
+              <input
+                type="email"
+                id="forgot_email"
+                placeholder="Email for password reset"
+                value={forgotEmail}
+                onChange={(e) => setForgotEmail(e.target.value)}
+                className="w-full p-3 rounded-md border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none transition placeholder-gray-400"
+                required
+              />
+            </div>
+            {error && <p className="text-red-500 text-center font-medium">{error}</p>}
+            {forgotMessage && <p className="text-green-500 text-center font-medium">{forgotMessage}</p>}
+            <button
+              type="submit"
+              className="w-full p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md hover:from-blue-700 hover:to-purple-700 transition font-semibold"
+            >
+              Send Reset Link
+            </button>
+            <p className="text-center text-gray-600">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowForgotPassword(false);
+                  setError('');
+                  setForgotMessage('');
+                }}
+                className="text-blue-600 hover:underline font-medium"
+              >
+                Back to Login
+              </button>
+            </p>
+          </form>
+        )}
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 }
