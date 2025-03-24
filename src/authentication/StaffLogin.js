@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { FiEye, FiEyeOff } from 'react-icons/fi';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API_BASE_URL from '../api';
 
 function StaffLogin({ setToken, setIsStaff }) {
@@ -27,11 +29,13 @@ function StaffLogin({ setToken, setIsStaff }) {
       localStorage.setItem('staff_id', staff_id);
       localStorage.setItem('user_name', user_name);
       setError('');
+      toast.success('Login successful!', { autoClose: 2000 });
       navigate('/staff-dashboard');
     } catch (error) {
       console.error('Staff login error:', error.response?.data || error.message);
       const errorMsg = error.response?.data?.non_field_errors?.[0] || error.response?.data?.error || error.message;
       setError('Login failed: ' + errorMsg);
+      toast.error('Login failed: ' + errorMsg, { autoClose: 3000 });
     }
   };
 
@@ -43,18 +47,21 @@ function StaffLogin({ setToken, setIsStaff }) {
     e.preventDefault();
     if (!forgotEmail) {
       setError('Please enter your email.');
+      toast.error('Please enter your email.', { autoClose: 3000 });
       return;
     }
     try {
       const response = await axios.post(`${API_BASE_URL}/staff/password_reset/`, { email: forgotEmail });
       setForgotMessage(response.data.message || 'Password reset link sent to your email.');
       setError('');
+      toast.success(response.data.message || 'Password reset link sent to your email.', { autoClose: 2000 });
       setForgotEmail('');
       setTimeout(() => setShowForgotPassword(false), 2000);
     } catch (error) {
       console.error('Forgot password error:', error.response?.data || error.message);
       const errorMsg = error.response?.data?.email?.[0] || error.response?.data?.detail || error.message;
       setError('Failed to send reset link: ' + errorMsg);
+      toast.error('Failed to send reset link: ' + errorMsg, { autoClose: 3000 });
     }
   };
 
@@ -174,6 +181,7 @@ function StaffLogin({ setToken, setIsStaff }) {
           </p>
         )}
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 }
