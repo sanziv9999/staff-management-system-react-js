@@ -13,6 +13,14 @@ function Navbar({ onLogout }) {
 
   const languages = ['English', 'Japanese', 'Nepali', 'Hindi'];
 
+  // Map languages to their corresponding flag URLs (using flagcdn.com)
+  const languageToFlagMap = {
+    English: 'https://flagcdn.com/16x12/gb.png', // UK flag for English
+    Japanese: 'https://flagcdn.com/16x12/jp.png', // Japan flag
+    Nepali: 'https://flagcdn.com/16x12/np.png', // Nepal flag
+    Hindi: 'https://flagcdn.com/16x12/in.png', // India flag for Hindi
+  };
+
   const handleLogout = () => {
     onLogout();
     localStorage.clear();
@@ -54,8 +62,8 @@ function Navbar({ onLogout }) {
             className="flex items-center space-x-2 hover:text-gray-200 transition focus:outline-none"
           >
             <img
-              src="https://flagcdn.com/16x12/gb.png"
-              alt="Language Flag"
+              src={languageToFlagMap[selectedLanguage]}
+              alt={`${selectedLanguage} Flag`}
               className="w-5 h-5"
             />
             <span>{selectedLanguage}</span>
@@ -67,9 +75,14 @@ function Navbar({ onLogout }) {
                 <button
                   key={language}
                   onClick={() => handleLanguageSelect(language)}
-                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
+                  className="flex items-center space-x-2 w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
                 >
-                  {language}
+                  <img
+                    src={languageToFlagMap[language]}
+                    alt={`${language} Flag`}
+                    className="w-5 h-5"
+                  />
+                  <span>{language}</span>
                 </button>
               ))}
             </div>
