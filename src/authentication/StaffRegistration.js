@@ -5,6 +5,8 @@ import { FiEye, FiEyeOff } from 'react-icons/fi';
 import { MapContainer, TileLayer, Marker, useMapEvents, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import API_BASE_URL from '../api';
 
 // Fix Leaflet marker icon issue
@@ -52,6 +54,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
       } catch (err) {
         console.error('Error fetching departments:', err);
         setError('Failed to load departments.');
+        toast.error('Failed to load departments.', { autoClose: 3000 });
       } finally {
         setIsMapReady(true);
       }
@@ -86,16 +89,20 @@ function StaffRegistration({ setToken, setIsStaff }) {
               ...prev,
               location_address: response.data.display_name,
             }));
+            toast.success('Location retrieved successfully!', { autoClose: 2000 });
           } catch (err) {
             setError('Could not retrieve address.');
+            toast.error('Could not retrieve address.', { autoClose: 3000 });
           }
         },
         (err) => {
           setError(`Unable to retrieve location: ${err.message}`);
+          toast.error(`Unable to retrieve location: ${err.message}`, { autoClose: 3000 });
         }
       );
     } else {
       setError('Geolocation not supported.');
+      toast.error('Geolocation not supported.', { autoClose: 3000 });
     }
   };
 
@@ -124,9 +131,11 @@ function StaffRegistration({ setToken, setIsStaff }) {
               ...prev,
               location_address: response.data.display_name,
             }));
+            toast.success('Location updated from map!', { autoClose: 2000 });
           })
           .catch((err) => {
             setError('Could not retrieve address from map.');
+            toast.error('Could not retrieve address from map.', { autoClose: 3000 });
           });
       },
     });
@@ -139,6 +148,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
     e.preventDefault();
     if (formData.password !== formData.confirm_password) {
       setError('Passwords do not match.');
+      toast.error('Passwords do not match.', { autoClose: 3000 });
       return;
     }
 
@@ -162,6 +172,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
       localStorage.setItem('staff_id', staff_id);
       localStorage.setItem('user_name', user_name);
       setSuccess('Registration successful! Redirecting...');
+      toast.success('Registration successful! Redirecting...', { autoClose: 1500 });
       setTimeout(() => navigate('/staff-login'), 1500);
     } catch (error) {
       console.error('Registration error:', error.response?.data || error.message);
@@ -170,6 +181,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
                        error.response?.data?.username?.[0] || 
                        'Registration failed.';
       setError(errorMsg);
+      toast.error(errorMsg, { autoClose: 3000 });
       setSuccess('');
     }
   };
@@ -455,6 +467,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
           <a href="/staff-login" className="text-blue-600 hover:underline font-medium">Login here</a>
         </p>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} newestOnTop closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     </div>
   );
 }
