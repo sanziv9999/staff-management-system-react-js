@@ -3,12 +3,55 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import API_BASE_URL from '../api';
 
+// Translation dictionary
+const translations = {
+  en: {
+    title: "Update Settings",
+    companyName: "Company Name",
+    workingHours: "Working Hours",
+    currency: "Currency",
+    overtimeRate: "Overtime Rate",
+    updateBtn: "Update Settings",
+    requiredFields: "All fields are required.",
+    invalidOvertime: "Overtime rate must be greater than 0.",
+    updateSuccess: "Settings updated successfully!",
+    updateError: "Failed to update settings",
+    loading: "Loading settings...",
+    loginRequired: "Please log in to access this page.",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩'
+    ]
+  },
+  ja: {
+    title: "設定を更新",
+    companyName: "会社名",
+    workingHours: "勤務時間",
+    currency: "通貨",
+    overtimeRate: "残業料金",
+    updateBtn: "設定を更新",
+    requiredFields: "すべてのフィールドが必要です。",
+    invalidOvertime: "残業料金は0より大きい必要があります。",
+    updateSuccess: "設定が正常に更新されました！",
+    updateError: "設定の更新に失敗しました",
+    loading: "設定を読み込み中...",
+    loginRequired: "このページにアクセスするにはログインしてください。",
+    currencies: [
+      'USD-＄', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-＄', 'AUD-＄',
+      'CHF-₣', 'HKD-＄', 'SGD-＄', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-＄', 'MXN-＄', 'BRL-R＄',
+      'ZAR-R', 'KRW-₩'
+    ]
+  }
+};
+
 function Settings({ token, setToken }) {
+  const [language, setLanguage] = useState('en');
   const [settings, setSettings] = useState({
     id: null,
     companyName: '',
     workingHours: '',
-    currency: 'JPY-¥', // Default to JPY
+    currency: 'JPY-¥',
     overtimeRate: 0,
   });
   const [error, setError] = useState('');
@@ -16,10 +59,18 @@ function Settings({ token, setToken }) {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  // Fetch settings from the backend on mount
+  // Load language preference
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    setLanguage(savedLanguage);
+  }, []);
+
+  const t = (key) => translations[language][key] || key;
+
+  // Fetch settings
   useEffect(() => {
     if (!token) {
-      setError('Please log in to access this page.');
+      setError(t('loginRequired'));
       navigate('/login');
       return;
     }
@@ -48,7 +99,7 @@ function Settings({ token, setToken }) {
           localStorage.removeItem('is_admin');
           navigate('/login');
         } else {
-          setError('Failed to load settings: ' + (error.response?.data?.detail || error.message));
+          setError(t('updateError') + ': ' + (error.response?.data?.detail || error.message));
         }
       } finally {
         setLoading(false);
@@ -56,21 +107,20 @@ function Settings({ token, setToken }) {
     };
 
     fetchSettings();
-  }, [token, navigate, setToken]);
+  }, [token, navigate, setToken, language]);
 
   const handleSave = async (e) => {
     e.preventDefault();
     setError('');
     setSuccess('');
 
-    // Validate inputs
     if (!settings.companyName || !settings.workingHours || !settings.currency || !settings.overtimeRate) {
-      setError('All fields are required.');
+      setError(t('requiredFields'));
       return;
     }
 
     if (settings.overtimeRate <= 0) {
-      setError('Overtime rate must be greater than 0.');
+      setError(t('invalidOvertime'));
       return;
     }
 
@@ -87,7 +137,7 @@ function Settings({ token, setToken }) {
           Authorization: `Bearer ${token}`,
         },
       });
-      setSuccess('Settings updated successfully!');
+      setSuccess(t('updateSuccess'));
       setSettings({
         id: response.data.id,
         companyName: response.data.company_name,
@@ -103,26 +153,26 @@ function Settings({ token, setToken }) {
         localStorage.removeItem('is_admin');
         navigate('/login');
       } else {
-        setError('Failed to update settings: ' + (error.response?.data?.detail || error.message));
+        setError(t('updateError') + ': ' + (error.response?.data?.detail || error.message));
       }
     }
   };
 
   if (!token) {
-    return <p className="text-red-600">Please log in to access this page.</p>;
+    return <p className="text-red-600">{t('loginRequired')}</p>;
   }
 
   if (loading) {
-    return <p className="text-gray-600">Loading settings...</p>;
+    return <p className="text-gray-600">{t('loading')}</p>;
   }
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Update Settings</h2>
+      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <form onSubmit={handleSave} className="bg-white p-4 rounded shadow">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block mb-1">Company Name</label>
+            <label className="block mb-1">{t('companyName')}</label>
             <input
               type="text"
               value={settings.companyName}
@@ -132,7 +182,7 @@ function Settings({ token, setToken }) {
             />
           </div>
           <div>
-            <label className="block mb-1">Working Hours</label>
+            <label className="block mb-1">{t('workingHours')}</label>
             <input
               type="text"
               value={settings.workingHours}
@@ -142,18 +192,14 @@ function Settings({ token, setToken }) {
             />
           </div>
           <div>
-            <label className="block mb-1">Currency</label>
+            <label className="block mb-1">{t('currency')}</label>
             <select
               value={settings.currency}
               onChange={(e) => setSettings({ ...settings, currency: e.target.value })}
               className="w-full p-2 border rounded"
               required
             >
-              {[
-                'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
-                'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
-                'ZAR-R', 'KRW-₩'
-              ].map((currency) => (
+              {t('currencies').map((currency) => (
                 <option key={currency} value={currency}>
                   {currency}
                 </option>
@@ -161,7 +207,7 @@ function Settings({ token, setToken }) {
             </select>
           </div>
           <div>
-            <label className="block mb-1">Overtime Rate</label>
+            <label className="block mb-1">{t('overtimeRate')}</label>
             <input
               type="number"
               step="0.1"
@@ -175,7 +221,7 @@ function Settings({ token, setToken }) {
         {error && <p className="text-red-600 mt-2">{error}</p>}
         {success && <p className="text-green-600 mt-2">{success}</p>}
         <button type="submit" className="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
-          Update Settings
+          {t('updateBtn')}
         </button>
       </form>
     </div>
