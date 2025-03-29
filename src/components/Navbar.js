@@ -1,25 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FiBell, FiChevronDown } from 'react-icons/fi';
 
 function Navbar({ onLogout }) {
   const navigate = useNavigate();
-  const userName = localStorage.getItem('user_name') || 'Admin'; // Fallback to 'Admin' if not found
-  const userRole = localStorage.getItem('is_staff') === 'true' ? 'Staff' : 'Admin'; // Determine role based on is_staff
-
+  const userName = localStorage.getItem('user_name') || 'Admin';
+  const userRole = localStorage.getItem('is_staff') === 'true' ? 'Staff' : 'Admin';
+  
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
 
-  const languages = ['English', 'Japanese', 'Nepali', 'Hindi'];
+  // Supported languages with their codes and display names
+  const languages = [
+    { code: 'en', name: 'English', flag: 'https://flagcdn.com/16x12/gb.png' },
+    { code: 'ja', name: '日本語 (Japanese)', flag: 'https://flagcdn.com/16x12/jp.png' },
+    { code: 'ne', name: 'नेपाली (Nepali)', flag: 'https://flagcdn.com/16x12/np.png' },
+    { code: 'hi', name: 'हिन्दी (Hindi)', flag: 'https://flagcdn.com/16x12/in.png' }
+  ];
 
-  // Map languages to their corresponding flag URLs (using flagcdn.com)
-  const languageToFlagMap = {
-    English: 'https://flagcdn.com/16x12/gb.png', // UK flag for English
-    Japanese: 'https://flagcdn.com/16x12/jp.png', // Japan flag
-    Nepali: 'https://flagcdn.com/16x12/np.png', // Nepal flag
-    Hindi: 'https://flagcdn.com/16x12/in.png', // India flag for Hindi
-  };
+  // Load saved language preference on component mount
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    const langObj = languages.find(lang => lang.code === savedLanguage);
+    if (langObj) {
+      setSelectedLanguage(langObj.name);
+    }
+  }, []);
 
   const handleLogout = () => {
     onLogout();
@@ -28,27 +35,63 @@ function Navbar({ onLogout }) {
   };
 
   const handleLanguageSelect = (language) => {
-    setSelectedLanguage(language);
-    setIsLanguageOpen(false);
-    // Add logic here to handle language change (e.g., i18n integration)
+    // Find the complete language object
+    const selectedLang = languages.find(lang => lang.name === language);
+    if (selectedLang) {
+      setSelectedLanguage(language);
+      setIsLanguageOpen(false);
+      localStorage.setItem('language', selectedLang.code);
+      window.location.reload(); // Refresh to apply language changes
+    }
   };
 
   const handleProfileClick = () => {
-    navigate('/profile'); // Adjust the route as per your app's routing
+    navigate('/profile');
     setIsUserOpen(false);
   };
+
+  // Translations for navbar items
+  const navbarTranslations = {
+    en: {
+      systemName: "Staff Management System",
+      notifications: "Notifications",
+      profile: "Profile",
+      logout: "Logout"
+    },
+    ja: {
+      systemName: "スタッフ管理システム",
+      notifications: "通知",
+      profile: "プロフィール",
+      logout: "ログアウト"
+    },
+    ne: {
+      systemName: "कर्मचारी व्यवस्थापन प्रणाली",
+      notifications: "सूचनाहरू",
+      profile: "प्रोफाइल",
+      logout: "लगआउट"
+    },
+    hi: {
+      systemName: "स्टाफ प्रबंधन प्रणाली",
+      notifications: "सूचनाएं",
+      profile: "प्रोफ़ाइल",
+      logout: "लॉगआउट"
+    }
+  };
+
+  // Get current language code
+  const currentLangCode = languages.find(lang => lang.name === selectedLanguage)?.code || 'en';
 
   return (
     <nav className="bg-gradient-to-r from-blue-600 to-purple-600 shadow-lg p-4 flex justify-between items-center text-white">
       {/* Left Side: System Title */}
       <div className="text-2xl font-extrabold tracking-tight">
-        Staff Management System
+        {navbarTranslations[currentLangCode]?.systemName || "Staff Management System"}
       </div>
 
       {/* Right Side: Notifications, Language, and User Profile */}
       <div className="flex items-center space-x-6">
         {/* Notification Bell Icon */}
-        <div className="relative">
+        <div className="relative" title={navbarTranslations[currentLangCode]?.notifications}>
           <FiBell size={24} className="cursor-pointer hover:text-gray-200 transition" />
           <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
             2
@@ -60,9 +103,10 @@ function Navbar({ onLogout }) {
           <button
             onClick={() => setIsLanguageOpen(!isLanguageOpen)}
             className="flex items-center space-x-2 hover:text-gray-200 transition focus:outline-none"
+            aria-label="Language selector"
           >
             <img
-              src={languageToFlagMap[selectedLanguage]}
+              src={languages.find(lang => lang.name === selectedLanguage)?.flag}
               alt={`${selectedLanguage} Flag`}
               className="w-5 h-5"
             />
@@ -70,19 +114,19 @@ function Navbar({ onLogout }) {
             <FiChevronDown size={16} />
           </button>
           {isLanguageOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1">
               {languages.map((language) => (
                 <button
-                  key={language}
-                  onClick={() => handleLanguageSelect(language)}
-                  className="flex items-center space-x-2 w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
+                  key={language.code}
+                  onClick={() => handleLanguageSelect(language.name)}
+                  className="flex items-center space-x-3 w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
                 >
                   <img
-                    src={languageToFlagMap[language]}
-                    alt={`${language} Flag`}
+                    src={language.flag}
+                    alt={`${language.name} Flag`}
                     className="w-5 h-5"
                   />
-                  <span>{language}</span>
+                  <span>{language.name}</span>
                 </button>
               ))}
             </div>
@@ -94,6 +138,7 @@ function Navbar({ onLogout }) {
           <button
             onClick={() => setIsUserOpen(!isUserOpen)}
             className="flex items-center space-x-2 hover:text-gray-200 transition focus:outline-none"
+            aria-label="User menu"
           >
             <div className="w-8 h-8 rounded-full bg-gray-300 flex items-center justify-center">
               <span className="text-gray-800 font-semibold">
@@ -107,18 +152,18 @@ function Navbar({ onLogout }) {
             <FiChevronDown size={16} />
           </button>
           {isUserOpen && (
-            <div className="absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-10">
+            <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10 py-1">
               <button
                 onClick={handleProfileClick}
                 className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-blue-100 transition"
               >
-                Profile
+                {navbarTranslations[currentLangCode]?.profile || "Profile"}
               </button>
               <button
                 onClick={handleLogout}
                 className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-red-100 transition"
               >
-                Logout
+                {navbarTranslations[currentLangCode]?.logout || "Logout"}
               </button>
             </div>
           )}

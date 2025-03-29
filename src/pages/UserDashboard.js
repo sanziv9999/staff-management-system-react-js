@@ -4,7 +4,66 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import API_BASE_URL from '../api';
 
+// Translation dictionary
+const translations = {
+  en: {
+    dashboardTitle: "My Dashboard",
+    markAttendance: "Mark Attendance",
+    date: "Date",
+    status: "Status",
+    timeIn: "Time In",
+    timeOut: "Time Out",
+    present: "Present",
+    absent: "Absent",
+    leave: "Leave",
+    submit: "Submit",
+    attendanceHistory: "My Attendance History",
+    noRecords: "No attendance records found.",
+    noScheduleRecords: "No schedule records found.",
+    noSalaryRecords: "No salary records found.",
+    schedule: "My Schedule",
+    shift: "Shift",
+    location: "Location",
+    salaryDetails: "My Salary Details",
+    paymentDate: "Payment Date",
+    baseSalary: "Base Salary",
+    bonus: "Bonus",
+    deductions: "Deductions",
+    total: "Total",
+    paid: "Paid",
+    pending: "Pending"
+  },
+  ja: {
+    dashboardTitle: "マイダッシュボード",
+    markAttendance: "出勤記録",
+    date: "日付",
+    status: "状態",
+    timeIn: "出勤時間",
+    timeOut: "退勤時間",
+    present: "出勤",
+    absent: "欠勤",
+    leave: "休暇",
+    submit: "送信",
+    attendanceHistory: "出勤履歴",
+    noRecords: "出勤記録が見つかりません。",
+    noScheduleRecords: "勤務予定が見つかりません。",
+    noSalaryRecords: "給与記録が見つかりません。",
+    schedule: "勤務予定",
+    shift: "シフト",
+    location: "場所",
+    salaryDetails: "給与明細",
+    paymentDate: "支払日",
+    baseSalary: "基本給",
+    bonus: "ボーナス",
+    deductions: "控除額",
+    total: "合計",
+    paid: "支払済み",
+    pending: "保留中"
+  }
+};
+
 function UserDashboard({ token, isStaff }) {
+  const [language, setLanguage] = useState('en');
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [salaryRecords, setSalaryRecords] = useState([]);
   const [scheduleRecords, setScheduleRecords] = useState([]);
@@ -14,23 +73,21 @@ function UserDashboard({ token, isStaff }) {
     time_in: '',
     time_out: '',
   });
-  const [currency, setCurrency] = useState('$'); // Default currency symbol
+  const [currency, setCurrency] = useState('$');
   const [error, setError] = useState('');
   const [fetchError, setFetchError] = useState('');
 
-  const getTodayClass = (recordDate) => {
-    const today = new Date('2025-03-19'); // Using the date you provided
-    const recordDateObj = new Date(recordDate);
-    return recordDateObj.toDateString() === today.toDateString()
-      ? 'bg-blue-100 text-blue-800 font-semibold' // Highlighted style for today
-      : 'opacity-60'; // Dimmed style for other days
-  };
-
+  // Check localStorage for language preference
   useEffect(() => {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+      setLanguage(savedLanguage);
+    }
+    
     const fetchData = async () => {
       const staffId = localStorage.getItem('staff_id');
       if (!staffId) {
-        setFetchError('Staff ID not found. Please log in again.');
+        setFetchError(t('staffIdNotFound'));
         return;
       }
 
@@ -43,13 +100,11 @@ function UserDashboard({ token, isStaff }) {
           axios.get(`${API_BASE_URL}/schedules/`, { params: { staff_id: staffId } }),
         ]);
         
-        // Set currency symbol from settings
         const currencySymbol = settingsResponse.data.currency.split('-')[1] || '$';
         setCurrency(currencySymbol);
 
         setAttendanceRecords(attendanceResponse.data || []);
         setSalaryRecords(salaryResponse.data || []);
-        // Sort schedule records by date in ascending order
         const sortedSchedules = (scheduleResponse.data || []).sort((a, b) => 
           new Date(a.date) - new Date(b.date)
         );
@@ -58,23 +113,33 @@ function UserDashboard({ token, isStaff }) {
       } catch (error) {
         console.error('Error fetching data:', error.response?.data || error.message);
         setFetchError(
-          'Failed to fetch data: ' + (error.response?.data?.detail || error.response?.data?.message || error.message)
+          t('fetchError') + (error.response?.data?.detail || error.response?.data?.message || error.message)
         );
       }
     };
     fetchData();
-  }, []);
+  }, [language]);
+
+  const t = (key) => translations[language][key] || key;
+
+  const getTodayClass = (recordDate) => {
+    const today = new Date('2025-03-19');
+    const recordDateObj = new Date(recordDate);
+    return recordDateObj.toDateString() === today.toDateString()
+      ? 'bg-blue-100 text-blue-800 font-semibold'
+      : 'opacity-60';
+  };
 
   const handleMarkAttendance = async (e) => {
     e.preventDefault();
     if (!newAttendance.status) {
-      setError('Status is required.');
+      setError(t('statusRequired'));
       return;
     }
     setError('');
     const staffId = localStorage.getItem('staff_id');
     if (!staffId) {
-      setError('Staff ID not found. Please log in again.');
+      setError(t('staffIdNotFound'));
       return;
     }
 
@@ -86,8 +151,6 @@ function UserDashboard({ token, isStaff }) {
       time_out: newAttendance.status === 'Present' && newAttendance.time_out ? `${newAttendance.time_out}:00` : null,
     };
 
-    console.log('Sending payload:', payload);
-
     try {
       delete axios.defaults.headers.common['Authorization'];
       const response = await axios.post(`${API_BASE_URL}/attendance/`, payload);
@@ -97,7 +160,7 @@ function UserDashboard({ token, isStaff }) {
     } catch (error) {
       console.error('Error marking attendance:', error.response?.data || error.message);
       const errorMsg = error.response?.data?.detail || error.response?.data?.message || JSON.stringify(error.response?.data) || error.message;
-      setError('Failed to mark attendance: ' + errorMsg);
+      setError(t('markAttendanceError') + errorMsg);
     }
   };
 
@@ -129,11 +192,11 @@ function UserDashboard({ token, isStaff }) {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">My Dashboard</h2>
+      <h2 className="text-2xl font-bold mb-4">{t('dashboardTitle')}</h2>
 
       {/* Mark Attendance Section */}
       <div className="bg-white p-4 rounded shadow mb-6">
-        <h3 className="text-lg font-semibold mb-2">Mark Attendance</h3>
+        <h3 className="text-lg font-semibold mb-2">{t('markAttendance')}</h3>
         <form onSubmit={handleMarkAttendance} className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <DatePicker
             selected={newAttendance.date}
@@ -146,9 +209,9 @@ function UserDashboard({ token, isStaff }) {
             onChange={(e) => setNewAttendance({ ...newAttendance, status: e.target.value })}
             className="p-2 border rounded"
           >
-            <option value="Present">Present</option>
-            <option value="Absent">Absent</option>
-            <option value="Leave">Leave</option>
+            <option value="Present">{t('present')}</option>
+            <option value="Absent">{t('absent')}</option>
+            <option value="Leave">{t('leave')}</option>
           </select>
           {isTimeInputVisible && (
             <>
@@ -157,12 +220,14 @@ function UserDashboard({ token, isStaff }) {
                 value={newAttendance.time_in}
                 onChange={(e) => setNewAttendance({ ...newAttendance, time_in: e.target.value })}
                 className="p-2 border rounded"
+                placeholder={t('timeIn')}
               />
               <input
                 type="time"
                 value={newAttendance.time_out}
                 onChange={(e) => setNewAttendance({ ...newAttendance, time_out: e.target.value })}
                 className="p-2 border rounded"
+                placeholder={t('timeOut')}
               />
             </>
           )}
@@ -170,7 +235,7 @@ function UserDashboard({ token, isStaff }) {
             type="submit"
             className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
           >
-            Mark Attendance
+            {t('submit')}
           </button>
         </form>
         {error && <p className="text-red-600 mt-2">{error}</p>}
@@ -178,19 +243,19 @@ function UserDashboard({ token, isStaff }) {
 
       {/* Attendance History Section */}
       <div className="bg-white p-4 rounded shadow mb-6">
-        <h3 className="text-lg font-semibold mb-2">My Attendance History</h3>
+        <h3 className="text-lg font-semibold mb-2">{t('attendanceHistory')}</h3>
         {fetchError && <p className="text-red-600 mb-4">{fetchError}</p>}
         {attendanceRecords.length === 0 ? (
-          <p className="text-gray-600">No attendance records found.</p>
+          <p className="text-gray-600">{t('noRecords')}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-2 text-left">Date</th>
-                  <th className="p-2 text-left">Status</th>
-                  <th className="p-2 text-left">Time In</th>
-                  <th className="p-2 text-left">Time Out</th>
+                  <th className="p-2 text-left">{t('date')}</th>
+                  <th className="p-2 text-left">{t('status')}</th>
+                  <th className="p-2 text-left">{t('timeIn')}</th>
+                  <th className="p-2 text-left">{t('timeOut')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -204,7 +269,7 @@ function UserDashboard({ token, isStaff }) {
                       <span
                         className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${getAttendanceStatusClass(record.status)}`}
                       >
-                        {record.status}
+                        {t(record.status.toLowerCase())}
                       </span>
                     </td>
                     <td className="p-2">{record.time_in || 'N/A'}</td>
@@ -219,18 +284,18 @@ function UserDashboard({ token, isStaff }) {
 
       {/* Schedule Details Section */}
       <div className="bg-white p-4 rounded shadow mb-6">
-        <h3 className="text-lg font-semibold mb-2">My Schedule</h3>
+        <h3 className="text-lg font-semibold mb-2">{t('schedule')}</h3>
         {fetchError && <p className="text-red-600 mb-4">{fetchError}</p>}
         {scheduleRecords.length === 0 ? (
-          <p className="text-gray-600">No schedule records found.</p>
+          <p className="text-gray-600">{t('noScheduleRecords')}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-2 text-left">Date</th>
-                  <th className="p-2 text-left">Shift</th>
-                  <th className="p-2 text-left">Location</th>
+                  <th className="p-2 text-left">{t('date')}</th>
+                  <th className="p-2 text-left">{t('shift')}</th>
+                  <th className="p-2 text-left">{t('location')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -252,21 +317,21 @@ function UserDashboard({ token, isStaff }) {
 
       {/* Salary Details Section */}
       <div className="bg-white p-4 rounded shadow">
-        <h3 className="text-lg font-semibold mb-2">My Salary Details</h3>
+        <h3 className="text-lg font-semibold mb-2">{t('salaryDetails')}</h3>
         {fetchError && <p className="text-red-600 mb-4">{fetchError}</p>}
         {salaryRecords.length === 0 ? (
-          <p className="text-gray-600">No salary records found.</p>
+          <p className="text-gray-600">{t('noSalaryRecords')}</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-100">
                 <tr>
-                  <th className="p-2 text-left">Payment Date</th>
-                  <th className="p-2 text-left">Base Salary</th>
-                  <th className="p-2 text-left">Bonus</th>
-                  <th className="p-2 text-left">Deductions</th>
-                  <th className="p-2 text-left">Total</th>
-                  <th className="p-2 text-left">Status</th>
+                  <th className="p-2 text-left">{t('paymentDate')}</th>
+                  <th className="p-2 text-left">{t('baseSalary')}</th>
+                  <th className="p-2 text-left">{t('bonus')}</th>
+                  <th className="p-2 text-left">{t('deductions')}</th>
+                  <th className="p-2 text-left">{t('total')}</th>
+                  <th className="p-2 text-left">{t('status')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -283,7 +348,7 @@ function UserDashboard({ token, isStaff }) {
                       <span
                         className={`inline-block px-2 py-1 rounded-full text-sm font-semibold ${getSalaryStatusClass(record.status)}`}
                       >
-                        {record.status}
+                        {t(record.status.toLowerCase())}
                       </span>
                     </td>
                   </tr>
