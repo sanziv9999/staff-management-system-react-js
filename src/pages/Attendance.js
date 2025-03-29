@@ -1,11 +1,70 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import API_BASE_URL from '../api';
 
+// Translation dictionary
+const translations = {
+  en: {
+    title: "Attendance Management",
+    selectDate: "Select Date:",
+    searchStaff: "Search Staff...",
+    noStaffFound: "No staff found",
+    status: "Status",
+    present: "Present",
+    absent: "Absent",
+    leave: "Leave",
+    timeIn: "Time In",
+    timeOut: "Time Out",
+    updateAttendance: "Update Attendance",
+    recordAttendance: "Record Attendance",
+    requiredFields: "Staff and status are required.",
+    loading: "Loading attendance records...",
+    noRecords: "No attendance records available for this date.",
+    fetchError: "Failed to fetch data. Please ensure the backend server is running or check your login credentials.",
+    addError: "Failed to add attendance",
+    updateError: "Failed to update attendance",
+    deleteError: "Failed to delete attendance",
+    confirmDelete: "Are you sure you want to delete attendance for",
+    unknown: "Unknown",
+    staff: "Staff",
+    date: "Date",
+    actions: "Actions",
+    na: "N/A"
+  },
+  ja: {
+    title: "出勤管理",
+    selectDate: "日付を選択:",
+    searchStaff: "スタッフを検索...",
+    noStaffFound: "スタッフが見つかりません",
+    status: "状態",
+    present: "出勤",
+    absent: "欠勤",
+    leave: "休暇",
+    timeIn: "出勤時間",
+    timeOut: "退勤時間",
+    updateAttendance: "出勤記録を更新",
+    recordAttendance: "出勤を記録",
+    requiredFields: "スタッフと状態が必要です。",
+    loading: "出勤記録を読み込み中...",
+    noRecords: "この日付の出勤記録はありません。",
+    fetchError: "データの取得に失敗しました。バックエンドサーバーが実行されているか、ログイン資格情報を確認してください。",
+    addError: "出勤記録の追加に失敗しました",
+    updateError: "出勤記録の更新に失敗しました",
+    deleteError: "出勤記録の削除に失敗しました",
+    confirmDelete: "この出勤記録を削除してもよろしいですか",
+    unknown: "不明",
+    staff: "スタッフ",
+    date: "日付",
+    actions: "操作",
+    na: "なし"
+  }
+};
+
 function Attendance({ token }) {
+  const [language, setLanguage] = useState('en');
   const [attendanceRecords, setAttendanceRecords] = useState([]);
   const [staffList, setStaffList] = useState([]);
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -22,12 +81,19 @@ function Attendance({ token }) {
   const [fetchError, setFetchError] = useState('');
   const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate(); // Hook for navigation
+  const navigate = useNavigate();
+
+  // Load language preference
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    setLanguage(savedLanguage);
+  }, []);
+
+  const t = (key) => translations[language][key] || key;
 
   useEffect(() => {
-    // Redirect to login if no token is provided
     if (!token) {
-      navigate('/login'); // Redirect to login page
+      navigate('/login');
       return;
     }
 
@@ -42,27 +108,25 @@ function Attendance({ token }) {
           }),
           axios.get(`${API_BASE_URL}/staff/`),
         ]);
-        console.log('Attendance Response:', attendanceResponse.data);
-        console.log('Staff List Response:', staffResponse.data);
         setAttendanceRecords(attendanceResponse.data || []);
         setStaffList(staffResponse.data || []);
         if (!attendanceResponse.data || attendanceResponse.data.length === 0) {
-          setFetchError('No attendance records found for this date.');
+          setFetchError(t('noRecords'));
         }
       } catch (error) {
         console.error('Error fetching data:', error);
-        setFetchError('Failed to fetch data. Please ensure the backend server is running or check your login credentials.');
+        setFetchError(t('fetchError'));
       } finally {
         setLoading(false);
       }
     };
     fetchData();
-  }, [token, selectedDate, navigate]); // Added navigate to dependency array
+  }, [token, selectedDate, navigate, language]);
 
   const handleAddAttendance = async (e) => {
     e.preventDefault();
     if (!newAttendance.staff || !newAttendance.status) {
-      setError('Staff and status are required.');
+      setError(t('requiredFields'));
       return;
     }
     setError('');
@@ -74,7 +138,6 @@ function Attendance({ token }) {
       time_out: newAttendance.status === 'Present' && newAttendance.time_out ? `${newAttendance.time_out}:00` : null,
     };
     delete payload.staff;
-    console.log('Adding attendance payload:', payload);
     try {
       const response = await axios.post(`${API_BASE_URL}/attendance/`, payload);
       setAttendanceRecords([...attendanceRecords, response.data]);
@@ -84,7 +147,7 @@ function Attendance({ token }) {
       setFetchError('');
     } catch (error) {
       console.error('Error adding attendance:', error.response?.data || error.message);
-      setError('Failed to add attendance: ' + (error.response?.data?.detail || error.message));
+      setError(t('addError') + ': ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -105,7 +168,7 @@ function Attendance({ token }) {
     e.preventDefault();
     if (!editingAttendance) return;
     if (!newAttendance.staff || !newAttendance.status) {
-      setError('Staff and status are required.');
+      setError(t('requiredFields'));
       return;
     }
     setError('');
@@ -117,7 +180,6 @@ function Attendance({ token }) {
       time_out: newAttendance.status === 'Present' && newAttendance.time_out ? `${newAttendance.time_out}:00` : null,
     };
     delete payload.staff;
-    console.log('Updating attendance payload:', payload);
     try {
       const response = await axios.put(
         `${API_BASE_URL}/attendance/${editingAttendance.id}/`,
@@ -130,19 +192,19 @@ function Attendance({ token }) {
       setShowStaffDropdown(false);
     } catch (error) {
       console.error('Error updating attendance:', error.response?.data || error.message);
-      setError('Failed to update attendance: ' + (error.response?.data?.detail || error.message));
+      setError(t('updateError') + ': ' + (error.response?.data?.detail || error.message));
     }
   };
 
   const handleDeleteAttendance = async (id, staffName) => {
-    const confirmed = window.confirm(`Are you sure you want to delete attendance for ${staffName}?`);
+    const confirmed = window.confirm(`${t('confirmDelete')} ${staffName || t('unknown')}?`);
     if (confirmed) {
       try {
         await axios.delete(`${API_BASE_URL}/attendance/${id}/`);
         setAttendanceRecords(attendanceRecords.filter(record => record.id !== id));
       } catch (error) {
         console.error('Error deleting attendance:', error);
-        setError('Failed to delete attendance: ' + (error.response?.data?.detail || error.message));
+        setError(t('deleteError') + ': ' + (error.response?.data?.detail || error.message));
       }
     }
   };
@@ -174,13 +236,12 @@ function Attendance({ token }) {
 
   const isTimeInputVisible = newAttendance.status === 'Present';
 
-  // No need for the token check here since useEffect handles the redirect
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Attendance Management</h2>
+      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="bg-white p-4 rounded shadow">
-          <label className="block mb-2 font-semibold">Select Date:</label>
+          <label className="block mb-2 font-semibold">{t('selectDate')}</label>
           <DatePicker
             selected={selectedDate}
             onChange={(date) => setSelectedDate(date)}
@@ -193,7 +254,7 @@ function Attendance({ token }) {
             <div className="relative">
               <input
                 type="text"
-                placeholder="Search Staff..."
+                placeholder={t('searchStaff')}
                 value={staffSearch}
                 onChange={(e) => {
                   setStaffSearch(e.target.value);
@@ -219,7 +280,7 @@ function Attendance({ token }) {
                       </li>
                     ))}
                   {staffList.filter(staff => staff.name.toLowerCase().includes(staffSearch.toLowerCase())).length === 0 && (
-                    <li className="p-2 text-gray-500">No staff found</li>
+                    <li className="p-2 text-gray-500">{t('noStaffFound')}</li>
                   )}
                 </ul>
               )}
@@ -229,9 +290,9 @@ function Attendance({ token }) {
               onChange={handleStatusChange}
               className="p-2 border rounded"
             >
-              <option value="Present">Present</option>
-              <option value="Absent">Absent</option>
-              <option value="Leave">Leave</option>
+              <option value="Present">{t('present')}</option>
+              <option value="Absent">{t('absent')}</option>
+              <option value="Leave">{t('leave')}</option>
             </select>
             {isTimeInputVisible && (
               <>
@@ -240,12 +301,14 @@ function Attendance({ token }) {
                   value={newAttendance.time_in}
                   onChange={(e) => setNewAttendance({ ...newAttendance, time_in: e.target.value })}
                   className="p-2 border rounded"
+                  placeholder={t('timeIn')}
                 />
                 <input
                   type="time"
                   value={newAttendance.time_out}
                   onChange={(e) => setNewAttendance({ ...newAttendance, time_out: e.target.value })}
                   className="p-2 border rounded"
+                  placeholder={t('timeOut')}
                 />
               </>
             )}
@@ -255,31 +318,31 @@ function Attendance({ token }) {
             type="submit"
             className="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
           >
-            {editingAttendance ? 'Update Attendance' : 'Record Attendance'}
+            {editingAttendance ? t('updateAttendance') : t('recordAttendance')}
           </button>
         </form>
       </div>
-      {loading && <p className="text-gray-600 mb-4">Loading attendance records...</p>}
+      {loading && <p className="text-gray-600 mb-4">{t('loading')}</p>}
       {fetchError && !loading && <p className="text-red-600 mb-4">{fetchError}</p>}
       {!loading && !fetchError && attendanceRecords.length === 0 && (
-        <p className="text-gray-600 mb-4">No attendance records available for this date.</p>
+        <p className="text-gray-600 mb-4">{t('noRecords')}</p>
       )}
       <div className="bg-white rounded shadow overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-100">
             <tr>
-              <th className="p-2 text-left">Staff</th>
-              <th className="p-2 text-left">Status</th>
-              <th className="p-2 text-left">Time In</th>
-              <th className="p-2 text-left">Time Out</th>
-              <th className="p-2 text-left">Date</th>
-              <th className="p-2 text-left">Actions</th>
+              <th className="p-2 text-left">{t('staff')}</th>
+              <th className="p-2 text-left">{t('status')}</th>
+              <th className="p-2 text-left">{t('timeIn')}</th>
+              <th className="p-2 text-left">{t('timeOut')}</th>
+              <th className="p-2 text-left">{t('date')}</th>
+              <th className="p-2 text-left">{t('actions')}</th>
             </tr>
           </thead>
           <tbody>
             {attendanceRecords.map((record) => (
               <tr key={record.id} className="border-t">
-                <td className="p-2">{record.staff?.name || 'Unknown'}</td>
+                <td className="p-2">{record.staff?.name || t('unknown')}</td>
                 <td className="p-2">
                   <span
                     className={`px-2 py-1 rounded ${
@@ -290,24 +353,24 @@ function Attendance({ token }) {
                         : 'bg-yellow-200'
                     }`}
                   >
-                    {record.status}
+                    {t(record.status.toLowerCase())}
                   </span>
                 </td>
-                <td className="p-2">{record.time_in || 'N/A'}</td>
-                <td className="p-2">{record.time_out || 'N/A'}</td>
+                <td className="p-2">{record.time_in || t('na')}</td>
+                <td className="p-2">{record.time_out || t('na')}</td>
                 <td className="p-2">{record.date}</td>
                 <td className="p-2">
                   <button
                     onClick={() => handleEditAttendance(record)}
                     className="text-blue-600 mr-2 hover:underline"
                   >
-                    Edit
+                    {t('edit')}
                   </button>
                   <button
-                    onClick={() => handleDeleteAttendance(record.id, record.staff?.name || 'Unknown')}
+                    onClick={() => handleDeleteAttendance(record.id, record.staff?.name || t('unknown'))}
                     className="text-red-600 hover:underline"
                   >
-                    Delete
+                    {t('delete')}
                   </button>
                 </td>
               </tr>
