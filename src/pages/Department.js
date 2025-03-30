@@ -186,7 +186,7 @@ function Department({ token }) {
   };
 
   const handleDeleteDept = async (id, name) => {
-    const confirmed = window благопол.comfirm(`${t('confirmDelete')} ${name || t('this department')}?`);
+    const confirmed = window.confirm(`${t('confirmDelete')} ${name || 'this department'}?`);
     if (confirmed) {
       try {
         await axios.delete(`${API_BASE_URL}/departments/${id}/`);
