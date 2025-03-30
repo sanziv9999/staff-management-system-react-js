@@ -2,16 +2,69 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../api';
 
+// Translation dictionary
+const translations = {
+  en: {
+    title: "Department Management",
+    deptName: "Department Name",
+    manager: "Manager",
+    staffCount: "Staff Count",
+    addDept: "Add Department",
+    updateDept: "Update Department",
+    edit: "Edit",
+    delete: "Delete",
+    confirmDelete: "Are you sure you want to delete",
+    loginError: "Please log in to access this page.",
+    fetchError: "Failed to load data. Please ensure the backend server is running or check your login credentials.",
+    addError: "Failed to add department",
+    updateError: "Failed to update department",
+    deleteError: "Failed to delete department",
+    requiredFields: "All fields are required, and Staff Count must be a valid number",
+    searchPlaceholder: "Search by name, manager, or staff count...",
+    name: "Name",
+    actions: "Actions"
+  },
+  ja: {
+    title: "部門管理",
+    deptName: "部門名",
+    manager: "管理者",
+    staffCount: "スタッフ数",
+    addDept: "部門を追加",
+    updateDept: "部門を更新",
+    edit: "編集",
+    delete: "削除",
+    confirmDelete: "この部門を削除してもよろしいですか",
+    loginError: "このページにアクセスするにはログインしてください。",
+    fetchError: "データの読み込みに失敗しました。バックエンドサーバーが実行されているか、ログイン資格情報を確認してください。",
+    addError: "部門の追加に失敗しました",
+    updateError: "部門の更新に失敗しました",
+    deleteError: "部門の削除に失敗しました",
+    requiredFields: "すべてのフィールドが必要であり、スタッフ数は有効な数字でなければなりません",
+    searchPlaceholder: "名前、管理者、またはスタッフ数で検索...",
+    name: "名前",
+    actions: "操作"
+  }
+};
+
 function Department({ token }) {
+  const [language, setLanguage] = useState('en');
   const [departments, setDepartments] = useState([]);
-  const [newDept, setNewDept] = useState({ name: '', manager: '', staff_count: '' }); // Changed to string to allow typing
+  const [newDept, setNewDept] = useState({ name: '', manager: '', staff_count: '' });
   const [editingDept, setEditingDept] = useState(null);
-  const [error, setError] = useState(''); // For error messages
-  const [searchTerm, setSearchTerm] = useState(''); // State for search
+  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Load language preference
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language') || 'en';
+    setLanguage(savedLanguage);
+  }, []);
+
+  const t = (key) => translations[language][key] || key;
 
   useEffect(() => {
     if (!token) {
-      setError('Please log in to access this page.');
+      setError(t('loginError'));
       return;
     }
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -22,31 +75,30 @@ function Department({ token }) {
         setDepartments(response.data);
       } catch (error) {
         console.error('Error fetching departments:', error);
-        setError('Failed to load data. Please ensure the backend server is running or check your login credentials.');
+        setError(t('fetchError'));
       }
     };
     fetchDepartments();
-  }, [token]);
+  }, [token, language]);
 
   const handleAddDept = async (e) => {
     e.preventDefault();
-    // Convert staff_count to integer, validate it's a number
     const staffCount = parseInt(newDept.staff_count);
     if (!newDept.name || !newDept.manager || isNaN(staffCount)) {
-      setError('All fields are required, and Staff Count must be a valid number');
+      setError(t('requiredFields'));
       return;
     }
     setError('');
     try {
-      const response = await axios.post( `${API_BASE_URL}/departments/`, {
+      const response = await axios.post(`${API_BASE_URL}/departments/`, {
         ...newDept,
-        staff_count: staffCount, // Ensure staff_count is an integer
+        staff_count: staffCount,
       });
       setDepartments([...departments, response.data]);
       setNewDept({ name: '', manager: '', staff_count: '' });
     } catch (error) {
       console.error('Error adding department:', error.response?.data || error.message);
-      setError('Failed to add department: ' + (error.response?.data?.detail || error.message));
+      setError(t('addError') + ': ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -55,7 +107,7 @@ function Department({ token }) {
     setNewDept({
       name: dept.name,
       manager: dept.manager,
-      staff_count: dept.staff_count.toString(), // Convert to string for input
+      staff_count: dept.staff_count.toString(),
     });
     setError('');
   };
@@ -65,33 +117,33 @@ function Department({ token }) {
     if (!editingDept) return;
     const staffCount = parseInt(newDept.staff_count);
     if (!newDept.name || !newDept.manager || isNaN(staffCount)) {
-      setError('All fields are required, and Staff Count must be a valid number');
+      setError(t('requiredFields'));
       return;
     }
     setError('');
     try {
       const response = await axios.put(`${API_BASE_URL}/departments/${editingDept.id}/`, {
         ...newDept,
-        staff_count: staffCount, // Ensure staff_count is an integer
+        staff_count: staffCount,
       });
       setDepartments(departments.map(dept => dept.id === editingDept.id ? response.data : dept));
       setEditingDept(null);
       setNewDept({ name: '', manager: '', staff_count: '' });
     } catch (error) {
       console.error('Error updating department:', error.response?.data || error.message);
-      setError('Failed to update department: ' + (error.response?.data?.detail || error.message));
+      setError(t('updateError') + ': ' + (error.response?.data?.detail || error.message));
     }
   };
 
   const handleDeleteDept = async (id, name) => {
-    const confirmed = window.confirm(`Are you sure you want to delete ${name}?`);
+    const confirmed = window.confirm(`${t('confirmDelete')} ${name || t('this department')}?`);
     if (confirmed) {
       try {
-        await axios.delete( `${API_BASE_URL}/departments/${id}/`);
+        await axios.delete(`${API_BASE_URL}/departments/${id}/`);
         setDepartments(departments.filter(dept => dept.id !== id));
       } catch (error) {
         console.error('Error deleting department:', error);
-        setError('Failed to delete department: ' + (error.response?.data?.detail || error.message));
+        setError(t('deleteError') + ': ' + (error.response?.data?.detail || error.message));
       }
     }
   };
@@ -105,19 +157,16 @@ function Department({ token }) {
     }
   };
 
-  // Handle input change for staff_count to allow typing
   const handleStaffCountChange = (e) => {
     const value = e.target.value;
-    // Allow empty input or numeric values
     if (value === '' || /^\d*$/.test(value)) {
       setNewDept({ ...newDept, staff_count: value });
-      setError(''); // Clear error if input is valid
+      setError('');
     } else {
-      setError('Staff Count must be a valid number');
+      setError(t('requiredFields'));
     }
   };
 
-  // Filter departments based on search term
   const filteredDepartments = departments.filter(dept =>
     dept.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     dept.manager.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -125,17 +174,17 @@ function Department({ token }) {
   );
 
   if (!token) {
-    return <p className="text-red-600">Please log in to access this page.</p>;
+    return <p className="text-red-600">{t('loginError')}</p>;
   }
 
   return (
     <div className="container mx-auto">
-      <h2 className="text-2xl font-bold mb-4">Department Management</h2>
+      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <input
             type="text"
-            placeholder="Department Name"
+            placeholder={t('deptName')}
             value={newDept.name}
             onChange={(e) => setNewDept({ ...newDept, name: e.target.value })}
             className="p-2 border rounded"
@@ -143,15 +192,15 @@ function Department({ token }) {
           />
           <input
             type="text"
-            placeholder="Manager"
+            placeholder={t('manager')}
             value={newDept.manager}
             onChange={(e) => setNewDept({ ...newDept, manager: e.target.value })}
             className="p-2 border rounded"
             required
           />
           <input
-            type="text" // Changed to text to allow free typing
-            placeholder="Staff Count"
+            type="text"
+            placeholder={t('staffCount')}
             value={newDept.staff_count}
             onChange={handleStaffCountChange}
             className="p-2 border rounded"
@@ -163,13 +212,12 @@ function Department({ token }) {
           type="submit"
           className="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
         >
-          {editingDept ? 'Update Department' : 'Add Department'}
+          {editingDept ? t('updateDept') : t('addDept')}
         </button>
       </form>
-      {/* Search Input */}
       <input
         type="text"
-        placeholder="Search by name, manager, or staff count..."
+        placeholder={t('searchPlaceholder')}
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="w-full md:w-1/3 p-2 border rounded mb-4"
@@ -178,10 +226,10 @@ function Department({ token }) {
         <table className="w-full">
           <thead className="bg-gray-100">
             <tr>
-              <th className="p-2 text-left">Name</th>
-              <th className="p-2 text-left">Manager</th>
-              <th className="p-2 text-left">Staff Count</th>
-              <th className="p-2 text-left">Actions</th>
+              <th className="p-2 text-left">{t('name')}</th>
+              <th className="p-2 text-left">{t('manager')}</th>
+              <th className="p-2 text-left">{t('staffCount')}</th>
+              <th className="p-2 text-left">{t('actions')}</th>
             </tr>
           </thead>
           <tbody>
@@ -195,13 +243,13 @@ function Department({ token }) {
                     onClick={() => handleEditDept(dept)}
                     className="text-blue-600 mr-2 hover:underline"
                   >
-                    Edit
+                    {t('edit')}
                   </button>
                   <button
                     onClick={() => handleDeleteDept(dept.id, dept.name)}
                     className="text-red-600 hover:underline"
                   >
-                    Delete
+                    {t('delete')}
                   </button>
                 </td>
               </tr>
