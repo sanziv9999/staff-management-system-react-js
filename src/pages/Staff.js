@@ -50,7 +50,8 @@ const translations = {
     addError: "Failed to add staff",
     updateError: "Failed to update staff",
     deleteError: "Failed to delete staff",
-    na: "N/A"
+    na: "N/A",
+    language: "Language"
   },
   ja: {
     title: "スタッフ管理",
@@ -96,7 +97,102 @@ const translations = {
     addError: "スタッフの追加に失敗しました",
     updateError: "スタッフの更新に失敗しました",
     deleteError: "スタッフの削除に失敗しました",
-    na: "なし"
+    na: "なし",
+    language: "言語"
+  },
+  ne: {
+    title: "कर्मचारी व्यवस्थापन",
+    addStaff: "कर्मचारी थप्नुहोस्",
+    updateStaff: "कर्मचारी अपडेट गर्नुहोस्",
+    name: "नाम",
+    searchDept: "विभाग खोज्नुहोस्...",
+    noDepts: "कुनै विभाग फेला परेन",
+    email: "इमेल",
+    searchPlaceholder: "नाम, भूमिका, विभाग, वा इमेलले खोज्नुहोस्...",
+    id: "आईडी",
+    department: "विभाग",
+    actions: "कार्यहरू",
+    viewDetails: "विवरण हेर्नुहोस्",
+    delete: "मेटाउनुहोस्",
+    staffDetails: "कर्मचारी विवरण",
+    firstName: "पहिलो नाम",
+    middleName: "मध्य नाम",
+    lastName: "थर",
+    fullName: "पुरा नाम",
+    username: "प्रयोगकर्ता नाम",
+    dob: "जन्म मिति",
+    locationLat: "स्थान (अक्षांश)",
+    locationLng: "स्थान (देशान्तर)",
+    locationAddress: "स्थान ठेगाना",
+    profilePic: "प्रोफाइल तस्वीर",
+    cv: "सीभी",
+    certType: "प्रमाणपत्र प्रकार",
+    certTitle: "प्रमाणपत्र शीर्षक",
+    certDesc: "प्रमाणपत्र विवरण",
+    certIssueDate: "प्रमाणपत्र जारी मिति",
+    certFile: "प्रमाणपत्र फाइल",
+    view: "हेर्नुहोस्",
+    close: "बन्द गर्नुहोस्",
+    requiredFields: "सबै फिल्डहरू आवश्यक छन्",
+    validEmail: "कृपया मान्य इमेल ठेगाना प्रविष्ट गर्नुहोस्",
+    confirmDelete: "तपाईं निश्चित हुनुहुन्छ कि मेटाउन चाहनुहुन्छ",
+    dataLoaded: "डाटा सफलतापूर्वक लोड भयो!",
+    staffAdded: "कर्मचारी सफलतापूर्वक थपियो!",
+    staffUpdated: "कर्मचारी सफलतापूर्वक अपडेट भयो!",
+    staffDeleted: "कर्मचारी सफलतापूर्वक मेटाइयो!",
+    loadError: "डाटा लोड गर्न असफल भयो। कृपया ब्याकेन्ड सर्भर चलिरहेको छ भनी निश्चित गर्नुहोस्।",
+    addError: "कर्मचारी थप्न असफल भयो",
+    updateError: "कर्मचारी अपडेट गर्न असफल भयो",
+    deleteError: "कर्मचारी मेटाउन असफल भयो",
+    na: "उपलब्ध छैन",
+    language: "भाषा"
+  },
+  hi: {
+    title: "स्टाफ प्रबंधन",
+    addStaff: "स्टाफ जोड़ें",
+    updateStaff: "स्टाफ अपडेट करें",
+    name: "नाम",
+    searchDept: "विभाग खोजें...",
+    noDepts: "कोई विभाग नहीं मिला",
+    email: "ईमेल",
+    searchPlaceholder: "नाम, भूमिका, विभाग या ईमेल से खोजें...",
+    id: "आईडी",
+    department: "विभाग",
+    actions: "कार्रवाई",
+    viewDetails: "विवरण देखें",
+    delete: "हटाएं",
+    staffDetails: "स्टाफ विवरण",
+    firstName: "पहला नाम",
+    middleName: "मध्य नाम",
+    lastName: "अंतिम नाम",
+    fullName: "पूरा नाम",
+    username: "उपयोगकर्ता नाम",
+    dob: "जन्म तिथि",
+    locationLat: "स्थान (अक्षांश)",
+    locationLng: "स्थान (देशांतर)",
+    locationAddress: "स्थान पता",
+    profilePic: "प्रोफाइल चित्र",
+    cv: "सीवी",
+    certType: "प्रमाणपत्र प्रकार",
+    certTitle: "प्रमाणपत्र शीर्षक",
+    certDesc: "प्रमाणपत्र विवरण",
+    certIssueDate: "प्रमाणपत्र जारी तिथि",
+    certFile: "प्रमाणपत्र फाइल",
+    view: "देखें",
+    close: "बंद करें",
+    requiredFields: "सभी फ़ील्ड आवश्यक हैं",
+    validEmail: "कृपया एक वैध ईमेल पता दर्ज करें",
+    confirmDelete: "क्या आप वाकई हटाना चाहते हैं",
+    dataLoaded: "डेटा सफलतापूर्वक लोड हो गया!",
+    staffAdded: "स्टाफ सफलतापूर्वक जोड़ा गया!",
+    staffUpdated: "स्टाफ सफलतापूर्वक अपडेट हो गया!",
+    staffDeleted: "स्टाफ सफलतापूर्वक हटा दिया गया!",
+    loadError: "डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है।",
+    addError: "स्टाफ जोड़ने में विफल",
+    updateError: "स्टाफ अपडेट करने में विफल",
+    deleteError: "स्टाफ हटाने में विफल",
+    na: "उपलब्ध नहीं",
+    language: "भाषा"
   }
 };
 
@@ -121,7 +217,7 @@ function Staff() {
     certificate_issue_date: ''
   });
   const [editingStaff, setEditingStaff] = useState(null);
-  const [selectedStaff, setSelectedStaff] = useState(null); // Removed duplicate declaration
+  const [selectedStaff, setSelectedStaff] = useState(null);
   const [deptSearch, setDeptSearch] = useState('');
   const [showDeptDropdown, setShowDeptDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
@@ -328,9 +424,29 @@ function Staff() {
     );
   });
 
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-3xl font-extrabold text-gray-800 mb-6">{t('title')}</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-extrabold text-gray-800">{t('title')}</h2>
+        <div className="relative">
+          <span className="mr-2">{t('language')}:</span>
+          <select
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            className="p-2 border rounded bg-white"
+          >
+            <option value="en">English</option>
+            <option value="ja">日本語 (Japanese)</option>
+            <option value="ne">नेपाली (Nepali)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+          </select>
+        </div>
+      </div>
       
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-2xl mb-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -463,8 +579,38 @@ function Staff() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full p-8 max-h-[80vh] overflow-y-auto">
             <h3 className="text-2xl font-extrabold text-gray-800 mb-6">{t('staffDetails')}</h3>
-            {/* Modal content remains the same */}
-            {/* ... [rest of the modal JSX remains unchanged] */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h4 className="font-semibold text-gray-700 mb-2">{t('fullName')}</h4>
+                <p className="text-gray-600">
+                  {`${selectedStaff.first_name || ''} ${selectedStaff.middle_name || ''} ${selectedStaff.last_name || ''}`.trim() || t('na')}
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-700 mb-2">{t('username')}</h4>
+                <p className="text-gray-600">{selectedStaff.username || t('na')}</p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-700 mb-2">{t('email')}</h4>
+                <p className="text-gray-600">{selectedStaff.email || t('na')}</p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-700 mb-2">{t('department')}</h4>
+                <p className="text-gray-600">
+                  {selectedStaff.department_name ||
+                    (departments.find((d) => d.id === selectedStaff.department)?.name) ||
+                    t('na')}
+                </p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-700 mb-2">{t('dob')}</h4>
+                <p className="text-gray-600">{selectedStaff.dob || t('na')}</p>
+              </div>
+              <div>
+                <h4 className="font-semibold text-gray-700 mb-2">{t('locationAddress')}</h4>
+                <p className="text-gray-600">{selectedStaff.location_address || t('na')}</p>
+              </div>
+            </div>
             <div className="mt-6 flex justify-end">
               <button
                 onClick={closeModal}
