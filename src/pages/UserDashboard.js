@@ -31,7 +31,8 @@ const translations = {
     deductions: "Deductions",
     total: "Total",
     paid: "Paid",
-    pending: "Pending"
+    pending: "Pending",
+    language: "Language"
   },
   ja: {
     dashboardTitle: "マイダッシュボード",
@@ -58,7 +59,64 @@ const translations = {
     deductions: "控除額",
     total: "合計",
     paid: "支払済み",
-    pending: "保留中"
+    pending: "保留中",
+    language: "言語"
+  },
+  ne: {
+    dashboardTitle: "मेरो ड्यासबोर्ड",
+    markAttendance: "उपस्थिति दर्ता गर्नुहोस्",
+    date: "मिति",
+    status: "स्थिति",
+    timeIn: "प्रवेश समय",
+    timeOut: "निस्कन समय",
+    present: "उपस्थित",
+    absent: "अनुपस्थित",
+    leave: "छुट्टी",
+    submit: "पेश गर्नुहोस्",
+    attendanceHistory: "मेरो उपस्थिति इतिहास",
+    noRecords: "कुनै उपस्थिति रेकर्ड फेला परेन।",
+    noScheduleRecords: "कुनै तालिका रेकर्ड फेला परेन।",
+    noSalaryRecords: "कुनै तलब रेकर्ड फेला परेन।",
+    schedule: "मेरो तालिका",
+    shift: "पाली",
+    location: "स्थान",
+    salaryDetails: "मेरो तलब विवरण",
+    paymentDate: "भुक्तानी मिति",
+    baseSalary: "आधार तलब",
+    bonus: "बोनस",
+    deductions: "कटौती",
+    total: "जम्मा",
+    paid: "भुक्तान भयो",
+    pending: "प्रतिक्षामा",
+    language: "भाषा"
+  },
+  hi: {
+    dashboardTitle: "मेरा डैशबोर्ड",
+    markAttendance: "उपस्थिति दर्ज करें",
+    date: "तारीख",
+    status: "स्थिति",
+    timeIn: "समय प्रवेश",
+    timeOut: "समय निकासी",
+    present: "उपस्थित",
+    absent: "अनुपस्थित",
+    leave: "छुट्टी",
+    submit: "जमा करें",
+    attendanceHistory: "मेरी उपस्थिति इतिहास",
+    noRecords: "कोई उपस्थिति रिकॉर्ड नहीं मिला।",
+    noScheduleRecords: "कोई अनुसूची रिकॉर्ड नहीं मिला।",
+    noSalaryRecords: "कोई वेतन रिकॉर्ड नहीं मिला।",
+    schedule: "मेरा अनुसूची",
+    shift: "शिफ्ट",
+    location: "स्थान",
+    salaryDetails: "मेरा वेतन विवरण",
+    paymentDate: "भुगतान तिथि",
+    baseSalary: "मूल वेतन",
+    bonus: "बोनस",
+    deductions: "कटौती",
+    total: "कुल",
+    paid: "भुगतान किया गया",
+    pending: "लंबित",
+    language: "भाषा"
   }
 };
 
@@ -76,6 +134,12 @@ function UserDashboard({ token, isStaff }) {
   const [currency, setCurrency] = useState('$');
   const [error, setError] = useState('');
   const [fetchError, setFetchError] = useState('');
+
+  // Handle language change
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
 
   // Check localStorage for language preference
   useEffect(() => {
@@ -192,6 +256,23 @@ function UserDashboard({ token, isStaff }) {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Language Selector Navbar */}
+      <div className="flex justify-end mb-4">
+        <div className="relative">
+          <span className="mr-2">{t('language')}:</span>
+          <select
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            className="p-2 border rounded bg-white"
+          >
+            <option value="en">English</option>
+            <option value="ja">日本語 (Japanese)</option>
+            <option value="ne">नेपाली (Nepali)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+          </select>
+        </div>
+      </div>
+
       <h2 className="text-2xl font-bold mb-4">{t('dashboardTitle')}</h2>
 
       {/* Mark Attendance Section */}
