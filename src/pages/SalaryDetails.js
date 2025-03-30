@@ -33,7 +33,8 @@ const translations = {
     requiredFields: "All fields are required, and salary values must be valid numbers",
     staff: "Staff",
     date: "Date",
-    actions: "Actions"
+    actions: "Actions",
+    language: "Language"
   },
   ja: {
     title: "給与明細",
@@ -64,7 +65,72 @@ const translations = {
     requiredFields: "すべてのフィールドが必要であり、給与の値は有効な数字でなければなりません",
     staff: "スタッフ",
     date: "日付",
-    actions: "操作"
+    actions: "操作",
+    language: "言語"
+  },
+  ne: {
+    title: "तलब विवरण",
+    searchStaff: "कर्मचारी खोज्नुहोस्...",
+    noStaffFound: "कुनै कर्मचारी फेला परेन",
+    baseSalary: "आधार तलब",
+    bonus: "बोनस",
+    deductions: "कटौती",
+    paymentDate: "भुक्तानी मिति",
+    status: "स्थिति",
+    pending: "प्रतिक्षामा",
+    paid: "भुक्तान भयो",
+    netSalary: "नयाँ तलब",
+    addSalary: "तलब थप्नुहोस्",
+    updateSalary: "तलब अपडेट गर्नुहोस्",
+    edit: "सम्पादन गर्नुहोस्",
+    delete: "मेटाउनुहोस्",
+    confirmDelete: "तपाईं निश्चित हुनुहुन्छ कि यस कर्मचारीको तलब मेटाउन चाहनुहुन्छ",
+    unknown: "अज्ञात",
+    loginError: "यो पृष्ठ पहुँच गर्न कृपया लगइन गर्नुहोस्।",
+    fetchError: "तलब डाटा लोड गर्न असफल भयो। कृपया ब्याकेन्ड सर्भर चलिरहेको छ भनी निश्चित गर्नुहोस्।",
+    addError: "तलब थप्न असफल भयो",
+    updateError: "तलब अपडेट गर्न असफल भयो",
+    deleteError: "तलब मेटाउन असफल भयो",
+    loading: "तलब डाटा लोड गर्दै...",
+    noSalaries: "कुनै तलब उपलब्ध छैन। नयाँ तलब थप्नुहोस्।",
+    searchPlaceholder: "नाम वा आईडीले खोज्नुहोस्...",
+    requiredFields: "सबै फिल्डहरू आवश्यक छन्, र तलब मानहरू वैध संख्या हुनुपर्छ",
+    staff: "कर्मचारी",
+    date: "मिति",
+    actions: "कार्यहरू",
+    language: "भाषा"
+  },
+  hi: {
+    title: "वेतन विवरण",
+    searchStaff: "स्टाफ खोजें...",
+    noStaffFound: "कोई स्टाफ नहीं मिला",
+    baseSalary: "मूल वेतन",
+    bonus: "बोनस",
+    deductions: "कटौती",
+    paymentDate: "भुगतान तिथि",
+    status: "स्थिति",
+    pending: "लंबित",
+    paid: "भुगतान किया गया",
+    netSalary: "शुद्ध वेतन",
+    addSalary: "वेतन जोड़ें",
+    updateSalary: "वेतन अपडेट करें",
+    edit: "संपादन",
+    delete: "हटाएं",
+    confirmDelete: "क्या आप वाकई इस स्टाफ के लिए वेतन हटाना चाहते हैं",
+    unknown: "अज्ञात",
+    loginError: "इस पेज तक पहुंचने के लिए कृपया लॉगिन करें।",
+    fetchError: "वेतन डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है।",
+    addError: "वेतन जोड़ने में विफल",
+    updateError: "वेतन अपडेट करने में विफल",
+    deleteError: "वेतन हटाने में विफल",
+    loading: "वेतन डेटा लोड हो रहा है...",
+    noSalaries: "कोई वेतन उपलब्ध नहीं है। शुरू करने के लिए नया वेतन जोड़ें।",
+    searchPlaceholder: "नाम या आईडी से खोजें...",
+    requiredFields: "सभी फ़ील्ड आवश्यक हैं, और वेतन मान वैध संख्याएँ होनी चाहिए",
+    staff: "स्टाफ",
+    date: "तारीख",
+    actions: "कार्रवाई",
+    language: "भाषा"
   }
 };
 
@@ -80,7 +146,7 @@ function SalaryDetails({ token }) {
     payment_date: new Date().toISOString().split('T')[0],
     status: 'Pending',
   });
-  const [currency, setCurrency] = useState('¥');
+  const [currency, setCurrency] = useState('$');
   const [searchTerm, setSearchTerm] = useState('');
   const [editingSalary, setEditingSalary] = useState(null);
   const [staffSearch, setStaffSearch] = useState('');
@@ -108,7 +174,7 @@ function SalaryDetails({ token }) {
       setLoading(true);
       try {
         const settingsRes = await axios.get(`${API_BASE_URL}/settings/1/`);
-        const currencySymbol = settingsRes.data.currency.split('-')[1] || '¥';
+        const currencySymbol = settingsRes.data.currency.split('-')[1] || '$';
         setCurrency(currencySymbol);
         const [salariesResponse, staffResponse] = await Promise.all([
           axios.get(`${API_BASE_URL}/salaries/`),
@@ -281,13 +347,34 @@ function SalaryDetails({ token }) {
     setNewSalary({ ...newSalary, status: e.target.value });
   };
 
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   if (!token) {
     return <p className="text-red-600">{t('loginError')}</p>;
   }
 
   return (
     <div className="container mx-auto">
-      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">{t('title')}</h2>
+        <div className="relative">
+          <span className="mr-2">{t('language')}:</span>
+          <select
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            className="p-2 border rounded bg-white"
+          >
+            <option value="en">English</option>
+            <option value="ja">日本語 (Japanese)</option>
+            <option value="ne">नेपाली (Nepali)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+          </select>
+        </div>
+      </div>
+      
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="relative">
