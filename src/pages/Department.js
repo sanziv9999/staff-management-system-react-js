@@ -22,7 +22,8 @@ const translations = {
     requiredFields: "All fields are required, and Staff Count must be a valid number",
     searchPlaceholder: "Search by name, manager, or staff count...",
     name: "Name",
-    actions: "Actions"
+    actions: "Actions",
+    language: "Language"
   },
   ja: {
     title: "部門管理",
@@ -42,7 +43,50 @@ const translations = {
     requiredFields: "すべてのフィールドが必要であり、スタッフ数は有効な数字でなければなりません",
     searchPlaceholder: "名前、管理者、またはスタッフ数で検索...",
     name: "名前",
-    actions: "操作"
+    actions: "操作",
+    language: "言語"
+  },
+  ne: {
+    title: "विभाग व्यवस्थापन",
+    deptName: "विभागको नाम",
+    manager: "प्रबन्धक",
+    staffCount: "कर्मचारी संख्या",
+    addDept: "विभाग थप्नुहोस्",
+    updateDept: "विभाग अपडेट गर्नुहोस्",
+    edit: "सम्पादन गर्नुहोस्",
+    delete: "हटाउनुहोस्",
+    confirmDelete: "के तपाईं यो विभाग हटाउन निश्चित हुनुहुन्छ",
+    loginError: "यो पृष्ठमा पहुँच गर्न कृपया लगइन गर्नुहोस्।",
+    fetchError: "डाटा लोड गर्न असफल भयो। कृपया ब्याकएन्ड सर्भर चलिरहेको छ कि छैन वा आफ्नो लगइन प्रमाणहरू जाँच गर्नुहोस्।",
+    addError: "विभाग थप्न असफल भयो",
+    updateError: "विभाग अपडेट गर्न असफल भयो",
+    deleteError: "विभाग हटाउन असफल भयो",
+    requiredFields: "सबै क्षेत्रहरू आवश्यक छन्, र कर्मचारी संख्या मान्य संख्या हुनुपर्छ",
+    searchPlaceholder: "नाम, प्रबन्धक, वा कर्मचारी संख्याबाट खोज्नुहोस्...",
+    name: "नाम",
+    actions: "कार्यहरू",
+    language: "भाषा"
+  },
+  hi: {
+    title: "विभाग प्रबंधन",
+    deptName: "विभाग का नाम",
+    manager: "प्रबंधक",
+    staffCount: "कर्मचारी संख्या",
+    addDept: "विभाग जोड़ें",
+    updateDept: "विभाग अपडेट करें",
+    edit: "संपादन करें",
+    delete: "हटाएं",
+    confirmDelete: "क्या आप इस विभाग को हटाने के लिए निश्चित हैं",
+    loginError: "इस पृष्ठ तक पहुँचने के लिए कृपया लॉगिन करें।",
+    fetchError: "डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है या अपने लॉगिन क्रेडेंशियल्स की जाँच करें।",
+    addError: "विभाग जोड़ने में विफल",
+    updateError: "विभाग अपडेट करने में विफल",
+    deleteError: "विभाग हटाने में विफल",
+    requiredFields: "सभी क्षेत्र आवश्यक हैं, और कर्मचारी संख्या एक मान्य संख्या होनी चाहिए",
+    searchPlaceholder: "नाम, प्रबंधक, या कर्मचारी संख्या से खोजें...",
+    name: "नाम",
+    actions: "कार्रवाइयाँ",
+    language: "भाषा"
   }
 };
 
@@ -54,13 +98,19 @@ function Department({ token }) {
   const [error, setError] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Load language preference
+  // Load language preference from localStorage
   useEffect(() => {
     const savedLanguage = localStorage.getItem('language') || 'en';
     setLanguage(savedLanguage);
   }, []);
 
   const t = (key) => translations[language][key] || key;
+
+  // Handle language change
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
 
   useEffect(() => {
     if (!token) {
@@ -136,7 +186,7 @@ function Department({ token }) {
   };
 
   const handleDeleteDept = async (id, name) => {
-    const confirmed = window.confirm(`${t('confirmDelete')} ${name || t('this department')}?`);
+    const confirmed = window благопол.comfirm(`${t('confirmDelete')} ${name || t('this department')}?`);
     if (confirmed) {
       try {
         await axios.delete(`${API_BASE_URL}/departments/${id}/`);
@@ -179,6 +229,40 @@ function Department({ token }) {
 
   return (
     <div className="container mx-auto">
+      {/* Navbar for Language Selection */}
+      <nav className="bg-gray-800 p-4 mb-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-white text-xl font-bold">{t('title')}</h1>
+          <div className="flex space-x-4">
+            <span className="text-white">{t('language')}:</span>
+            <button
+              onClick={() => handleLanguageChange('en')}
+              className={`text-white ${language === 'en' ? 'font-bold' : ''}`}
+            >
+              English
+            </button>
+            <button
+              onClick={() => handleLanguageChange('ja')}
+              className={`text-white ${language === 'ja' ? 'font-bold' : ''}`}
+            >
+              日本語
+            </button>
+            <button
+              onClick={() => handleLanguageChange('ne')}
+              className={`text-white ${language === 'ne' ? 'font-bold' : ''}`}
+            >
+              नेपाली
+            </button>
+            <button
+              onClick={() => handleLanguageChange('hi')}
+              className={`text-white ${language === 'hi' ? 'font-bold' : ''}`}
+            >
+              हिंदी
+            </button>
+          </div>
+        </div>
+      </nav>
+
       <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
