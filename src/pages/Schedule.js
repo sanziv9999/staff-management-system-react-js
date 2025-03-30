@@ -34,7 +34,8 @@ const translations = {
       Morning: "Morning",
       Afternoon: "Afternoon",
       Night: "Night"
-    }
+    },
+    language: "Language"
   },
   ja: {
     title: "スケジュール管理",
@@ -64,7 +65,70 @@ const translations = {
       Morning: "朝",
       Afternoon: "昼",
       Night: "夜"
-    }
+    },
+    language: "言語"
+  },
+  ne: {
+    title: "तालिका व्यवस्थापन",
+    searchStaff: "कर्मचारी खोज्नुहोस्...",
+    noStaffFound: "कुनै कर्मचारी फेला परेन",
+    location: "स्थान",
+    addSchedule: "तालिका थप्नुहोस्",
+    updateSchedule: "तालिका अपडेट गर्नुहोस्",
+    selectStaffError: "कृपया कर्मचारी चयन गर्नुहोस्",
+    locationError: "कृपया स्थान प्रदान गर्नुहोस्",
+    searchPlaceholder: "कर्मचारी नाम, मिति, पाली, वा स्थानले खोज्नुहोस्...",
+    staff: "कर्मचारी",
+    date: "मिति",
+    shift: "पाली",
+    actions: "कार्यहरू",
+    edit: "सम्पादन गर्नुहोस्",
+    delete: "मेटाउनुहोस्",
+    confirmDelete: "तपाईं निश्चित हुनुहुन्छ कि यस कर्मचारीको तालिका मेटाउन चाहनुहुन्छ",
+    thisStaff: "यो कर्मचारी",
+    loginError: "यो पृष्ठ पहुँच गर्न कृपया लगइन गर्नुहोस्।",
+    fetchError: "डाटा लोड गर्न असफल भयो। कृपया ब्याकेन्ड सर्भर चलिरहेको छ भनी निश्चित गर्नुहोस् वा तपाईंको लगइन प्रमाणिकरण जाँच गर्नुहोस्।",
+    addError: "तालिका थप्न असफल भयो",
+    updateError: "तालिका अपडेट गर्न असफल भयो",
+    deleteError: "तालिका मेटाउन असफल भयो",
+    na: "उपलब्ध छैन",
+    shifts: {
+      Morning: "बिहान",
+      Afternoon: "दिउँसो",
+      Night: "रात"
+    },
+    language: "भाषा"
+  },
+  hi: {
+    title: "अनुसूची प्रबंधन",
+    searchStaff: "स्टाफ खोजें...",
+    noStaffFound: "कोई स्टाफ नहीं मिला",
+    location: "स्थान",
+    addSchedule: "अनुसूची जोड़ें",
+    updateSchedule: "अनुसूची अपडेट करें",
+    selectStaffError: "कृपया एक स्टाफ सदस्य चुनें",
+    locationError: "कृपया स्थान प्रदान करें",
+    searchPlaceholder: "स्टाफ नाम, तारीख, शिफ्ट या स्थान से खोजें...",
+    staff: "स्टाफ",
+    date: "तारीख",
+    shift: "शिफ्ट",
+    actions: "कार्रवाई",
+    edit: "संपादन",
+    delete: "हटाएं",
+    confirmDelete: "क्या आप वाकई इस स्टाफ के लिए अनुसूची हटाना चाहते हैं",
+    thisStaff: "इस स्टाफ",
+    loginError: "इस पेज तक पहुंचने के लिए कृपया लॉगिन करें।",
+    fetchError: "डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है या अपने लॉगिन क्रेडेंशियल्स जांचें।",
+    addError: "अनुसूची जोड़ने में विफल",
+    updateError: "अनुसूची अपडेट करने में विफल",
+    deleteError: "अनुसूची हटाने में विफल",
+    na: "उपलब्ध नहीं",
+    shifts: {
+      Morning: "सुबह",
+      Afternoon: "दोपहर",
+      Night: "रात"
+    },
+    language: "भाषा"
   }
 };
 
@@ -245,13 +309,33 @@ function Schedule({ token }) {
     setShowStaffDropdown(false);
   };
 
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   if (!token) {
     return <p className="text-red-600">{t('loginError')}</p>;
   }
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">{t('title')}</h2>
+        <div className="relative">
+          <span className="mr-2">{t('language')}:</span>
+          <select
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            className="p-2 border rounded bg-white"
+          >
+            <option value="en">English</option>
+            <option value="ja">日本語 (Japanese)</option>
+            <option value="ne">नेपाली (Nepali)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+          </select>
+        </div>
+      </div>
       
       {/* Form */}
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow mb-6">
