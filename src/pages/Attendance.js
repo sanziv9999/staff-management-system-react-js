@@ -32,7 +32,8 @@ const translations = {
     staff: "Staff",
     date: "Date",
     actions: "Actions",
-    na: "N/A"
+    na: "N/A",
+    language: "Language"
   },
   ja: {
     title: "出勤管理",
@@ -59,7 +60,64 @@ const translations = {
     staff: "スタッフ",
     date: "日付",
     actions: "操作",
-    na: "なし"
+    na: "なし",
+    language: "言語"
+  },
+  ne: {
+    title: "उपस्थिति व्यवस्थापन",
+    selectDate: "मिति छान्नुहोस्:",
+    searchStaff: "कर्मचारी खोज्नुहोस्...",
+    noStaffFound: "कुनै कर्मचारी भेटिएन",
+    status: "स्थिति",
+    present: "उपस्थित",
+    absent: "अनुपस्थित",
+    leave: "बिदा",
+    timeIn: "प्रवेश समय",
+    timeOut: "निकास समय",
+    updateAttendance: "उपस्थिति अपडेट गर्नुहोस्",
+    recordAttendance: "उपस्थिति रेकर्ड गर्नुहोस्",
+    requiredFields: "कर्मचारी र स्थिति आवश्यक छ।",
+    loading: "उपस्थिति रेकर्डहरू लोड हुँदै...",
+    noRecords: "यो मितिको लागि कुनै उपस्थिति रेकर्ड उपलब्ध छैन।",
+    fetchError: "डाटा प्राप्त गर्न असफल भयो। कृपया ब्याकएन्ड सर्भर चलिरहेको छ कि छैन वा आफ्नो लगइन प्रमाणहरू जाँच गर्नुहोस्।",
+    addError: "उपस्थिति थप्न असफल भयो",
+    updateError: "उपस्थिति अपडेट गर्न असफल भयो",
+    deleteError: "उपस्थिति हटाउन असफल भयो",
+    confirmDelete: "के तपाईं यो कर्मचारीको उपस्थिति हटाउन निश्चित हुनुहुन्छ",
+    unknown: "अज्ञात",
+    staff: "कर्मचारी",
+    date: "मिति",
+    actions: "कार्यहरू",
+    na: "उपलब्ध छैन",
+    language: "भाषा"
+  },
+  hi: {
+    title: "उपस्थिति प्रबंधन",
+    selectDate: "तारीख चुनें:",
+    searchStaff: "कर्मचारी खोजें...",
+    noStaffFound: "कोई कर्मचारी नहीं मिला",
+    status: "स्थिति",
+    present: "उपस्थित",
+    absent: "अनुपस्थित",
+    leave: "अवकाश",
+    timeIn: "प्रवेश समय",
+    timeOut: "निकास समय",
+    updateAttendance: "उपस्थिति अपडेट करें",
+    recordAttendance: "उपस्थिति रिकॉर्ड करें",
+    requiredFields: "कर्मचारी और स्थिति आवश्यक हैं।",
+    loading: "उपस्थिति रिकॉर्ड लोड हो रहे हैं...",
+    noRecords: "इस तारीख के लिए कोई उपस्थिति रिकॉर्ड उपलब्ध नहीं है।",
+    fetchError: "डेटा प्राप्त करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है या अपने लॉगिन क्रेडेंशियल्स की जाँच करें।",
+    addError: "उपस्थिति जोड़ने में विफल",
+    updateError: "उपस्थिति अपडेट करने में विफल",
+    deleteError: "उपस्थिति हटाने में विफल",
+    confirmDelete: "क्या आप इस कर्मचारी की उपस्थिति हटाने के लिए निश्चित हैं",
+    unknown: "अज्ञात",
+    staff: "कर्मचारी",
+    date: "तारीख",
+    actions: "कार्रवाइयाँ",
+    na: "उपलब्ध नहीं",
+    language: "भाषा"
   }
 };
 
@@ -90,6 +148,12 @@ function Attendance({ token }) {
   }, []);
 
   const t = (key) => translations[language][key] || key;
+
+  // Handle language change
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
 
   useEffect(() => {
     if (!token) {
@@ -238,6 +302,40 @@ function Attendance({ token }) {
 
   return (
     <div className="container mx-auto p-4">
+      {/* Navbar for Language Selection */}
+      <nav className="bg-gray-800 p-4 mb-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-white text-xl font-bold">{t('title')}</h1>
+          <div className="flex space-x-4">
+            <span className="text-white">{t('language')}:</span>
+            <button
+              onClick={() => handleLanguageChange('en')}
+              className={`text-white ${language === 'en' ? 'font-bold' : ''}`}
+            >
+              English
+            </button>
+            <button
+              onClick={() => handleLanguageChange('ja')}
+              className={`text-white ${language === 'ja' ? 'font-bold' : ''}`}
+            >
+              日本語
+            </button>
+            <button
+              onClick={() => handleLanguageChange('ne')}
+              className={`text-white ${language === 'ne' ? 'font-bold' : ''}`}
+            >
+              नेपाली
+            </button>
+            <button
+              onClick={() => handleLanguageChange('hi')}
+              className={`text-white ${language === 'hi' ? 'font-bold' : ''}`}
+            >
+              हिंदी
+            </button>
+          </div>
+        </div>
+      </nav>
+
       <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="bg-white p-4 rounded shadow">
