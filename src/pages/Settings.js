@@ -42,6 +42,44 @@ const translations = {
       'CHF-₣', 'HKD-＄', 'SGD-＄', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-＄', 'MXN-＄', 'BRL-R＄',
       'ZAR-R', 'KRW-₩'
     ]
+  },
+  ne: {
+    title: "सेटिङहरू अपडेट गर्नुहोस्",
+    companyName: "कम्पनीको नाम",
+    workingHours: "कार्य घण्टा",
+    currency: "मुद्रा",
+    overtimeRate: "अतिरिक्त समय दर",
+    updateBtn: "सेटिङहरू अपडेट गर्नुहोस्",
+    requiredFields: "सबै फिल्डहरू आवश्यक छन्।",
+    invalidOvertime: "अतिरिक्त समय दर ० भन्दा बढी हुनुपर्छ।",
+    updateSuccess: "सेटिङहरू सफलतापूर्वक अपडेट भयो!",
+    updateError: "सेटिङहरू अपडेट गर्न असफल भयो",
+    loading: "सेटिङहरू लोड गर्दै...",
+    loginRequired: "यो पृष्ठ पहुँच गर्न कृपया लगइन गर्नुहोस्।",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-रु', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩'
+    ]
+  },
+  hi: {
+    title: "सेटिंग अपडेट करें",
+    companyName: "कंपनी का नाम",
+    workingHours: "कार्य घंटे",
+    currency: "मुद्रा",
+    overtimeRate: "ओवरटाइम दर",
+    updateBtn: "सेटिंग अपडेट करें",
+    requiredFields: "सभी फ़ील्ड आवश्यक हैं।",
+    invalidOvertime: "ओवरटाइम दर 0 से अधिक होनी चाहिए।",
+    updateSuccess: "सेटिंग सफलतापूर्वक अपडेट हो गई!",
+    updateError: "सेटिंग अपडेट करने में विफल",
+    loading: "सेटिंग लोड हो रही है...",
+    loginRequired: "इस पेज तक पहुंचने के लिए कृपया लॉगिन करें।",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-रु', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩'
+    ]
   }
 };
 
@@ -51,7 +89,7 @@ function Settings({ token, setToken }) {
     id: null,
     companyName: '',
     workingHours: '',
-    currency: 'JPY-¥',
+    currency: 'USD-$',
     overtimeRate: 0,
   });
   const [error, setError] = useState('');
@@ -158,6 +196,11 @@ function Settings({ token, setToken }) {
     }
   };
 
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
+
   if (!token) {
     return <p className="text-red-600">{t('loginRequired')}</p>;
   }
@@ -168,7 +211,23 @@ function Settings({ token, setToken }) {
 
   return (
     <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold">{t('title')}</h2>
+        <div className="relative">
+          <span className="mr-2">Language:</span>
+          <select
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            className="p-2 border rounded bg-white"
+          >
+            <option value="en">English</option>
+            <option value="ja">日本語 (Japanese)</option>
+            <option value="ne">नेपाली (Nepali)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+          </select>
+        </div>
+      </div>
+      
       <form onSubmit={handleSave} className="bg-white p-4 rounded shadow">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -220,7 +279,10 @@ function Settings({ token, setToken }) {
         </div>
         {error && <p className="text-red-600 mt-2">{error}</p>}
         {success && <p className="text-green-600 mt-2">{success}</p>}
-        <button type="submit" className="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+        <button 
+          type="submit" 
+          className="mt-4 bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+        >
           {t('updateBtn')}
         </button>
       </form>
