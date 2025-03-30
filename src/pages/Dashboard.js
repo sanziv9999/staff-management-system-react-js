@@ -13,7 +13,8 @@ const translations = {
     presentToday: "Present Today",
     monthlySalary: "Monthly Salary",
     loading: "Loading...",
-    fetchError: "Failed to load dashboard data. Please ensure the backend server is running or check your login credentials."
+    fetchError: "Failed to load dashboard data. Please ensure the backend server is running or check your login credentials.",
+    language: "Language"
   },
   ja: {
     title: "ダッシュボード",
@@ -22,7 +23,28 @@ const translations = {
     presentToday: "本日の出勤者",
     monthlySalary: "月間給与総額",
     loading: "読み込み中...",
-    fetchError: "ダッシュボードデータの読み込みに失敗しました。バックエンドサーバーが実行されているか、ログイン資格情報を確認してください。"
+    fetchError: "ダッシュボードデータの読み込みに失敗しました。バックエンドサーバーが実行されているか、ログイン資格情報を確認してください。",
+    language: "言語"
+  },
+  ne: {
+    title: "ड्यासबोर्ड",
+    totalStaff: "कुल कर्मचारी",
+    departments: "विभागहरू",
+    presentToday: "आज उपस्थित",
+    monthlySalary: "मासिक तलब",
+    loading: "लोड हुँदै...",
+    fetchError: "ड्यासबोर्ड डाटा लोड गर्न असफल भयो। कृपया ब्याकएन्ड सर्भर चलिरहेको छ कि छैन वा आफ्नो लगइन प्रमाणहरू जाँच गर्नुहोस्।",
+    language: "भाषा"
+  },
+  hi: {
+    title: "डैशबोर्ड",
+    totalStaff: "कुल कर्मचारी",
+    departments: "विभाग",
+    presentToday: "आज उपस्थित",
+    monthlySalary: "मासिक वेतन",
+    loading: "लोड हो रहा है...",
+    fetchError: "डैशबोर्ड डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है या अपने लॉगिन क्रेडेंशियल्स की जाँच करें।",
+    language: "भाषा"
   }
 };
 
@@ -46,6 +68,12 @@ function Dashboard({ token }) {
   }, []);
 
   const t = (key) => translations[language][key] || key;
+
+  // Handle language change
+  const handleLanguageChange = (lang) => {
+    setLanguage(lang);
+    localStorage.setItem('language', lang);
+  };
 
   useEffect(() => {
     if (!token) {
@@ -95,6 +123,40 @@ function Dashboard({ token }) {
 
   return (
     <div className="container mx-auto">
+      {/* Navbar for Language Selection */}
+      <nav className="bg-gray-800 p-4 mb-6">
+        <div className="flex justify-between items-center">
+          <h1 className="text-white text-xl font-bold">{t('title')}</h1>
+          <div className="flex space-x-4">
+            <span className="text-white">{t('language')}:</span>
+            <button
+              onClick={() => handleLanguageChange('en')}
+              className={`text-white ${language === 'en' ? 'font-bold' : ''}`}
+            >
+              English
+            </button>
+            <button
+              onClick={() => handleLanguageChange('ja')}
+              className={`text-white ${language === 'ja' ? 'font-bold' : ''}`}
+            >
+              日本語
+            </button>
+            <button
+              onClick={() => handleLanguageChange('ne')}
+              className={`text-white ${language === 'ne' ? 'font-bold' : ''}`}
+            >
+              नेपाली
+            </button>
+            <button
+              onClick={() => handleLanguageChange('hi')}
+              className={`text-white ${language === 'hi' ? 'font-bold' : ''}`}
+            >
+              हिंदी
+            </button>
+          </div>
+        </div>
+      </nav>
+
       <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <div className="bg-blue-100 p-4 rounded shadow mb-6">
         <h1 className="text-3xl font-extrabold text-blue-800 animate-fadeIn">
