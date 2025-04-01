@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import API_BASE_URL from '../api';
 
-// Translation dictionary
+// Translation dictionary with additional languages
 const translations = {
   en: {
     title: "Staff Login",
@@ -87,8 +87,163 @@ const translations = {
     resetLinkSent: "पासवर्ड रीसेट लिंक आपके ईमेल पर भेज दिया गया है।",
     resetFailed: "रीसेट लिंक भेजने में विफल: ",
     language: "भाषा"
+  },
+  my: { // Myanmar (Burmese)
+    title: "ဝန်ထမ်းဝင်ရောက်မှု",
+    resetPassword: "စကားဝှက်ပြန်လည်သတ်မှတ်ရန်",
+    email: "အီးမေးလ်",
+    enterEmail: "သင်၏အီးမေးလ်ကိုထည့်ပါ",
+    password: "စကားဝှက်",
+    enterPassword: "သင်၏စကားဝှက်ကိုထည့်ပါ",
+    login: "ဝင်ရောက်ပါ",
+    forgotPassword: "စကားဝှက်မေ့နေလား။",
+    sendResetLink: "ပြန်လည်သတ်မှတ်လင့်ခ်ပို့ပါ",
+    backToLogin: "ဝင်ရောက်မှုသို့ပြန်သွားပါ",
+    noAccount: "အကောင့်မရှိဘူးလား။",
+    registerHere: "ဒီမှာမှတ်ပုံတင်ပါ",
+    loginSuccess: "ဝင်ရောက်မှုအောင်မြင်ပါပြီ။",
+    loginFailed: "ဝင်ရောက်မှုမအောင်မြင်ပါ: ",
+    enterEmailForReset: "ကျေးဇူးပြု၍ သင်၏အီးမေးလ်ကိုထည့်ပါ။",
+    resetLinkSent: "စကားဝှက်ပြန်လည်သတ်မှတ်လင့်ခ်ကို သင်၏အီးမေးလ်သို့ပို့ပြီးပါပြီ။",
+    resetFailed: "ပြန်လည်သတ်မှတ်လင့်ခ်ပို့ရန်မအောင်မြင်ပါ: ",
+    language: "ဘာသာစကား"
+  },
+  'pt-BR': { // Brazil (Portuguese)
+    title: "Login da Equipe",
+    resetPassword: "Redefinir Senha",
+    email: "E-mail",
+    enterEmail: "Digite seu e-mail",
+    password: "Senha",
+    enterPassword: "Digite sua senha",
+    login: "Entrar",
+    forgotPassword: "Esqueceu a senha?",
+    sendResetLink: "Enviar Link de Redefinição",
+    backToLogin: "Voltar ao Login",
+    noAccount: "Não tem uma conta?",
+    registerHere: "Registre-se aqui",
+    loginSuccess: "Login bem-sucedido!",
+    loginFailed: "Falha no login: ",
+    enterEmailForReset: "Por favor, digite seu e-mail.",
+    resetLinkSent: "Link de redefinição de senha enviado para seu e-mail.",
+    resetFailed: "Falha ao enviar o link de redefinição: ",
+    language: "Idioma"
+  },
+  tl: { // Philippines (Filipino/Tagalog)
+    title: "Login ng Staff",
+    resetPassword: "I-reset ang Password",
+    email: "Email",
+    enterEmail: "Ilagay ang iyong email",
+    password: "Password",
+    enterPassword: "Ilagay ang iyong password",
+    login: "Mag-login",
+    forgotPassword: "Nakalimutan ang password?",
+    sendResetLink: "Magpadala ng Reset Link",
+    backToLogin: "Bumalik sa Login",
+    noAccount: "Walang account?",
+    registerHere: "Magrehistro dito",
+    loginSuccess: "Matagumpay ang login!",
+    loginFailed: "Hindi matagumpay ang login: ",
+    enterEmailForReset: "Mangyaring ilagay ang iyong email.",
+    resetLinkSent: "Naipadala ang link para i-reset ang password sa iyong email.",
+    resetFailed: "Hindi naipadala ang reset link: ",
+    language: "Wika"
+  },
+  bn: { // Bangladesh (Bengali)
+    title: "কর্মচারী লগইন",
+    resetPassword: "পাসওয়ার্ড রিসেট",
+    email: "ইমেইল",
+    enterEmail: "আপনার ইমেইল লিখুন",
+    password: "পাসওয়ার্ড",
+    enterPassword: "আপনার পাসওয়ার্ড লিখুন",
+    login: "লগইন করুন",
+    forgotPassword: "পাসওয়ার্ড ভুলে গেছেন?",
+    sendResetLink: "রিসেট লিঙ্ক পাঠান",
+    backToLogin: "লগইনে ফিরে যান",
+    noAccount: "অ্যাকাউন্ট নেই?",
+    registerHere: "এখানে নিবন্ধন করুন",
+    loginSuccess: "লগইন সফল!",
+    loginFailed: "লগইন ব্যর্থ: ",
+    enterEmailForReset: "দয়া করে আপনার ইমেইল লিখুন।",
+    resetLinkSent: "পাসওয়ার্ড রিসেট লিঙ্ক আপনার ইমেইলে পাঠানো হয়েছে।",
+    resetFailed: "রিসেট লিঙ্ক পাঠাতে ব্যর্থ: ",
+    language: "ভাষা"
+  },
+  th: { // Thailand (Thai)
+    title: "เข้าสู่ระบบพนักงาน",
+    resetPassword: "รีเซ็ตรหัสผ่าน",
+    email: "อีเมล",
+    enterEmail: "กรุณากรอกอีเมลของคุณ",
+    password: "รหัสผ่าน",
+    enterPassword: "กรุณากรอกรหัสผ่านของคุณ",
+    login: "เข้าสู่ระบบ",
+    forgotPassword: "ลืมรหัสผ่าน?",
+    sendResetLink: "ส่งลิงก์รีเซ็ต",
+    backToLogin: "กลับไปที่การเข้าสู่ระบบ",
+    noAccount: "ไม่มีบัญชี?",
+    registerHere: "ลงทะเบียนที่นี่",
+    loginSuccess: "เข้าสู่ระบบสำเร็จ!",
+    loginFailed: "การเข้าสู่ระบบล้มเหลว: ",
+    enterEmailForReset: "กรุณากรอกอีเมลของคุณ",
+    resetLinkSent: "ลิงก์รีเซ็ตรหัสผ่านถูกส่งไปยังอีเมลของคุณแล้ว",
+    resetFailed: "การส่งลิงก์รีเซ็ตล้มเหลว: ",
+    language: "ภาษา"
+  },
+  vi: { // Vietnam (Vietnamese)
+    title: "Đăng nhập nhân viên",
+    resetPassword: "Đặt lại mật khẩu",
+    email: "Email",
+    enterEmail: "Nhập email của bạn",
+    password: "Mật khẩu",
+    enterPassword: "Nhập mật khẩu của bạn",
+    login: "Đăng nhập",
+    forgotPassword: "Quên mật khẩu?",
+    sendResetLink: "Gửi liên kết đặt lại",
+    backToLogin: "Quay lại đăng nhập",
+    noAccount: "Chưa có tài khoản?",
+    registerHere: "Đăng ký tại đây",
+    loginSuccess: "Đăng nhập thành công!",
+    loginFailed: "Đăng nhập thất bại: ",
+    enterEmailForReset: "Vui lòng nhập email của bạn.",
+    resetLinkSent: "Liên kết đặt lại mật khẩu đã được gửi đến email của bạn.",
+    resetFailed: "Gửi liên kết đặt lại thất bại: ",
+    language: "Ngôn ngữ"
+  },
+  'pt-PT': { // Portugal (Portuguese)
+    title: "Login de Funcionários",
+    resetPassword: "Redefinir Palavra-passe",
+    email: "E-mail",
+    enterEmail: "Insira o seu e-mail",
+    password: "Palavra-passe",
+    enterPassword: "Insira a sua palavra-passe",
+    login: "Entrar",
+    forgotPassword: "Esqueceu-se da palavra-passe?",
+    sendResetLink: "Enviar Link de Redefinição",
+    backToLogin: "Voltar ao Login",
+    noAccount: "Não tem uma conta?",
+    registerHere: "Registe-se aqui",
+    loginSuccess: "Login bem-sucedido!",
+    loginFailed: "Falha no login: ",
+    enterEmailForReset: "Por favor, insira o seu e-mail.",
+    resetLinkSent: "Link de redefinição de palavra-passe enviado para o seu e-mail.",
+    resetFailed: "Falha ao enviar o link de redefinição: ",
+    language: "Idioma"
   }
 };
+
+// Language options with flags
+const languageOptions = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
+  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
+  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
+  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
+  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
+];
 
 function StaffLogin({ setToken, setIsStaff }) {
   const [language, setLanguage] = useState('en');
@@ -171,10 +326,11 @@ function StaffLogin({ setToken, setIsStaff }) {
               onChange={(e) => handleLanguageChange(e.target.value)}
               className="p-2 border rounded bg-white"
             >
-              <option value="en">English</option>
-              <option value="ja">日本語 (Japanese)</option>
-              <option value="ne">नेपाली (Nepali)</option>
-              <option value="hi">हिन्दी (Hindi)</option>
+              {languageOptions.map((option) => (
+                <option key={option.code} value={option.code}>
+                  {option.flag} {option.name}
+                </option>
+              ))}
             </select>
           </div>
         </div>

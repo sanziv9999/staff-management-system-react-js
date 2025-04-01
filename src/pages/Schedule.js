@@ -129,8 +129,240 @@ const translations = {
       Night: "रात"
     },
     language: "भाषा"
+  },
+  my: { // Myanmar (Burmese)
+    title: "အချိန်ဇယားစီမံခန့်ခွဲမှု",
+    searchStaff: "ဝန်ထမ်းရှာဖွေပါ...",
+    noStaffFound: "ဝန်ထမ်းမတွေ့ပါ",
+    location: "တည်နေရာ",
+    addSchedule: "အချိန်ဇယားထည့်ပါ",
+    updateSchedule: "အချိန်ဇယားအဆင့်မြှင့်ပါ",
+    selectStaffError: "ကျေးဇူးပြု၍ ဝန်ထမ်းတစ်ဦးကိုရွေးချယ်ပါ",
+    locationError: "ကျေးဇူးပြု၍ တည်နေရာပေးပါ",
+    searchPlaceholder: "ဝန်ထမ်းအမည်၊ ရက်စွဲ၊ အလုပ်ချိန်၊ သို့မဟုတ် တည်နေရာဖြင့် ရှာဖွေပါ...",
+    staff: "ဝန်ထမ်း",
+    date: "ရက်စွဲ",
+    shift: "အလုပ်ချိန်",
+    actions: "လုပ်ဆောင်ချက်များ",
+    edit: "ပြင်ဆင်ပါ",
+    delete: "ဖျက်ပါ",
+    confirmDelete: "ဤဝန်ထမ်း၏အချိန်ဇယားကိုဖျက်ရန်သေချာပါသလား",
+    thisStaff: "ဤဝန်ထမ်း",
+    loginError: "ဤစာမျက်နှာသို့ဝင်ရောက်ရန် ကျေးဇူးပြု၍ အကောင့်ဝင်ပါ။",
+    fetchError: "ဒေတာရယူရန်မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ နောက်ကွယ်ဆာဗာလည်ပတ်နေသလား သို့မဟုတ် သင်၏လော့ဂ်အင်အထောက်အထားများကိုစစ်ဆေးပါ။",
+    addError: "အချိန်ဇယားထည့်ရန်မအောင်မြင်ပါ",
+    updateError: "အချိန်ဇယားအဆင့်မြှင့်ရန်မအောင်မြင်ပါ",
+    deleteError: "အချိန်ဇယားဖျက်ရန်မအောင်မြင်ပါ",
+    na: "မရှိ",
+    shifts: {
+      Morning: "မနက်",
+      Afternoon: "နေ့လည်",
+      Night: "ည"
+    },
+    language: "ဘာသာစကား"
+  },
+  'pt-BR': { // Brazil (Portuguese)
+    title: "Gerenciamento de Horários",
+    searchStaff: "Pesquisar Funcionário...",
+    noStaffFound: "Nenhum funcionário encontrado",
+    location: "Localização",
+    addSchedule: "Adicionar Horário",
+    updateSchedule: "Atualizar Horário",
+    selectStaffError: "Por favor, selecione um funcionário",
+    locationError: "Por favor, forneça uma localização",
+    searchPlaceholder: "Pesquisar por nome do funcionário, data, turno ou localização...",
+    staff: "Funcionário",
+    date: "Data",
+    shift: "Turno",
+    actions: "Ações",
+    edit: "Editar",
+    delete: "Excluir",
+    confirmDelete: "Tem certeza de que deseja excluir o horário de",
+    thisStaff: "este funcionário",
+    loginError: "Por favor, faça login para acessar esta página.",
+    fetchError: "Falha ao buscar dados. Verifique se o servidor backend está em execução ou confira suas credenciais de login.",
+    addError: "Falha ao adicionar horário",
+    updateError: "Falha ao atualizar horário",
+    deleteError: "Falha ao excluir horário",
+    na: "N/D",
+    shifts: {
+      Morning: "Manhã",
+      Afternoon: "Tarde",
+      Night: "Noite"
+    },
+    language: "Idioma"
+  },
+  tl: { // Philippines (Filipino/Tagalog)
+    title: "Pamamahala ng Iskedyul",
+    searchStaff: "Maghanap ng Kawani...",
+    noStaffFound: "Walang natagpuang kawani",
+    location: "Lokasyon",
+    addSchedule: "Magdagdag ng Iskedyul",
+    updateSchedule: "I-update ang Iskedyul",
+    selectStaffError: "Mangyaring pumili ng kawani",
+    locationError: "Mangyaring magbigay ng lokasyon",
+    searchPlaceholder: "Maghanap ayon sa pangalan ng kawani, petsa, shift, o lokasyon...",
+    staff: "Kawani",
+    date: "Petsa",
+    shift: "Shift",
+    actions: "Mga Aksyon",
+    edit: "I-edit",
+    delete: "Tanggalin",
+    confirmDelete: "Sigurado ka bang gusto mong tanggalin ang iskedyul para sa",
+    thisStaff: "itong kawani",
+    loginError: "Mangyaring mag-login upang ma-access ang pahinang ito.",
+    fetchError: "Nabigo sa pagkuha ng data. Siguraduhing tumatakbo ang backend server o suriin ang iyong mga kredensyal sa pag-login.",
+    addError: "Nabigo sa pagdaragdag ng iskedyul",
+    updateError: "Nabigo sa pag-update ng iskedyul",
+    deleteError: "Nabigo sa pagtanggal ng iskedyul",
+    na: "Wala",
+    shifts: {
+      Morning: "Umaga",
+      Afternoon: "Hapon",
+      Night: "Gabi"
+    },
+    language: "Wika"
+  },
+  bn: { // Bangladesh (Bengali)
+    title: "সূচি ব্যবস্থাপনা",
+    searchStaff: "কর্মী খুঁজুন...",
+    noStaffFound: "কোনো কর্মী পাওয়া যায়নি",
+    location: "অবস্থান",
+    addSchedule: "সূচি যোগ করুন",
+    updateSchedule: "সূচি আপডেট করুন",
+    selectStaffError: "অনুগ্রহ করে একজন কর্মী নির্বাচন করুন",
+    locationError: "অনুগ্রহ করে একটি অবস্থান প্রদান করুন",
+    searchPlaceholder: "কর্মীর নাম, তারিখ, শিফট বা অবস্থান দ্বারা খুঁজুন...",
+    staff: "কর্মী",
+    date: "তারিখ",
+    shift: "শিফট",
+    actions: "ক্রিয়াকলাপ",
+    edit: "সম্পাদনা",
+    delete: "মুছুন",
+    confirmDelete: "আপনি কি নিশ্চিত যে এই কর্মীর জন্য সূচি মুছে ফেলতে চান",
+    thisStaff: "এই কর্মী",
+    loginError: "এই পৃষ্ঠায় প্রবেশ করতে অনুগ্রহ করে লগইন করুন।",
+    fetchError: "ডেটা আনতে ব্যর্থ। অনুগ্রহ করে নিশ্চিত করুন যে ব্যাকএন্ড সার্ভার চলছে বা আপনার লগইন শংসাপত্র পরীক্ষা করুন।",
+    addError: "সূচি যোগ করতে ব্যর্থ",
+    updateError: "সূচি আপডেট করতে ব্যর্থ",
+    deleteError: "সূচি মুছে ফেলতে ব্যর্থ",
+    na: "প্রযোজ্য নয়",
+    shifts: {
+      Morning: "সকাল",
+      Afternoon: "দুপুর",
+      Night: "রাত"
+    },
+    language: "ভাষা"
+  },
+  th: { // Thailand (Thai)
+    title: "การจัดการตารางงาน",
+    searchStaff: "ค้นหาพนักงาน...",
+    noStaffFound: "ไม่พบพนักงาน",
+    location: "สถานที่",
+    addSchedule: "เพิ่มตารางงาน",
+    updateSchedule: "อัปเดตตารางงาน",
+    selectStaffError: "กรุณาเลือกพนักงาน",
+    locationError: "กรุณาระบุสถานที่",
+    searchPlaceholder: "ค้นหาด้วยชื่อพนักงาน วันที่ กะ หรือสถานที่...",
+    staff: "พนักงาน",
+    date: "วันที่",
+    shift: "กะ",
+    actions: "การดำเนินการ",
+    edit: "แก้ไข",
+    delete: "ลบ",
+    confirmDelete: "คุณแน่ใจหรือไม่ว่าต้องการลบตารางงานของ",
+    thisStaff: "พนักงานนี้",
+    loginError: "กรุณาเข้าสู่ระบบเพื่อเข้าถึงหน้านี้",
+    fetchError: "ไม่สามารถดึงข้อมูลได้ กรุณาตรวจสอบว่าเซิร์ฟเวอร์ backend ทำงานอยู่หรือตรวจสอบข้อมูลการเข้าสู่ระบบของคุณ",
+    addError: "ไม่สามารถเพิ่มตารางงานได้",
+    updateError: "ไม่สามารถอัปเดตตารางงานได้",
+    deleteError: "ไม่สามารถลบตารางงานได้",
+    na: "ไม่มี",
+    shifts: {
+      Morning: "เช้า",
+      Afternoon: "บ่าย",
+      Night: "กลางคืน"
+    },
+    language: "ภาษา"
+  },
+  vi: { // Vietnam (Vietnamese)
+    title: "Quản lý Lịch trình",
+    searchStaff: "Tìm kiếm Nhân viên...",
+    noStaffFound: "Không tìm thấy nhân viên",
+    location: "Địa điểm",
+    addSchedule: "Thêm Lịch trình",
+    updateSchedule: "Cập nhật Lịch trình",
+    selectStaffError: "Vui lòng chọn một nhân viên",
+    locationError: "Vui lòng cung cấp địa điểm",
+    searchPlaceholder: "Tìm kiếm theo tên nhân viên, ngày, ca hoặc địa điểm...",
+    staff: "Nhân viên",
+    date: "Ngày",
+    shift: "Ca",
+    actions: "Hành động",
+    edit: "Chỉnh sửa",
+    delete: "Xóa",
+    confirmDelete: "Bạn có chắc chắn muốn xóa lịch trình của",
+    thisStaff: "nhân viên này",
+    loginError: "Vui lòng đăng nhập để truy cập trang này.",
+    fetchError: "Không thể lấy dữ liệu. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn.",
+    addError: "Không thể thêm lịch trình",
+    updateError: "Không thể cập nhật lịch trình",
+    deleteError: "Không thể xóa lịch trình",
+    na: "Không có",
+    shifts: {
+      Morning: "Sáng",
+      Afternoon: "Chiều",
+      Night: "Tối"
+    },
+    language: "Ngôn ngữ"
+  },
+  'pt-PT': { // Portugal (Portuguese)
+    title: "Gestão de Horários",
+    searchStaff: "Pesquisar Funcionário...",
+    noStaffFound: "Nenhum funcionário encontrado",
+    location: "Localização",
+    addSchedule: "Adicionar Horário",
+    updateSchedule: "Atualizar Horário",
+    selectStaffError: "Por favor, selecione um funcionário",
+    locationError: "Por favor, forneça uma localização",
+    searchPlaceholder: "Pesquisar por nome do funcionário, data, turno ou localização...",
+    staff: "Funcionário",
+    date: "Data",
+    shift: "Turno",
+    actions: "Ações",
+    edit: "Editar",
+    delete: "Eliminar",
+    confirmDelete: "Tem a certeza de que deseja eliminar o horário de",
+    thisStaff: "este funcionário",
+    loginError: "Por favor, inicie sessão para aceder a esta página.",
+    fetchError: "Falha ao obter dados. Certifique-se de que o servidor backend está em execução ou verifique as suas credenciais de login.",
+    addError: "Falha ao adicionar horário",
+    updateError: "Falha ao atualizar horário",
+    deleteError: "Falha ao eliminar horário",
+    na: "N/D",
+    shifts: {
+      Morning: "Manhã",
+      Afternoon: "Tarde",
+      Night: "Noite"
+    },
+    language: "Idioma"
   }
 };
+
+// Language options with flags
+const languageOptions = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
+  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
+  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
+  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
+  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
+];
 
 function Schedule({ token }) {
   const [language, setLanguage] = useState('en');
@@ -309,6 +541,7 @@ function Schedule({ token }) {
     setShowStaffDropdown(false);
   };
 
+  // Handle language change
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
     localStorage.setItem('language', lang);
@@ -320,23 +553,28 @@ function Schedule({ token }) {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">{t('title')}</h2>
-        <div className="relative">
-          <span className="mr-2">{t('language')}:</span>
-          <select
-            value={language}
-            onChange={(e) => handleLanguageChange(e.target.value)}
-            className="p-2 border rounded bg-white"
-          >
-            <option value="en">English</option>
-            <option value="ja">日本語 (Japanese)</option>
-            <option value="ne">नेपाली (Nepali)</option>
-            <option value="hi">हिन्दी (Hindi)</option>
-          </select>
+      {/* Navbar for Language Selection */}
+      <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
+        <div className="flex justify-between items-center">
+          <h1 className="text-white text-xl font-bold">{t('title')}</h1>
+          <div className="flex space-x-4 items-center">
+            <span className="text-white">{t('language')}:</span>
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                onClick={() => handleLanguageChange(option.code)}
+                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
+              >
+                <span className="mr-1">{option.flag}</span>
+                {option.name}
+              </button>
+            ))}
+          </div>
         </div>
-      </div>
-      
+      </nav>
+
+      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
+
       {/* Form */}
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow mb-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">

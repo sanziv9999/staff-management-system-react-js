@@ -21,7 +21,7 @@ const translations = {
     currencies: [
       'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
       'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
-      'ZAR-R', 'KRW-₩'
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
     ]
   },
   ja: {
@@ -40,7 +40,7 @@ const translations = {
     currencies: [
       'USD-＄', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-＄', 'AUD-＄',
       'CHF-₣', 'HKD-＄', 'SGD-＄', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-＄', 'MXN-＄', 'BRL-R＄',
-      'ZAR-R', 'KRW-₩'
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
     ]
   },
   ne: {
@@ -59,7 +59,7 @@ const translations = {
     currencies: [
       'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-रु', 'CAD-$', 'AUD-$',
       'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
-      'ZAR-R', 'KRW-₩'
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
     ]
   },
   hi: {
@@ -78,7 +78,121 @@ const translations = {
     currencies: [
       'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-रु', 'CAD-$', 'AUD-$',
       'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
-      'ZAR-R', 'KRW-₩'
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
+    ]
+  },
+  my: { // Myanmar (Burmese)
+    title: "ဆက်တင်များကို အပ်ဒိတ်လုပ်ပါ",
+    companyName: "ကုမ္ပဏီအမည်",
+    workingHours: "အလုပ်ချိန်",
+    currency: "ငွေကြေး",
+    overtimeRate: "အချိန်ပိုနှုန်း",
+    updateBtn: "ဆက်တင်များကို အပ်ဒိတ်လုပ်ပါ",
+    requiredFields: "အကွက်အားလုံး လိုအပ်ပါသည်။",
+    invalidOvertime: "အချိန်ပိုနှုန်းသည် ၀ ထက်ကြီးရပါမည်။",
+    updateSuccess: "ဆက်တင်များ အောင်မြင်စွာ အပ်ဒိတ်လုပ်ပြီးပါပြီ!",
+    updateError: "ဆက်တင်များ အပ်ဒိတ်လုပ်ရာတွင် မအောင်မြင်ပါ",
+    loading: "ဆက်တင်များ ဖွင့်နေသည်...",
+    loginRequired: "ဤစာမျက်နှာသို့ ဝင်ရောက်ရန် ကျေးဇူးပြု၍ လော့ဂ်အင်ဝင်ပါ။",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
+    ]
+  },
+  pt: { // Portuguese (for both Brazil and Portugal)
+    title: "Atualizar Configurações",
+    companyName: "Nome da Empresa",
+    workingHours: "Horas de Trabalho",
+    currency: "Moeda",
+    overtimeRate: "Taxa de Hora Extra",
+    updateBtn: "Atualizar Configurações",
+    requiredFields: "Todos os campos são obrigatórios.",
+    invalidOvertime: "A taxa de hora extra deve ser maior que 0.",
+    updateSuccess: "Configurações atualizadas com sucesso!",
+    updateError: "Falha ao atualizar configurações",
+    loading: "Carregando configurações...",
+    loginRequired: "Por favor, faça login para acessar esta página.",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
+    ]
+  },
+  tl: { // Tagalog (Filipino)
+    title: "I-update ang Mga Setting",
+    companyName: "Pangalan ng Kumpanya",
+    workingHours: "Oras ng Trabaho",
+    currency: "Pera",
+    overtimeRate: "Rate ng Overtime",
+    updateBtn: "I-update ang Mga Setting",
+    requiredFields: "Kailangan ang lahat ng field.",
+    invalidOvertime: "Ang rate ng overtime ay dapat mas mataas sa 0.",
+    updateSuccess: "Matagumpay na na-update ang mga setting!",
+    updateError: "Nabigo sa pag-update ng mga setting",
+    loading: "Nilo-load ang mga setting...",
+    loginRequired: "Mangyaring mag-login upang ma-access ang pahinang ito.",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
+    ]
+  },
+  bn: { // Bengali
+    title: "সেটিংস আপডেট করুন",
+    companyName: "কোম্পানির নাম",
+    workingHours: "কাজের সময়",
+    currency: "মুদ্রা",
+    overtimeRate: "ওভারটাইম রেট",
+    updateBtn: "সেটিংস আপডেট করুন",
+    requiredFields: "সমস্ত ক্ষেত্র প্রয়োজন।",
+    invalidOvertime: "ওভারটাইম রেট ০-এর বেশি হতে হবে।",
+    updateSuccess: "সেটিংস সফলভাবে আপডেট হয়েছে!",
+    updateError: "সেটিংস আপডেট করতে ব্যর্থ",
+    loading: "সেটিংস লোড হচ্ছে...",
+    loginRequired: "এই পৃষ্ঠায় প্রবেশ করতে অনুগ্রহ করে লগইন করুন।",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
+    ]
+  },
+  th: { // Thai
+    title: "อัปเดตการตั้งค่า",
+    companyName: "ชื่อบริษัท",
+    workingHours: "ชั่วโมงทำงาน",
+    currency: "สกุลเงิน",
+    overtimeRate: "อัตราค่าล่วงเวลา",
+    updateBtn: "อัปเดตการตั้งค่า",
+    requiredFields: "ต้องกรอกข้อมูลทุกช่อง",
+    invalidOvertime: "อัตราค่าล่วงเวลาต้องมากกว่า 0",
+    updateSuccess: "อัปเดตการตั้งค่าสำเร็จแล้ว!",
+    updateError: "ไม่สามารถอัปเดตการตั้งค่าได้",
+    loading: "กำลังโหลดการตั้งค่า...",
+    loginRequired: "กรุณาเข้าสู่ระบบเพื่อเข้าถึงหน้านี้",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
+    ]
+  },
+  vi: { // Vietnamese
+    title: "Cập nhật Cài đặt",
+    companyName: "Tên Công ty",
+    workingHours: "Giờ Làm việc",
+    currency: "Tiền tệ",
+    overtimeRate: "Tỷ lệ Làm thêm giờ",
+    updateBtn: "Cập nhật Cài đặt",
+    requiredFields: "Tất cả các trường đều bắt buộc.",
+    invalidOvertime: "Tỷ lệ làm thêm giờ phải lớn hơn 0.",
+    updateSuccess: "Cài đặt đã được cập nhật thành công!",
+    updateError: "Không thể cập nhật cài đặt",
+    loading: "Đang tải cài đặt...",
+    loginRequired: "Vui lòng đăng nhập để truy cập trang này.",
+    currencies: [
+      'USD-$', 'EUR-€', 'JPY-¥', 'GBP-£', 'CNY-¥', 'INR-₹', 'NPR-₨', 'CAD-$', 'AUD-$',
+      'CHF-₣', 'HKD-$', 'SGD-$', 'SEK-kr', 'NOK-kr', 'DKK-kr', 'NZD-$', 'MXN-$', 'BRL-R$',
+      'ZAR-R', 'KRW-₩', 'MMK-K', 'PHP-₱', 'BDT-৳', 'THB-฿', 'VND-₫'
     ]
   }
 };
@@ -220,10 +334,16 @@ function Settings({ token, setToken }) {
             onChange={(e) => handleLanguageChange(e.target.value)}
             className="p-2 border rounded bg-white"
           >
-            <option value="en">English</option>
-            <option value="ja">日本語 (Japanese)</option>
-            <option value="ne">नेपाली (Nepali)</option>
-            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="ja">🇯🇵 日本語 (Japanese)</option>
+            <option value="ne">🇳🇵 नेपाली (Nepali)</option>
+            <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+            <option value="my">🇲🇲 မြန်မာ (Myanmar)</option>
+            <option value="pt">🇧🇷🇵🇹 Português (Portuguese)</option>
+            <option value="tl">🇵🇭 Tagalog (Filipino)</option>
+            <option value="bn">🇧🇩 বাংলা (Bengali)</option>
+            <option value="th">🇹🇭 ไทย (Thai)</option>
+            <option value="vi">🇻🇳 Tiếng Việt (Vietnamese)</option>
           </select>
         </div>
       </div>
@@ -265,6 +385,7 @@ function Settings({ token, setToken }) {
               ))}
             </select>
           </div>
+ conquistar
           <div>
             <label className="block mb-1">{t('overtimeRate')}</label>
             <input

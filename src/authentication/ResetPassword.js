@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import API_BASE_URL from '../api';
 
-// Translation dictionary
+// Translation dictionary with all requested languages
 const translations = {
   en: {
     title: "Reset Password",
@@ -11,6 +11,7 @@ const translations = {
     confirmPassword: "Confirm Password",
     resetPassword: "Reset Password",
     backToLogin: "Back to Login",
+    login: "Login",
     language: "Language",
     errorPasswordsNotMatch: "Passwords do not match.",
     errorResetFailed: "Failed to reset password."
@@ -21,6 +22,7 @@ const translations = {
     confirmPassword: "パスワードの確認",
     resetPassword: "パスワードをリセット",
     backToLogin: "ログインに戻る",
+    login: "ログイン",
     language: "言語",
     errorPasswordsNotMatch: "パスワードが一致しません。",
     errorResetFailed: "パスワードのリセットに失敗しました。"
@@ -31,6 +33,7 @@ const translations = {
     confirmPassword: "पासवर्ड पुष्टि गर्नुहोस्",
     resetPassword: "पासवर्ड रिसेट गर्नुहोस्",
     backToLogin: "लगइनमा फर्कनुहोस्",
+    login: "लगइन",
     language: "भाषा",
     errorPasswordsNotMatch: "पासवर्डहरू मेल खाँदैनन्।",
     errorResetFailed: "पासवर्ड रिसेट गर्न असफल भयो।"
@@ -41,10 +44,91 @@ const translations = {
     confirmPassword: "पासवर्ड की पुष्टि करें",
     resetPassword: "पासवर्ड रीसेट करें",
     backToLogin: "लॉगिन पर वापस जाएं",
+    login: "लॉग इन",
     language: "भाषा",
     errorPasswordsNotMatch: "पासवर्ड मेल नहीं खाते।",
     errorResetFailed: "पासवर्ड रीसेट करने में विफल।"
+  },
+  my: { // Myanmar (Burmese)
+    title: "စကားဝှက်ပြန်လည်သတ်မှတ်ရန်",
+    newPassword: "စကားဝှက်အသစ်",
+    confirmPassword: "စကားဝှက်အတည်ပြုရန်",
+    resetPassword: "စကားဝှက်ပြန်လည်သတ်မှတ်ရန်",
+    backToLogin: "အကောင့်ဝင်ရန်သို့ပြန်သွားရန်",
+    login: "အကောင့်ဝင်ရန်",
+    language: "ဘာသာစကား",
+    errorPasswordsNotMatch: "စကားဝှက်များမကိုက်ညီပါ။",
+    errorResetFailed: "စကားဝှက်ပြန်လည်သတ်မှတ်ရန်မအောင်မြင်ပါ။"
+  },
+  pt: { // Portuguese (Brazil/Portugal)
+    title: "Redefinir Senha",
+    newPassword: "Nova Senha",
+    confirmPassword: "Confirmar Senha",
+    resetPassword: "Redefinir Senha",
+    backToLogin: "Voltar para Login",
+    login: "Entrar",
+    language: "Idioma",
+    errorPasswordsNotMatch: "As senhas não coincidem.",
+    errorResetFailed: "Falha ao redefinir a senha."
+  },
+  fil: { // Filipino (Philippines)
+    title: "I-reset ang Password",
+    newPassword: "Bagong Password",
+    confirmPassword: "Kumpirmahin ang Password",
+    resetPassword: "I-reset ang Password",
+    backToLogin: "Bumalik sa Pag-login",
+    login: "Mag-login",
+    language: "Wika",
+    errorPasswordsNotMatch: "Hindi magkatugma ang mga password.",
+    errorResetFailed: "Nabigong i-reset ang password."
+  },
+  bn: { // Bengali (Bangladesh)
+    title: "পাসওয়ার্ড রিসেট করুন",
+    newPassword: "নতুন পাসওয়ার্ড",
+    confirmPassword: "পাসওয়ার্ড নিশ্চিত করুন",
+    resetPassword: "পাসওয়ার্ড রিসেট করুন",
+    backToLogin: "লগইনে ফিরে যান",
+    login: "লগইন",
+    language: "ভাষা",
+    errorPasswordsNotMatch: "পাসওয়ার্ড মেলে না।",
+    errorResetFailed: "পাসওয়ার্ড রিসেট করতে ব্যর্থ হয়েছে।"
+  },
+  th: { // Thai (Thailand)
+    title: "รีเซ็ตรหัสผ่าน",
+    newPassword: "รหัสผ่านใหม่",
+    confirmPassword: "ยืนยันรหัสผ่าน",
+    resetPassword: "รีเซ็ตรหัสผ่าน",
+    backToLogin: "กลับไปที่เข้าสู่ระบบ",
+    login: "เข้าสู่ระบบ",
+    language: "ภาษา",
+    errorPasswordsNotMatch: "รหัสผ่านไม่ตรงกัน",
+    errorResetFailed: "รีเซ็ตรหัสผ่านไม่สำเร็จ"
+  },
+  vi: { // Vietnamese (Vietnam)
+    title: "Đặt lại mật khẩu",
+    newPassword: "Mật khẩu mới",
+    confirmPassword: "Xác nhận mật khẩu",
+    resetPassword: "Đặt lại mật khẩu",
+    backToLogin: "Quay lại đăng nhập",
+    login: "Đăng nhập",
+    language: "Ngôn ngữ",
+    errorPasswordsNotMatch: "Mật khẩu không khớp.",
+    errorResetFailed: "Đặt lại mật khẩu thất bại."
   }
+};
+
+// Flag emojis for each language
+const languageFlags = {
+  en: '🇬🇧',
+  ja: '🇯🇵',
+  ne: '🇳🇵',
+  hi: '🇮🇳',
+  my: '🇲🇲',
+  pt: '🇧🇷',
+  fil: '🇵🇭',
+  bn: '🇧🇩',
+  th: '🇹🇭',
+  vi: '🇻🇳'
 };
 
 function ResetPassword() {
@@ -52,7 +136,7 @@ function ResetPassword() {
   const [formData, setFormData] = useState({ new_password: '', confirm_password: '' });
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-  const { token } = useParams(); // Get token from URL
+  const { token } = useParams();
   const navigate = useNavigate();
 
   // Load language preference from localStorage
@@ -102,32 +186,16 @@ function ResetPassword() {
       <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4">
-            <span className="text-white">{t('language')}:</span>
-            <button
-              onClick={() => handleLanguageChange('en')}
-              className={`text-white ${language === 'en' ? 'font-bold' : ''} hover:underline`}
-            >
-              English
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ja')}
-              className={`text-white ${language === 'ja' ? 'font-bold' : ''} hover:underline`}
-            >
-              日本語
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ne')}
-              className={`text-white ${language === 'ne' ? 'font-bold' : ''} hover:underline`}
-            >
-              नेपाली
-            </button>
-            <button
-              onClick={() => handleLanguageChange('hi')}
-              className={`text-white ${language === 'hi' ? 'font-bold' : ''} hover:underline`}
-            >
-              हिंदी
-            </button>
+          <div className="flex flex-wrap gap-2 justify-end">
+            {Object.entries(languageFlags).map(([langCode, flag]) => (
+              <button
+                key={langCode}
+                onClick={() => handleLanguageChange(langCode)}
+                className={`px-2 py-1 text-xs rounded flex items-center ${language === langCode ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+              >
+                <span className="mr-1">{flag}</span> {translations[langCode].login}
+              </button>
+            ))}
           </div>
         </div>
       </nav>

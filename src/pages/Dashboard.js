@@ -45,8 +45,93 @@ const translations = {
     loading: "लोड हो रहा है...",
     fetchError: "डैशबोर्ड डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है या अपने लॉगिन क्रेडेंशियल्स की जाँच करें।",
     language: "भाषा"
+  },
+  my: { // Myanmar (Burmese)
+    title: "ဒက်ရှ်ဘုတ်",
+    totalStaff: "ဝန်ထမ်းစုစုပေါင်း",
+    departments: "ဌာနများ",
+    presentToday: "ယနေ့တက်ရောက်သူ",
+    monthlySalary: "လစဉ်လစာ",
+    loading: "ဖွင့်နေသည်...",
+    fetchError: "ဒက်ရှ်ဘုတ်ဒေတာကိုဖွင့်ရန်မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ နောက်ကွယ်ဆာဗာလည်ပတ်နေသလား သို့မဟုတ် သင်၏လော့ဂ်အင်အထောက်အထားများကိုစစ်ဆေးပါ။",
+    language: "ဘာသာစကား"
+  },
+  'pt-BR': { // Brazil (Portuguese)
+    title: "Painel",
+    totalStaff: "Total de Funcionários",
+    departments: "Departamentos",
+    presentToday: "Presentes Hoje",
+    monthlySalary: "Salário Mensal",
+    loading: "Carregando...",
+    fetchError: "Falha ao carregar os dados do painel. Verifique se o servidor backend está em execução ou confira suas credenciais de login.",
+    language: "Idioma"
+  },
+  tl: { // Philippines (Filipino/Tagalog)
+    title: "Dashboard",
+    totalStaff: "Kabuuan ng Kawani",
+    departments: "Mga Kagawaran",
+    presentToday: "Dumalo Ngayon",
+    monthlySalary: "Buwanang Sahod",
+    loading: "Nilo-load...",
+    fetchError: "Nabigo sa pag-load ng datos ng dashboard. Siguraduhing tumatakbo ang backend server o suriin ang iyong mga kredensyal sa pag-login.",
+    language: "Wika"
+  },
+  bn: { // Bangladesh (Bengali)
+    title: "ড্যাশবোর্ড",
+    totalStaff: "মোট কর্মী",
+    departments: "বিভাগ",
+    presentToday: "আজ উপস্থিত",
+    monthlySalary: "মাসিক বেতন",
+    loading: "লোড হচ্ছে...",
+    fetchError: "ড্যাশবোর্ড ডেটা লোড করতে ব্যর্থ। অনুগ্রহ করে নিশ্চিত করুন যে ব্যাকএন্ড সার্ভার চলছে বা আপনার লগইন শংসাপত্র পরীক্ষা করুন।",
+    language: "ভাষা"
+  },
+  th: { // Thailand (Thai)
+    title: "แดชบอร์ด",
+    totalStaff: "จำนวนพนักงานทั้งหมด",
+    departments: "แผนก",
+    presentToday: "มาทำงานวันนี้",
+    monthlySalary: "เงินเดือนรายเดือน",
+    loading: "กำลังโหลด...",
+    fetchError: "ไม่สามารถโหลดข้อมูลแดชบอร์ดได้ กรุณาตรวจสอบว่าเซิร์ฟเวอร์ backend ทำงานอยู่หรือตรวจสอบข้อมูลการเข้าสู่ระบบของคุณ",
+    language: "ภาษา"
+  },
+  vi: { // Vietnam (Vietnamese)
+    title: "Bảng Điều Khiển",
+    totalStaff: "Tổng Nhân Viên",
+    departments: "Phòng Ban",
+    presentToday: "Có Mặt Hôm Nay",
+    monthlySalary: "Lương Hàng Tháng",
+    loading: "Đang tải...",
+    fetchError: "Không thể tải dữ liệu bảng điều khiển. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn.",
+    language: "Ngôn ngữ"
+  },
+  'pt-PT': { // Portugal (Portuguese)
+    title: "Painel",
+    totalStaff: "Total de Funcionários",
+    departments: "Departamentos",
+    presentToday: "Presentes Hoje",
+    monthlySalary: "Salário Mensal",
+    loading: "A carregar...",
+    fetchError: "Falha ao carregar os dados do painel. Certifique-se de que o servidor backend está em execução ou verifique as suas credenciais de login.",
+    language: "Idioma"
   }
 };
+
+// Language options with flags
+const languageOptions = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
+  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
+  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
+  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
+  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
+];
 
 function Dashboard({ token }) {
   const [language, setLanguage] = useState('en');
@@ -124,35 +209,21 @@ function Dashboard({ token }) {
   return (
     <div className="container mx-auto">
       {/* Navbar for Language Selection */}
-      <nav className="bg-gray-800 p-4 mb-6">
+      <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-center">
             <span className="text-white">{t('language')}:</span>
-            <button
-              onClick={() => handleLanguageChange('en')}
-              className={`text-white ${language === 'en' ? 'font-bold' : ''}`}
-            >
-              English
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ja')}
-              className={`text-white ${language === 'ja' ? 'font-bold' : ''}`}
-            >
-              日本語
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ne')}
-              className={`text-white ${language === 'ne' ? 'font-bold' : ''}`}
-            >
-              नेपाली
-            </button>
-            <button
-              onClick={() => handleLanguageChange('hi')}
-              className={`text-white ${language === 'hi' ? 'font-bold' : ''}`}
-            >
-              हिंदी
-            </button>
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                onClick={() => handleLanguageChange(option.code)}
+                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
+              >
+                <span className="mr-1">{option.flag}</span>
+                {option.name}
+              </button>
+            ))}
           </div>
         </div>
       </nav>

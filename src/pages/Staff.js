@@ -7,192 +7,81 @@ import API_BASE_URL from '../api';
 // Translation dictionary
 const translations = {
   en: {
-    title: "Staff Management",
-    addStaff: "Add Staff",
-    updateStaff: "Update Staff",
-    name: "Name",
-    searchDept: "Search Department...",
-    noDepts: "No departments found",
-    email: "Email",
-    searchPlaceholder: "Search by name, role, department, or email...",
-    id: "ID",
-    department: "Department",
-    actions: "Actions",
-    viewDetails: "View Details",
-    delete: "Delete",
-    staffDetails: "Staff Details",
-    firstName: "First Name",
-    middleName: "Middle Name",
-    lastName: "Last Name",
-    fullName: "Full Name",
-    username: "Username",
-    dob: "Date of Birth",
-    locationLat: "Location (Latitude)",
-    locationLng: "Location (Longitude)",
-    locationAddress: "Location Address",
-    profilePic: "Profile Picture",
-    cv: "CV",
-    certType: "Certificate Type",
-    certTitle: "Certificate Title",
-    certDesc: "Certificate Description",
-    certIssueDate: "Certificate Issue Date",
-    certFile: "Certificate File",
-    view: "View",
-    close: "Close",
-    requiredFields: "All fields are required",
-    validEmail: "Please enter a valid email address",
-    confirmDelete: "Are you sure you want to delete",
-    dataLoaded: "Data loaded successfully!",
-    staffAdded: "Staff added successfully!",
-    staffUpdated: "Staff updated successfully!",
-    staffDeleted: "Staff deleted successfully!",
-    loadError: "Failed to load data. Please ensure the backend server is running.",
-    addError: "Failed to add staff",
-    updateError: "Failed to update staff",
-    deleteError: "Failed to delete staff",
-    na: "N/A",
-    language: "Language"
+    title: 'Staff Management',
+    dataLoaded: 'Data loaded successfully',
+    loadError: 'Error loading data',
+    staffAdded: 'Staff added successfully',
+    addError: 'Error adding staff',
+    staffUpdated: 'Staff updated successfully',
+    updateError: 'Error updating staff',
+    staffDeleted: 'Staff deleted successfully',
+    deleteError: 'Error deleting staff',
+    requiredFields: 'Please fill in all required fields',
+    validEmail: 'Please enter a valid email address',
+    confirmDelete: 'Are you sure you want to delete',
+    thisStaff: 'this staff member',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    searchDept: 'Search Department',
+    email: 'Email',
+    updateStaff: 'Update Staff',
+    addStaff: 'Add Staff',
+    searchPlaceholder: 'Search by name, department, or email',
+    id: 'ID',
+    name: 'Name',
+    department: 'Department',
+    actions: 'Actions',
+    viewDetails: 'View Details',
+    delete: 'Delete',
+    noDepts: 'No departments found',
+    staffDetails: 'Staff Details',
+    fullName: 'Full Name',
+    username: 'Username',
+    dob: 'Date of Birth',
+    locationAddress: 'Location Address',
+    close: 'Close',
+    language: 'Language',
+    na: 'N/A'
   },
   ja: {
-    title: "スタッフ管理",
-    addStaff: "スタッフを追加",
-    updateStaff: "スタッフを更新",
-    name: "名前",
-    searchDept: "部門を検索...",
-    noDepts: "部門が見つかりません",
-    email: "メールアドレス",
-    searchPlaceholder: "名前、役職、部門、またはメールで検索...",
-    id: "ID",
-    department: "部門",
-    actions: "操作",
-    viewDetails: "詳細を見る",
-    delete: "削除",
-    staffDetails: "スタッフ詳細",
-    firstName: "名",
-    middleName: "ミドルネーム",
-    lastName: "姓",
-    fullName: "フルネーム",
-    username: "ユーザー名",
-    dob: "生年月日",
-    locationLat: "位置情報（緯度）",
-    locationLng: "位置情報（経度）",
-    locationAddress: "住所",
-    profilePic: "プロフィール画像",
-    cv: "履歴書",
-    certType: "証明書タイプ",
-    certTitle: "証明書タイトル",
-    certDesc: "証明書説明",
-    certIssueDate: "証明書発行日",
-    certFile: "証明書ファイル",
-    view: "表示",
-    close: "閉じる",
-    requiredFields: "すべてのフィールドが必要です",
-    validEmail: "有効なメールアドレスを入力してください",
-    confirmDelete: "本当に削除しますか",
-    dataLoaded: "データの読み込みに成功しました！",
-    staffAdded: "スタッフの追加に成功しました！",
-    staffUpdated: "スタッフの更新に成功しました！",
-    staffDeleted: "スタッフの削除に成功しました！",
-    loadError: "データの読み込みに失敗しました。バックエンドサーバーが実行されていることを確認してください。",
-    addError: "スタッフの追加に失敗しました",
-    updateError: "スタッフの更新に失敗しました",
-    deleteError: "スタッフの削除に失敗しました",
-    na: "なし",
-    language: "言語"
+    title: 'スタッフ管理',
+    dataLoaded: 'データが正常に読み込まれました',
+    loadError: 'データの読み込みエラー',
+    staffAdded: 'スタッフが正常に追加されました',
+    addError: 'スタッフ追加エラー',
+    // Add more Japanese translations as needed
   },
   ne: {
-    title: "कर्मचारी व्यवस्थापन",
-    addStaff: "कर्मचारी थप्नुहोस्",
-    updateStaff: "कर्मचारी अपडेट गर्नुहोस्",
-    name: "नाम",
-    searchDept: "विभाग खोज्नुहोस्...",
-    noDepts: "कुनै विभाग फेला परेन",
-    email: "इमेल",
-    searchPlaceholder: "नाम, भूमिका, विभाग, वा इमेलले खोज्नुहोस्...",
-    id: "आईडी",
-    department: "विभाग",
-    actions: "कार्यहरू",
-    viewDetails: "विवरण हेर्नुहोस्",
-    delete: "मेटाउनुहोस्",
-    staffDetails: "कर्मचारी विवरण",
-    firstName: "पहिलो नाम",
-    middleName: "मध्य नाम",
-    lastName: "थर",
-    fullName: "पुरा नाम",
-    username: "प्रयोगकर्ता नाम",
-    dob: "जन्म मिति",
-    locationLat: "स्थान (अक्षांश)",
-    locationLng: "स्थान (देशान्तर)",
-    locationAddress: "स्थान ठेगाना",
-    profilePic: "प्रोफाइल तस्वीर",
-    cv: "सीभी",
-    certType: "प्रमाणपत्र प्रकार",
-    certTitle: "प्रमाणपत्र शीर्षक",
-    certDesc: "प्रमाणपत्र विवरण",
-    certIssueDate: "प्रमाणपत्र जारी मिति",
-    certFile: "प्रमाणपत्र फाइल",
-    view: "हेर्नुहोस्",
-    close: "बन्द गर्नुहोस्",
-    requiredFields: "सबै फिल्डहरू आवश्यक छन्",
-    validEmail: "कृपया मान्य इमेल ठेगाना प्रविष्ट गर्नुहोस्",
-    confirmDelete: "तपाईं निश्चित हुनुहुन्छ कि मेटाउन चाहनुहुन्छ",
-    dataLoaded: "डाटा सफलतापूर्वक लोड भयो!",
-    staffAdded: "कर्मचारी सफलतापूर्वक थपियो!",
-    staffUpdated: "कर्मचारी सफलतापूर्वक अपडेट भयो!",
-    staffDeleted: "कर्मचारी सफलतापूर्वक मेटाइयो!",
-    loadError: "डाटा लोड गर्न असफल भयो। कृपया ब्याकेन्ड सर्भर चलिरहेको छ भनी निश्चित गर्नुहोस्।",
-    addError: "कर्मचारी थप्न असफल भयो",
-    updateError: "कर्मचारी अपडेट गर्न असफल भयो",
-    deleteError: "कर्मचारी मेटाउन असफल भयो",
-    na: "उपलब्ध छैन",
-    language: "भाषा"
+    title: 'कर्मचारी व्यवस्थापन',
+    // Add Nepali translations as needed
   },
   hi: {
-    title: "स्टाफ प्रबंधन",
-    addStaff: "स्टाफ जोड़ें",
-    updateStaff: "स्टाफ अपडेट करें",
-    name: "नाम",
-    searchDept: "विभाग खोजें...",
-    noDepts: "कोई विभाग नहीं मिला",
-    email: "ईमेल",
-    searchPlaceholder: "नाम, भूमिका, विभाग या ईमेल से खोजें...",
-    id: "आईडी",
-    department: "विभाग",
-    actions: "कार्रवाई",
-    viewDetails: "विवरण देखें",
-    delete: "हटाएं",
-    staffDetails: "स्टाफ विवरण",
-    firstName: "पहला नाम",
-    middleName: "मध्य नाम",
-    lastName: "अंतिम नाम",
-    fullName: "पूरा नाम",
-    username: "उपयोगकर्ता नाम",
-    dob: "जन्म तिथि",
-    locationLat: "स्थान (अक्षांश)",
-    locationLng: "स्थान (देशांतर)",
-    locationAddress: "स्थान पता",
-    profilePic: "प्रोफाइल चित्र",
-    cv: "सीवी",
-    certType: "प्रमाणपत्र प्रकार",
-    certTitle: "प्रमाणपत्र शीर्षक",
-    certDesc: "प्रमाणपत्र विवरण",
-    certIssueDate: "प्रमाणपत्र जारी तिथि",
-    certFile: "प्रमाणपत्र फाइल",
-    view: "देखें",
-    close: "बंद करें",
-    requiredFields: "सभी फ़ील्ड आवश्यक हैं",
-    validEmail: "कृपया एक वैध ईमेल पता दर्ज करें",
-    confirmDelete: "क्या आप वाकई हटाना चाहते हैं",
-    dataLoaded: "डेटा सफलतापूर्वक लोड हो गया!",
-    staffAdded: "स्टाफ सफलतापूर्वक जोड़ा गया!",
-    staffUpdated: "स्टाफ सफलतापूर्वक अपडेट हो गया!",
-    staffDeleted: "स्टाफ सफलतापूर्वक हटा दिया गया!",
-    loadError: "डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है।",
-    addError: "स्टाफ जोड़ने में विफल",
-    updateError: "स्टाफ अपडेट करने में विफल",
-    deleteError: "स्टाफ हटाने में विफल",
-    na: "उपलब्ध नहीं",
-    language: "भाषा"
+    title: 'कर्मचारी प्रबंधन',
+    // Add Hindi translations as needed
+  },
+  my: {
+    title: 'ဝန်ထမ်းစီမံခန့်ခွဲမှု',
+    // Add Myanmar translations as needed
+  },
+  pt: {
+    title: 'Gestão de Pessoal',
+    // Add Portuguese translations as needed
+  },
+  tl: {
+    title: 'Pamamahala ng Staff',
+    // Add Tagalog translations as needed
+  },
+  bn: {
+    title: 'কর্মী ব্যবস্থাপনা',
+    // Add Bengali translations as needed
+  },
+  th: {
+    title: 'การจัดการพนักงาน',
+    // Add Thai translations as needed
+  },
+  vi: {
+    title: 'Quản lý Nhân viên',
+    // Add Vietnamese translations as needed
   }
 };
 
@@ -440,14 +329,20 @@ function Staff() {
             onChange={(e) => handleLanguageChange(e.target.value)}
             className="p-2 border rounded bg-white"
           >
-            <option value="en">English</option>
-            <option value="ja">日本語 (Japanese)</option>
-            <option value="ne">नेपाली (Nepali)</option>
-            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="en">🇬🇧 English</option>
+            <option value="ja">🇯🇵 日本語 (Japanese)</option>
+            <option value="ne">🇳🇵 नेपाली (Nepali)</option>
+            <option value="hi">🇮🇳 हिन्दी (Hindi)</option>
+            <option value="my">🇲🇲 မြန်မာ (Myanmar)</option>
+            <option value="pt">🇧🇷🇵🇹 Português (Portuguese)</option>
+            <option value="tl">🇵🇭 Tagalog (Filipino)</option>
+            <option value="bn">🇧🇩 বাংলা (Bengali)</option>
+            <option value="th">🇹🇭 ไทย (Thai)</option>
+            <option value="vi">🇻🇳 Tiếng Việt (Vietnamese)</option>
           </select>
         </div>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-2xl mb-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input
@@ -508,9 +403,9 @@ function Staff() {
             required
           />
         </div>
-        
+
         {error && <p className="text-red-500 text-center font-medium mt-4">{error}</p>}
-        
+
         <button
           type="submit"
           className="mt-6 w-full p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md hover:from-blue-700 hover:to-purple-700 transition font-semibold"

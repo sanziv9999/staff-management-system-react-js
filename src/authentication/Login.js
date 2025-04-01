@@ -83,7 +83,134 @@ const translations = {
     pleaseEnterEmail: 'कृपया अपना ईमेल दर्ज करें।',
     resetLinkSent: 'पासवर्ड रीसेट लिंक आपके ईमेल पर भेज दिया गया है।',
     failedToSend: 'रीसेट लिंक भेजने में विफल: '
+  },
+  my: {
+    login: 'အကောင့်ဝင်ရန်',
+    resetPassword: 'စကားဝှက်ပြန်လည်သတ်မှတ်ရန်',
+    username: 'အသုံးပြုသူအမည်',
+    enterUsername: 'သင့်အသုံးပြုသူအမည်ထည့်ပါ',
+    password: 'စကားဝှက်',
+    enterPassword: 'သင့်စကားဝှက်ထည့်ပါ',
+    loginButton: 'အကောင့်ဝင်ရန်',
+    forgotPassword: 'စကားဝှက်မေ့နေပါသလား?',
+    enterEmail: 'သင့်အီးမေးလ်လိပ်စာထည့်ပါ',
+    emailPlaceholder: 'စကားဝှက်ပြန်လည်သတ်မှတ်ရန်အီးမေးလ်',
+    sendResetLink: 'ပြန်လည်သတ်မှတ်ရန်လင့်ပို့ရန်',
+    backToLogin: 'အကောင့်ဝင်ရန်သို့ပြန်သွားရန်',
+    loginSuccess: 'အကောင့်ဝင်ခြင်းအောင်မြင်ပါသည်!',
+    loginFailed: 'အကောင့်ဝင်ခြင်းမအောင်မြင်ပါ: ',
+    pleaseEnterEmail: 'ကျေးဇူးပြု၍သင့်အီးမေးလ်လိပ်စာထည့်ပါ။',
+    resetLinkSent: 'စကားဝှက်ပြန်လည်သတ်မှတ်ရန်လင့်ကိုသင့်အီးမေးလ်သို့ပို့ပြီးပါပြီ။',
+    failedToSend: 'ပြန်လည်သတ်မှတ်ရန်လင့်ပို့ရန်မအောင်မြင်ပါ: '
+  },
+  pt: {
+    login: 'Entrar',
+    resetPassword: 'Redefinir Senha',
+    username: 'Nome de Usuário',
+    enterUsername: 'Digite seu nome de usuário',
+    password: 'Senha',
+    enterPassword: 'Digite sua senha',
+    loginButton: 'Entrar',
+    forgotPassword: 'Esqueceu a senha?',
+    enterEmail: 'Digite seu e-mail',
+    emailPlaceholder: 'E-mail para redefinição de senha',
+    sendResetLink: 'Enviar Link de Redefinição',
+    backToLogin: 'Voltar para Entrar',
+    loginSuccess: 'Login bem-sucedido!',
+    loginFailed: 'Falha no login: ',
+    pleaseEnterEmail: 'Por favor, digite seu e-mail.',
+    resetLinkSent: 'Link de redefinição de senha enviado para seu e-mail.',
+    failedToSend: 'Falha ao enviar link de redefinição: '
+  },
+  fil: {
+    login: 'Mag-login',
+    resetPassword: 'I-reset ang Password',
+    username: 'Username',
+    enterUsername: 'Ilagay ang iyong username',
+    password: 'Password',
+    enterPassword: 'Ilagay ang iyong password',
+    loginButton: 'Mag-login',
+    forgotPassword: 'Nakalimutan ang password?',
+    enterEmail: 'Ilagay ang iyong email',
+    emailPlaceholder: 'Email para sa password reset',
+    sendResetLink: 'Ipadala ang Reset Link',
+    backToLogin: 'Bumalik sa Pag-login',
+    loginSuccess: 'Matagumpay ang pag-login!',
+    loginFailed: 'Nabigo ang pag-login: ',
+    pleaseEnterEmail: 'Mangyaring ilagay ang iyong email.',
+    resetLinkSent: 'Ang password reset link ay ipinadala sa iyong email.',
+    failedToSend: 'Nabigong ipadala ang reset link: '
+  },
+  bn: {
+    login: 'লগইন',
+    resetPassword: 'পাসওয়ার্ড রিসেট করুন',
+    username: 'ব্যবহারকারীর নাম',
+    enterUsername: 'আপনার ব্যবহারকারীর নাম লিখুন',
+    password: 'পাসওয়ার্ড',
+    enterPassword: 'আপনার পাসওয়ার্ড লিখুন',
+    loginButton: 'লগইন',
+    forgotPassword: 'পাসওয়ার্ড ভুলে গেছেন?',
+    enterEmail: 'আপনার ইমেইল লিখুন',
+    emailPlaceholder: 'পাসওয়ার্ড রিসেটের জন্য ইমেইল',
+    sendResetLink: 'রিসেট লিংক পাঠান',
+    backToLogin: 'লগইনে ফিরে যান',
+    loginSuccess: 'লগইন সফল হয়েছে!',
+    loginFailed: 'লগইন ব্যর্থ হয়েছে: ',
+    pleaseEnterEmail: 'অনুগ্রহ করে আপনার ইমেইল লিখুন।',
+    resetLinkSent: 'পাসওয়ার্ড রিসেট লিংক আপনার ইমেইলে পাঠানো হয়েছে।',
+    failedToSend: 'রিসেট লিংক পাঠাতে ব্যর্থ হয়েছে: '
+  },
+  th: {
+    login: 'เข้าสู่ระบบ',
+    resetPassword: 'รีเซ็ตรหัสผ่าน',
+    username: 'ชื่อผู้ใช้',
+    enterUsername: 'กรอกชื่อผู้ใช้ของคุณ',
+    password: 'รหัสผ่าน',
+    enterPassword: 'กรอกรหัสผ่านของคุณ',
+    loginButton: 'เข้าสู่ระบบ',
+    forgotPassword: 'ลืมรหัสผ่าน?',
+    enterEmail: 'กรอกอีเมลของคุณ',
+    emailPlaceholder: 'อีเมลสำหรับรีเซ็ตรหัสผ่าน',
+    sendResetLink: 'ส่งลิงค์รีเซ็ต',
+    backToLogin: 'กลับไปที่เข้าสู่ระบบ',
+    loginSuccess: 'เข้าสู่ระบบสำเร็จ!',
+    loginFailed: 'เข้าสู่ระบบล้มเหลว: ',
+    pleaseEnterEmail: 'กรุณากรอกอีเมลของคุณ',
+    resetLinkSent: 'ส่งลิงค์รีเซ็ตรหัสผ่านไปยังอีเมลของคุณแล้ว',
+    failedToSend: 'ส่งลิงค์รีเซ็ตล้มเหลว: '
+  },
+  vi: {
+    login: 'Đăng nhập',
+    resetPassword: 'Đặt lại mật khẩu',
+    username: 'Tên đăng nhập',
+    enterUsername: 'Nhập tên đăng nhập của bạn',
+    password: 'Mật khẩu',
+    enterPassword: 'Nhập mật khẩu của bạn',
+    loginButton: 'Đăng nhập',
+    forgotPassword: 'Quên mật khẩu?',
+    enterEmail: 'Nhập email của bạn',
+    emailPlaceholder: 'Email để đặt lại mật khẩu',
+    sendResetLink: 'Gửi liên kết đặt lại',
+    backToLogin: 'Quay lại đăng nhập',
+    loginSuccess: 'Đăng nhập thành công!',
+    loginFailed: 'Đăng nhập thất bại: ',
+    pleaseEnterEmail: 'Vui lòng nhập email của bạn.',
+    resetLinkSent: 'Liên kết đặt lại mật khẩu đã được gửi đến email của bạn.',
+    failedToSend: 'Gửi liên kết đặt lại thất bại: '
   }
+};
+
+const languageFlags = {
+  en: '🇬🇧',
+  ja: '🇯🇵',
+  ne: '🇳🇵',
+  hi: '🇮🇳',
+  my: '🇲🇲',
+  pt: '🇧🇷',
+  fil: '🇵🇭',
+  bn: '🇧🇩',
+  th: '🇹🇭',
+  vi: '🇻🇳'
 };
 
 function Login({ setToken, setIsAdmin }) {
@@ -147,39 +274,22 @@ function Login({ setToken, setIsAdmin }) {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center p-6">
       <div className="bg-white rounded-xl shadow-2xl max-w-md w-full p-8 relative">
-        {/* Language Selector */}
-        <div className="absolute top-4 right-4 flex space-x-2">
-          <button 
-            onClick={() => setLanguage('en')} 
-            className={`px-2 py-1 text-xs rounded ${language === 'en' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          >
-            EN
-          </button>
-          <button 
-            onClick={() => setLanguage('ja')} 
-            className={`px-2 py-1 text-xs rounded ${language === 'ja' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          >
-            日本語
-          </button>
-          <button 
-            onClick={() => setLanguage('ne')} 
-            className={`px-2 py-1 text-xs rounded ${language === 'ne' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          >
-            नेपाली
-          </button>
-          <button 
-            onClick={() => setLanguage('hi')} 
-            className={`px-2 py-1 text-xs rounded ${language === 'hi' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
-          >
-            हिन्दी
-          </button>
+        <div className="absolute top-4 right-4 flex flex-wrap gap-2 max-w-[200px] justify-end">
+          {Object.entries(languageFlags).map(([langCode, flag]) => (
+            <button 
+              key={langCode}
+              onClick={() => setLanguage(langCode)} 
+              className={`px-2 py-1 text-xs rounded flex items-center ${language === langCode ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+            >
+              <span className="mr-1">{flag}</span> {translations[langCode].loginButton}
+            </button>
+          ))}
         </div>
 
         <h2 className="text-4xl font-extrabold text-center text-gray-800 mb-8">
           {showForgotPassword ? t.resetPassword : t.login}
         </h2>
 
-        {/* Login Form */}
         {!showForgotPassword ? (
           <form onSubmit={handleLogin} className="space-y-6">
             <div>
@@ -238,7 +348,6 @@ function Login({ setToken, setIsAdmin }) {
             </p>
           </form>
         ) : (
-          /* Forgot Password Form */
           <form onSubmit={handleForgotPassword} className="space-y-6">
             <div>
               <label htmlFor="forgot_email" className="block text-sm font-semibold text-gray-700 mb-1">
