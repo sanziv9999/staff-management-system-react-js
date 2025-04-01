@@ -87,8 +87,170 @@ const translations = {
     name: "नाम",
     actions: "कार्रवाइयाँ",
     language: "भाषा"
+  },
+  my: { // Myanmar (Burmese)
+    title: "ဌာနစီမံခန့်ခွဲမှု",
+    deptName: "ဌာနအမည်",
+    manager: "မန်နေဂျာ",
+    staffCount: "ဝန်ထမ်းအရေအတွက်",
+    addDept: "ဌာနထည့်ပါ",
+    updateDept: "ဌာနအဆင့်မြှင့်ပါ",
+    edit: "ပြင်ဆင်ပါ",
+    delete: "ဖျက်ပါ",
+    confirmDelete: "ဤဌာနကိုဖျက်ရန်သေချာပါသလား",
+    loginError: "ဤစာမျက်နှာသို့ဝင်ရောက်ရန် ကျေးဇူးပြု၍ အကောင့်ဝင်ပါ။",
+    fetchError: "ဒေတာဖွင့်ရန်မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ နောက်ကွယ်ဆာဗာလည်ပတ်နေသလား သို့မဟုတ် သင်၏လော့ဂ်အင်အထောက်အထားများကိုစစ်ဆေးပါ။",
+    addError: "ဌာနထည့်ရန်မအောင်မြင်ပါ",
+    updateError: "ဌာနအဆင့်မြှင့်ရန်မအောင်မြင်ပါ",
+    deleteError: "ဌာနဖျက်ရန်မအောင်မြင်ပါ",
+    requiredFields: "အားလုံးဖြည့်ရန်လိုအပ်ပြီး ဝန်ထမ်းအရေအတွက်သည် မှန်ကန်သောဂဏန်းဖြစ်ရမည်",
+    searchPlaceholder: "အမည်၊ မန်နေဂျာ၊ သို့မဟုတ် ဝန်ထမ်းအရေအတွက်ဖြင့် ရှာဖွေပါ...",
+    name: "အမည်",
+    actions: "လုပ်ဆောင်ချက်များ",
+    language: "ဘာသာစကား"
+  },
+  'pt-BR': { // Brazil (Portuguese)
+    title: "Gerenciamento de Departamentos",
+    deptName: "Nome do Departamento",
+    manager: "Gerente",
+    staffCount: "Contagem de Funcionários",
+    addDept: "Adicionar Departamento",
+    updateDept: "Atualizar Departamento",
+    edit: "Editar",
+    delete: "Excluir",
+    confirmDelete: "Tem certeza de que deseja excluir",
+    loginError: "Por favor, faça login para acessar esta página.",
+    fetchError: "Falha ao carregar dados. Verifique se o servidor backend está em execução ou confira suas credenciais de login.",
+    addError: "Falha ao adicionar departamento",
+    updateError: "Falha ao atualizar departamento",
+    deleteError: "Falha ao excluir departamento",
+    requiredFields: "Todos os campos são obrigatórios, e a contagem de funcionários deve ser um número válido",
+    searchPlaceholder: "Pesquisar por nome, gerente ou contagem de funcionários...",
+    name: "Nome",
+    actions: "Ações",
+    language: "Idioma"
+  },
+  tl: { // Philippines (Filipino/Tagalog)
+    title: "Pamamahala ng Kagawaran",
+    deptName: "Pangalan ng Kagawaran",
+    manager: "Tagapamahala",
+    staffCount: "Bilang ng Kawani",
+    addDept: "Magdagdag ng Kagawaran",
+    updateDept: "I-update ang Kagawaran",
+    edit: "I-edit",
+    delete: "Tanggalin",
+    confirmDelete: "Sigurado ka bang gusto mong tanggalin",
+    loginError: "Mangyaring mag-login upang ma-access ang pahinang ito.",
+    fetchError: "Nabigo sa pag-load ng data. Siguraduhing tumatakbo ang backend server o suriin ang iyong mga kredensyal sa pag-login.",
+    addError: "Nabigo sa pagdaragdag ng kagawaran",
+    updateError: "Nabigo sa pag-update ng kagawaran",
+    deleteError: "Nabigo sa pagtanggal ng kagawaran",
+    requiredFields: "Lahat ng field ay kinakailangan, at ang bilang ng kawani ay dapat na wastong numero",
+    searchPlaceholder: "Maghanap ayon sa pangalan, tagapamahala, o bilang ng kawani...",
+    name: "Pangalan",
+    actions: "Mga Aksyon",
+    language: "Wika"
+  },
+  bn: { // Bangladesh (Bengali)
+    title: "বিভাগ ব্যবস্থাপনা",
+    deptName: "বিভাগের নাম",
+    manager: "পরিচালক",
+    staffCount: "কর্মী সংখ্যা",
+    addDept: "বিভাগ যোগ করুন",
+    updateDept: "বিভাগ আপডেট করুন",
+    edit: "সম্পাদনা",
+    delete: "মুছুন",
+    confirmDelete: "আপনি কি নিশ্চিত যে এই বিভাগটি মুছে ফেলতে চান",
+    loginError: "এই পৃষ্ঠায় প্রবেশ করতে অনুগ্রহ করে লগইন করুন।",
+    fetchError: "ডেটা লোড করতে ব্যর্থ। অনুগ্রহ করে নিশ্চিত করুন যে ব্যাকএন্ড সার্ভার চলছে বা আপনার লগইন শংসাপত্র পরীক্ষা করুন।",
+    addError: "বিভাগ যোগ করতে ব্যর্থ",
+    updateError: "বিভাগ আপডেট করতে ব্যর্থ",
+    deleteError: "বিভাগ মুছে ফেলতে ব্যর্থ",
+    requiredFields: "সমস্ত ক্ষেত্র প্রয়োজন, এবং কর্মী সংখ্যা একটি বৈধ সংখ্যা হতে হবে",
+    searchPlaceholder: "নাম, পরিচালক, বা কর্মী সংখ্যা দ্বারা অনুসন্ধান করুন...",
+    name: "নাম",
+    actions: "ক্রিয়াকলাপ",
+    language: "ভাষা"
+  },
+  th: { // Thailand (Thai)
+    title: "การจัดการแผนก",
+    deptName: "ชื่อแผนก",
+    manager: "ผู้จัดการ",
+    staffCount: "จำนวนพนักงาน",
+    addDept: "เพิ่มแผนก",
+    updateDept: "อัปเดตแผนก",
+    edit: "แก้ไข",
+    delete: "ลบ",
+    confirmDelete: "คุณแน่ใจหรือไม่ว่าต้องการลบ",
+    loginError: "กรุณาเข้าสู่ระบบเพื่อเข้าถึงหน้านี้",
+    fetchError: "ไม่สามารถโหลดข้อมูลได้ กรุณาตรวจสอบว่าเซิร์ฟเวอร์ backend ทำงานอยู่หรือตรวจสอบข้อมูลการเข้าสู่ระบบของคุณ",
+    addError: "ไม่สามารถเพิ่มแผนกได้",
+    updateError: "ไม่สามารถอัปเดตแผนกได้",
+    deleteError: "ไม่สามารถลบแผนกได้",
+    requiredFields: "ต้องกรอกทุกช่อง และจำนวนพนักงานต้องเป็นตัวเลขที่ถูกต้อง",
+    searchPlaceholder: "ค้นหาด้วยชื่อ ผู้จัดการ หรือจำนวนพนักงาน...",
+    name: "ชื่อ",
+    actions: "การดำเนินการ",
+    language: "ภาษา"
+  },
+  vi: { // Vietnam (Vietnamese)
+    title: "Quản lý Phòng Ban",
+    deptName: "Tên Phòng Ban",
+    manager: "Quản lý",
+    staffCount: "Số Lượng Nhân Viên",
+    addDept: "Thêm Phòng Ban",
+    updateDept: "Cập nhật Phòng Ban",
+    edit: "Chỉnh sửa",
+    delete: "Xóa",
+    confirmDelete: "Bạn có chắc chắn muốn xóa",
+    loginError: "Vui lòng đăng nhập để truy cập trang này.",
+    fetchError: "Không thể tải dữ liệu. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn.",
+    addError: "Không thể thêm phòng ban",
+    updateError: "Không thể cập nhật phòng ban",
+    deleteError: "Không thể xóa phòng ban",
+    requiredFields: "Tất cả các trường đều bắt buộc, và số lượng nhân viên phải là một số hợp lệ",
+    searchPlaceholder: "Tìm kiếm theo tên, quản lý hoặc số lượng nhân viên...",
+    name: "Tên",
+    actions: "Hành động",
+    language: "Ngôn ngữ"
+  },
+  'pt-PT': { // Portugal (Portuguese)
+    title: "Gestão de Departamentos",
+    deptName: "Nome do Departamento",
+    manager: "Gestor",
+    staffCount: "Contagem de Funcionários",
+    addDept: "Adicionar Departamento",
+    updateDept: "Atualizar Departamento",
+    edit: "Editar",
+    delete: "Eliminar",
+    confirmDelete: "Tem a certeza de que deseja eliminar",
+    loginError: "Por favor, inicie sessão para aceder a esta página.",
+    fetchError: "Falha ao carregar dados. Certifique-se de que o servidor backend está em execução ou verifique as suas credenciais de login.",
+    addError: "Falha ao adicionar departamento",
+    updateError: "Falha ao atualizar departamento",
+    deleteError: "Falha ao eliminar departamento",
+    requiredFields: "Todos os campos são obrigatórios, e a contagem de funcionários deve ser um número válido",
+    searchPlaceholder: "Pesquisar por nome, gestor ou contagem de funcionários...",
+    name: "Nome",
+    actions: "Ações",
+    language: "Idioma"
   }
 };
+
+// Language options with flags
+const languageOptions = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
+  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
+  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
+  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
+  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
+];
 
 function Department({ token }) {
   const [language, setLanguage] = useState('en');
@@ -230,35 +392,21 @@ function Department({ token }) {
   return (
     <div className="container mx-auto">
       {/* Navbar for Language Selection */}
-      <nav className="bg-gray-800 p-4 mb-6">
+      <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-center">
             <span className="text-white">{t('language')}:</span>
-            <button
-              onClick={() => handleLanguageChange('en')}
-              className={`text-white ${language === 'en' ? 'font-bold' : ''}`}
-            >
-              English
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ja')}
-              className={`text-white ${language === 'ja' ? 'font-bold' : ''}`}
-            >
-              日本語
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ne')}
-              className={`text-white ${language === 'ne' ? 'font-bold' : ''}`}
-            >
-              नेपाली
-            </button>
-            <button
-              onClick={() => handleLanguageChange('hi')}
-              className={`text-white ${language === 'hi' ? 'font-bold' : ''}`}
-            >
-              हिंदी
-            </button>
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                onClick={() => handleLanguageChange(option.code)}
+                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
+              >
+                <span className="mr-1">{option.flag}</span>
+                {option.name}
+              </button>
+            ))}
           </div>
         </div>
       </nav>
