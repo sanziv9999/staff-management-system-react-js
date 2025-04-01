@@ -33,6 +33,8 @@ const translations = {
     date: "Date",
     actions: "Actions",
     na: "N/A",
+    edit: "Edit",
+    delete: "Delete",
     language: "Language"
   },
   ja: {
@@ -61,6 +63,8 @@ const translations = {
     date: "日付",
     actions: "操作",
     na: "なし",
+    edit: "編集",
+    delete: "削除",
     language: "言語"
   },
   ne: {
@@ -89,6 +93,8 @@ const translations = {
     date: "मिति",
     actions: "कार्यहरू",
     na: "उपलब्ध छैन",
+    edit: "सम्पादन गर्नुहोस्",
+    delete: "हटाउनुहोस्",
     language: "भाषा"
   },
   hi: {
@@ -117,9 +123,236 @@ const translations = {
     date: "तारीख",
     actions: "कार्रवाइयाँ",
     na: "उपलब्ध नहीं",
+    edit: "संपादन करें",
+    delete: "हटाएं",
     language: "भाषा"
+  },
+  my: { // Myanmar (Burmese)
+    title: "တက်ရောက်မှုစီမံခန့်ခွဲမှု",
+    selectDate: "ရက်စွဲရွေးပါ:",
+    searchStaff: "ဝန်ထမ်းရှာဖွေပါ...",
+    noStaffFound: "ဝန်ထမ်းမတွေ့ပါ",
+    status: "အခြေအနေ",
+    present: "တက်ရောက်",
+    absent: "မတက်ရောက်",
+    leave: "ခွင့်ယူ",
+    timeIn: "ဝင်ချိန်",
+    timeOut: "ထွက်ချိန်",
+    updateAttendance: "တက်ရောက်မှုကိုအဆင့်မြှင့်ပါ",
+    recordAttendance: "တက်ရောက်မှုမှတ်တမ်းတင်ပါ",
+    requiredFields: "ဝန်ထမ်းနှင့်အခြေအနေလိုအပ်ပါသည်။",
+    loading: "တက်ရောက်မှုမှတ်တမ်းများကိုဖွင့်နေသည်...",
+    noRecords: "ဤရက်စွဲအတွက်တက်ရောက်မှုမှတ်တမ်းမရှိပါ။",
+    fetchError: "ဒေတာရယူရန်မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ နောက်ကွယ်ဆာဗာလည်ပတ်နေသလား သို့မဟုတ် သင်၏လော့ဂ်အင်အထောက်အထားများကိုစစ်ဆေးပါ။",
+    addError: "တက်ရောက်မှုထည့်ရန်မအောင်မြင်ပါ",
+    updateError: "တက်ရောက်မှုအဆင့်မြှင့်ရန်မအောင်မြင်ပါ",
+    deleteError: "တက်ရောက်မှုဖျက်ရန်မအောင်မြင်ပါ",
+    confirmDelete: "ဤဝန်ထမ်း၏တက်ရောက်မှုကိုဖျက်ရန်သေချာပါသလား",
+    unknown: "မသိ",
+    staff: "ဝန်ထမ်း",
+    date: "ရက်စွဲ",
+    actions: "လုပ်ဆောင်ချက်များ",
+    na: "မရှိ",
+    edit: "ပြင်ဆင်ပါ",
+    delete: "ဖျက်ပါ",
+    language: "ဘာသာစကား"
+  },
+  'pt-BR': { // Brazil (Portuguese)
+    title: "Gerenciamento de Presença",
+    selectDate: "Selecionar Data:",
+    searchStaff: "Pesquisar Funcionário...",
+    noStaffFound: "Nenhum funcionário encontrado",
+    status: "Status",
+    present: "Presente",
+    absent: "Ausente",
+    leave: "Licença",
+    timeIn: "Hora de Entrada",
+    timeOut: "Hora de Saída",
+    updateAttendance: "Atualizar Presença",
+    recordAttendance: "Registrar Presença",
+    requiredFields: "Funcionário e status são obrigatórios.",
+    loading: "Carregando registros de presença...",
+    noRecords: "Nenhum registro de presença disponível para esta data.",
+    fetchError: "Falha ao buscar dados. Verifique se o servidor backend está em execução ou confira suas credenciais de login.",
+    addError: "Falha ao adicionar presença",
+    updateError: "Falha ao atualizar presença",
+    deleteError: "Falha ao excluir presença",
+    confirmDelete: "Tem certeza de que deseja excluir a presença de",
+    unknown: "Desconhecido",
+    staff: "Funcionário",
+    date: "Data",
+    actions: "Ações",
+    na: "N/D",
+    edit: "Editar",
+    delete: "Excluir",
+    language: "Idioma"
+  },
+  tl: { // Philippines (Filipino/Tagalog)
+    title: "Pamamahala ng Pagdalo",
+    selectDate: "Pumili ng Petsa:",
+    searchStaff: "Maghanap ng Kawani...",
+    noStaffFound: "Walang natagpuang kawani",
+    status: "Katayuan",
+    present: "Dumalo",
+    absent: "Wala",
+    leave: "Bakasyon",
+    timeIn: "Oras ng Pagpasok",
+    timeOut: "Oras ng Pag-alis",
+    updateAttendance: "I-update ang Pagdalo",
+    recordAttendance: "Magrehistro ng Pagdalo",
+    requiredFields: "Kailangan ang kawani at katayuan.",
+    loading: "Nilo-load ang mga tala ng pagdalo...",
+    noRecords: "Walang magagamit na tala ng pagdalo para sa petsang ito.",
+    fetchError: "Nabigo sa pagkuha ng data. Siguraduhing tumatakbo ang backend server o suriin ang iyong mga kredensyal sa pag-login.",
+    addError: "Nabigo sa pagdaragdag ng pagdalo",
+    updateError: "Nabigo sa pag-update ng pagdalo",
+    deleteError: "Nabigo sa pagtanggal ng pagdalo",
+    confirmDelete: "Sigurado ka bang gusto mong tanggalin ang pagdalo para kay",
+    unknown: "Hindi Kilala",
+    staff: "Kawani",
+    date: "Petsa",
+    actions: "Mga Aksyon",
+    na: "Wala",
+    edit: "I-edit",
+    delete: "Tanggalin",
+    language: "Wika"
+  },
+  bn: { // Bangladesh (Bengali)
+    title: "উপস্থিতি ব্যবস্থাপনা",
+    selectDate: "তারিখ নির্বাচন করুন:",
+    searchStaff: "কর্মী অনুসন্ধান করুন...",
+    noStaffFound: "কোনো কর্মী পাওয়া যায়নি",
+    status: "অবস্থা",
+    present: "উপস্থিত",
+    absent: "অনুপস্থিত",
+    leave: "ছুটি",
+    timeIn: "প্রবেশের সময়",
+    timeOut: "বের হওয়ার সময়",
+    updateAttendance: "উপস্থিতি আপডেট করুন",
+    recordAttendance: "উপস্থিতি রেকর্ড করুন",
+    requiredFields: "কর্মী এবং অবস্থা প্রয়োজন।",
+    loading: "উপস্থিতি রেকর্ড লোড হচ্ছে...",
+    noRecords: "এই তারিখের জন্য কোনো উপস্থিতি রেকর্ড উপলব্ধ নেই।",
+    fetchError: "ডেটা আনতে ব্যর্থ। অনুগ্রহ করে নিশ্চিত করুন যে ব্যাকএন্ড সার্ভার চলছে বা আপনার লগইন শংসাপত্র পরীক্ষা করুন।",
+    addError: "উপস্থিতি যোগ করতে ব্যর্থ",
+    updateError: "উপস্থিতি আপডেট করতে ব্যর্থ",
+    deleteError: "উপস্থিতি মুছে ফেলতে ব্যর্থ",
+    confirmDelete: "আপনি কি নিশ্চিত যে এই কর্মীর উপস্থিতি মুছে ফেলতে চান",
+    unknown: "অজানা",
+    staff: "কর্মী",
+    date: "তারিখ",
+    actions: "ক্রিয়াকলাপ",
+    na: "প্রযোজ্য নয়",
+    edit: "সম্পাদনা",
+    delete: "মুছুন",
+    language: "ভাষা"
+  },
+  th: { // Thailand (Thai)
+    title: "การจัดการการเข้างาน",
+    selectDate: "เลือกวันที่:",
+    searchStaff: "ค้นหาพนักงาน...",
+    noStaffFound: "ไม่พบพนักงาน",
+    status: "สถานะ",
+    present: "มาทำงาน",
+    absent: "ขาดงาน",
+    leave: "ลางาน",
+    timeIn: "เวลามาทำงาน",
+    timeOut: "เวลาออกงาน",
+    updateAttendance: "อัปเดตการเข้างาน",
+    recordAttendance: "บันทึกการเข้างาน",
+    requiredFields: "ต้องระบุพนักงานและสถานะ",
+    loading: "กำลังโหลดบันทึกการเข้างาน...",
+    noRecords: "ไม่มีบันทึกการเข้างานสำหรับวันที่นี้",
+    fetchError: "ไม่สามารถดึงข้อมูลได้ กรุณาตรวจสอบว่าเซิร์ฟเวอร์ backend ทำงานอยู่หรือตรวจสอบข้อมูลการเข้าสู่ระบบของคุณ",
+    addError: "ไม่สามารถเพิ่มการเข้างานได้",
+    updateError: "ไม่สามารถอัปเดตการเข้างานได้",
+    deleteError: "ไม่สามารถลบการเข้างานได้",
+    confirmDelete: "คุณแน่ใจหรือไม่ว่าต้องการลบการเข้างานของ",
+    unknown: "ไม่ทราบ",
+    staff: "พนักงาน",
+    date: "วันที่",
+    actions: "การดำเนินการ",
+    na: "ไม่มี",
+    edit: "แก้ไข",
+    delete: "ลบ",
+    language: "ภาษา"
+  },
+  vi: { // Vietnam (Vietnamese)
+    title: "Quản lý Điểm danh",
+    selectDate: "Chọn Ngày:",
+    searchStaff: "Tìm kiếm Nhân viên...",
+    noStaffFound: "Không tìm thấy nhân viên",
+    status: "Trạng thái",
+    present: "Có mặt",
+    absent: "Vắng mặt",
+    leave: "Nghỉ phép",
+    timeIn: "Giờ vào",
+    timeOut: "Giờ ra",
+    updateAttendance: "Cập nhật Điểm danh",
+    recordAttendance: "Ghi lại Điểm danh",
+    requiredFields: "Nhân viên và trạng thái là bắt buộc.",
+    loading: "Đang tải bản ghi điểm danh...",
+    noRecords: "Không có bản ghi điểm danh nào cho ngày này.",
+    fetchError: "Không thể lấy dữ liệu. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn.",
+    addError: "Không thể thêm điểm danh",
+    updateError: "Không thể cập nhật điểm danh",
+    deleteError: "Không thể xóa điểm danh",
+    confirmDelete: "Bạn có chắc chắn muốn xóa điểm danh của",
+    unknown: "Không rõ",
+    staff: "Nhân viên",
+    date: "Ngày",
+    actions: "Hành động",
+    na: "Không có",
+    edit: "Chỉnh sửa",
+    delete: "Xóa",
+    language: "Ngôn ngữ"
+  },
+  'pt-PT': { // Portugal (Portuguese)
+    title: "Gestão de Presenças",
+    selectDate: "Selecionar Data:",
+    searchStaff: "Pesquisar Funcionário...",
+    noStaffFound: "Nenhum funcionário encontrado",
+    status: "Estado",
+    present: "Presente",
+    absent: "Ausente",
+    leave: "Licença",
+    timeIn: "Hora de Entrada",
+    timeOut: "Hora de Saída",
+    updateAttendance: "Atualizar Presença",
+    recordAttendance: "Registar Presença",
+    requiredFields: "Funcionário e estado são obrigatórios.",
+    loading: "A carregar registos de presença...",
+    noRecords: "Nenhum registo de presença disponível para esta data.",
+    fetchError: "Falha ao obter dados. Certifique-se de que o servidor backend está em execução ou verifique as suas credenciais de login.",
+    addError: "Falha ao adicionar presença",
+    updateError: "Falha ao atualizar presença",
+    deleteError: "Falha ao eliminar presença",
+    confirmDelete: "Tem a certeza de que deseja eliminar a presença de",
+    unknown: "Desconhecido",
+    staff: "Funcionário",
+    date: "Data",
+    actions: "Ações",
+    na: "N/D",
+    edit: "Editar",
+    delete: "Eliminar",
+    language: "Idioma"
   }
 };
+
+// Language options with flags
+const languageOptions = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
+  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
+  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
+  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
+  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
+];
 
 function Attendance({ token }) {
   const [language, setLanguage] = useState('en');
@@ -303,35 +536,21 @@ function Attendance({ token }) {
   return (
     <div className="container mx-auto p-4">
       {/* Navbar for Language Selection */}
-      <nav className="bg-gray-800 p-4 mb-6">
+      <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-center">
             <span className="text-white">{t('language')}:</span>
-            <button
-              onClick={() => handleLanguageChange('en')}
-              className={`text-white ${language === 'en' ? 'font-bold' : ''}`}
-            >
-              English
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ja')}
-              className={`text-white ${language === 'ja' ? 'font-bold' : ''}`}
-            >
-              日本語
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ne')}
-              className={`text-white ${language === 'ne' ? 'font-bold' : ''}`}
-            >
-              नेपाली
-            </button>
-            <button
-              onClick={() => handleLanguageChange('hi')}
-              className={`text-white ${language === 'hi' ? 'font-bold' : ''}`}
-            >
-              हिंदी
-            </button>
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                onClick={() => handleLanguageChange(option.code)}
+                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
+              >
+                <span className="mr-1">{option.flag}</span>
+                {option.name}
+              </button>
+            ))}
           </div>
         </div>
       </nav>
