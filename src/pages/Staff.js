@@ -4,8 +4,86 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import API_BASE_URL from '../api';
 
-// Translation dictionary remains unchanged
-// ... [translations object remains the same] ...
+// Translation dictionary
+const translations = {
+  en: {
+    title: 'Staff Management',
+    dataLoaded: 'Data loaded successfully',
+    loadError: 'Error loading data',
+    staffAdded: 'Staff added successfully',
+    addError: 'Error adding staff',
+    staffUpdated: 'Staff updated successfully',
+    updateError: 'Error updating staff',
+    staffDeleted: 'Staff deleted successfully',
+    deleteError: 'Error deleting staff',
+    requiredFields: 'Please fill in all required fields',
+    validEmail: 'Please enter a valid email address',
+    confirmDelete: 'Are you sure you want to delete',
+    thisStaff: 'this staff member',
+    firstName: 'First Name',
+    lastName: 'Last Name',
+    searchDept: 'Search Department',
+    email: 'Email',
+    updateStaff: 'Update Staff',
+    addStaff: 'Add Staff',
+    searchPlaceholder: 'Search by name, department, or email',
+    id: 'ID',
+    name: 'Name',
+    department: 'Department',
+    actions: 'Actions',
+    viewDetails: 'View Details',
+    delete: 'Delete',
+    noDepts: 'No departments found',
+    staffDetails: 'Staff Details',
+    fullName: 'Full Name',
+    username: 'Username',
+    dob: 'Date of Birth',
+    locationAddress: 'Location Address',
+    close: 'Close',
+    language: 'Language',
+    na: 'N/A'
+  },
+  ja: {
+    title: 'スタッフ管理',
+    dataLoaded: 'データが正常に読み込まれました',
+    loadError: 'データの読み込みエラー',
+    staffAdded: 'スタッフが正常に追加されました',
+    addError: 'スタッフ追加エラー',
+    // Add more Japanese translations as needed
+  },
+  ne: {
+    title: 'कर्मचारी व्यवस्थापन',
+    // Add Nepali translations as needed
+  },
+  hi: {
+    title: 'कर्मचारी प्रबंधन',
+    // Add Hindi translations as needed
+  },
+  my: {
+    title: 'ဝန်ထမ်းစီမံခန့်ခွဲမှု',
+    // Add Myanmar translations as needed
+  },
+  pt: {
+    title: 'Gestão de Pessoal',
+    // Add Portuguese translations as needed
+  },
+  tl: {
+    title: 'Pamamahala ng Staff',
+    // Add Tagalog translations as needed
+  },
+  bn: {
+    title: 'কর্মী ব্যবস্থাপনা',
+    // Add Bengali translations as needed
+  },
+  th: {
+    title: 'การจัดการพนักงาน',
+    // Add Thai translations as needed
+  },
+  vi: {
+    title: 'Quản lý Nhân viên',
+    // Add Vietnamese translations as needed
+  }
+};
 
 function Staff() {
   const [language, setLanguage] = useState('en');
@@ -118,7 +196,7 @@ function Staff() {
       location_lat: staff.location_lat || '',
       location_lng: staff.location_lng || '',
       location_address: staff.location_address || '',
-      certificate_type: staff.certificate_type || '', // Fixed typo here
+      certificate_type: staff.certificate_type || '',
       certificate_title: staff.certificate_title || '',
       certificate_description: staff.certificate_description || '',
       certificate_issue_date: staff.certificate_issue_date || ''
@@ -264,7 +342,7 @@ function Staff() {
           </select>
         </div>
       </div>
-      
+
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-xl shadow-2xl mb-6">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input
@@ -325,9 +403,9 @@ function Staff() {
             required
           />
         </div>
-        
+
         {error && <p className="text-red-500 text-center font-medium mt-4">{error}</p>}
-        
+
         <button
           type="submit"
           className="mt-6 w-full p-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-md hover:from-blue-700 hover:to-purple-700 transition font-semibold"
