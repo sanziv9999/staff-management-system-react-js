@@ -17,7 +17,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
 });
 
-// Translation dictionary
+// Translation dictionary with additional languages
 const translations = {
   en: {
     title: "Staff Registration",
@@ -170,8 +170,289 @@ const translations = {
     successLocationRetrieved: "स्थान सफलतापूर्वक प्राप्त हुआ!",
     successLocationUpdated: "मानचित्र से स्थान अपडेट हुआ!",
     successRegistration: "पंजीकरण सफल हुआ! पुनर्निर्देशन कर रहा है..."
+  },
+  my: { // Myanmar (Burmese)
+    title: "ဝန်ထမ်းမှတ်ပုံတင်ခြင်း",
+    firstName: "အမည်",
+    middleName: "အလယ်အမည်",
+    lastName: "မျိုးရိုးအမည်",
+    username: "အသုံးပြုသူအမည်",
+    email: "အီးမေးလ်",
+    dob: "မွေးသက္ကရာဇ်",
+    password: "စကားဝှက်",
+    confirmPassword: "စကားဝှက်အတည်ပြုပါ",
+    department: "ဌာန",
+    selectDepartment: "ဌာနတစ်ခုရွေးပါ",
+    location: "တည်နေရာ",
+    useCurrentLocation: "ကျွန်ုပ်၏လက်ရှိတည်နေရာကိုသုံးပါ",
+    profilePicture: "ပရိုဖိုင်ဓာတ်ပုံ",
+    cv: "အလုပ်ရာဇဝင်",
+    certificateFile: "လက်မှတ်ဖိုင်",
+    certificateType: "လက်မှတ်အမျိုးအစား",
+    selectType: "အမျိုးအစားရွေးပါ (ရွေးချယ်ခွင့်)",
+    experience: "အတွေ့အကြုံ",
+    training: "လေ့ကျင့်ရေး",
+    achievement: "အောင်မြင်မှု",
+    certificateTitle: "လက်မှတ်ခေါင်းစဉ်",
+    certificateDescription: "လက်မှတ်ဖော်ပြချက်",
+    certificateIssueDate: "လက်မှတ်ထုတ်ပေးသည့်ရက်စွဲ",
+    register: "မှတ်ပုံတင်ပါ",
+    alreadyHaveAccount: "အကောင့်ရှိပြီးသားလား?",
+    loginHere: "ဒီမှာဝင်ရောက်ပါ",
+    language: "ဘာသာစကား",
+    errorPasswordsNotMatch: "စကားဝှက်များမကိုက်ညီပါ။",
+    errorFailedLoadDepartments: "ဌာနများကိုဖွင့်ရန်မအောင်မြင်ပါ။",
+    errorCouldNotRetrieveAddress: "လိပ်စာကိုမရယူနိုင်ပါ။",
+    errorGeolocationNotSupported: "တည်နေရာရှာဖွေမှုကိုမထောက်ပံ့ပါ။",
+    errorUnableRetrieveLocation: "တည်နေရာကိုမရယူနိုင်ပါ",
+    successLocationRetrieved: "တည်နေရာကိုအောင်မြင်စွာရယူပြီးပါပြီ!",
+    successLocationUpdated: "မြေပုံမှတည်နေရာကိုအဆင့်မြှင့်တင်ပြီးပါပြီ!",
+    successRegistration: "မှတ်ပုံတင်ခြင်းအောင်မြင်ပါပြီ! ပြန်ညွှန်းနေပါပြီ..."
+  },
+  'pt-BR': { // Brazil (Portuguese)
+    title: "Registro de Funcionário",
+    firstName: "Primeiro Nome",
+    middleName: "Nome do Meio",
+    lastName: "Sobrenome",
+    username: "Nome de Usuário",
+    email: "E-mail",
+    dob: "Data de Nascimento",
+    password: "Senha",
+    confirmPassword: "Confirmar Senha",
+    department: "Departamento",
+    selectDepartment: "Selecione um departamento",
+    location: "Localização",
+    useCurrentLocation: "Usar Minha Localização Atual",
+    profilePicture: "Foto de Perfil",
+    cv: "Currículo",
+    certificateFile: "Arquivo de Certificado",
+    certificateType: "Tipo de Certificado",
+    selectType: "Selecionar Tipo (Opcional)",
+    experience: "Experiência",
+    training: "Treinamento",
+    achievement: "Conquista",
+    certificateTitle: "Título do Certificado",
+    certificateDescription: "Descrição do Certificado",
+    certificateIssueDate: "Data de Emissão do Certificado",
+    register: "Registrar",
+    alreadyHaveAccount: "Já possui uma conta?",
+    loginHere: "Faça login aqui",
+    language: "Idioma",
+    errorPasswordsNotMatch: "As senhas não coincidem.",
+    errorFailedLoadDepartments: "Falha ao carregar departamentos.",
+    errorCouldNotRetrieveAddress: "Não foi possível recuperar o endereço.",
+    errorGeolocationNotSupported: "Geolocalização não suportada.",
+    errorUnableRetrieveLocation: "Não foi possível recuperar a localização",
+    successLocationRetrieved: "Localização recuperada com sucesso!",
+    successLocationUpdated: "Localização atualizada pelo mapa!",
+    successRegistration: "Registro bem-sucedido! Redirecionando..."
+  },
+  tl: { // Philippines (Filipino/Tagalog)
+    title: "Pagpaparehistro ng Staff",
+    firstName: "Pangalan",
+    middleName: "Gitnang Pangalan",
+    lastName: "Apelyido",
+    username: "Username",
+    email: "Email",
+    dob: "Petsa ng Kapanganakan",
+    password: "Password",
+    confirmPassword: "Kumpirmahin ang Password",
+    department: "Kagawaran",
+    selectDepartment: "Pumili ng kagawaran",
+    location: "Lokasyon",
+    useCurrentLocation: "Gamitin ang Aking Kasalukuyang Lokasyon",
+    profilePicture: "Larawan ng Profile",
+    cv: "CV",
+    certificateFile: "File ng Sertipiko",
+    certificateType: "Uri ng Sertipiko",
+    selectType: "Pumili ng Uri (Opsyonal)",
+    experience: "Karanasan",
+    training: "Pagsasanay",
+    achievement: "Tagumpay",
+    certificateTitle: "Pamagat ng Sertipiko",
+    certificateDescription: "Paglalarawan ng Sertipiko",
+    certificateIssueDate: "Petsa ng Pag-isyu ng Sertipiko",
+    register: "Magrehistro",
+    alreadyHaveAccount: "May account na ba?",
+    loginHere: "Mag-login dito",
+    language: "Wika",
+    errorPasswordsNotMatch: "Hindi tugma ang mga password.",
+    errorFailedLoadDepartments: "Hindi na-load ang mga kagawaran.",
+    errorCouldNotRetrieveAddress: "Hindi makuha ang address.",
+    errorGeolocationNotSupported: "Hindi suportado ang geolocation.",
+    errorUnableRetrieveLocation: "Hindi makuha ang lokasyon",
+    successLocationRetrieved: "Matagumpay na nakuha ang lokasyon!",
+    successLocationUpdated: "Na-update ang lokasyon mula sa mapa!",
+    successRegistration: "Matagumpay ang pagpaparehistro! Ina-redirect..."
+  },
+  bn: { // Bangladesh (Bengali)
+    title: "কর্মচারী নিবন্ধন",
+    firstName: "প্রথম নাম",
+    middleName: "মধ্য নাম",
+    lastName: "পদবি",
+    username: "ব্যবহারকারীর নাম",
+    email: "ইমেইল",
+    dob: "জন্ম তারিখ",
+    password: "পাসওয়ার্ড",
+    confirmPassword: "পাসওয়ার্ড নিশ্চিত করুন",
+    department: "বিভাগ",
+    selectDepartment: "একটি বিভাগ নির্বাচন করুন",
+    location: "অবস্থান",
+    useCurrentLocation: "আমার বর্তমান অবস্থান ব্যবহার করুন",
+    profilePicture: "প্রোফাইল ছবি",
+    cv: "সিভি",
+    certificateFile: "সার্টিফিকেট ফাইল",
+    certificateType: "সার্টিফিকেট প্রকার",
+    selectType: "প্রকার নির্বাচন করুন (ঐচ্ছিক)",
+    experience: "অভিজ্ঞতা",
+    training: "প্রশিক্ষণ",
+    achievement: "সাফল্য",
+    certificateTitle: "সার্টিফিকেট শিরোনাম",
+    certificateDescription: "সার্টিফিকেট বিবরণ",
+    certificateIssueDate: "সার্টিফিকেট জারি তারিখ",
+    register: "নিবন্ধন করুন",
+    alreadyHaveAccount: "ইতিমধ্যে একটি অ্যাকাউন্ট আছে?",
+    loginHere: "এখানে লগইন করুন",
+    language: "ভাষা",
+    errorPasswordsNotMatch: "পাসওয়ার্ড মিলছে না।",
+    errorFailedLoadDepartments: "বিভাগ লোড করতে ব্যর্থ।",
+    errorCouldNotRetrieveAddress: "ঠিকানা পুনরুদ্ধার করা যায়নি।",
+    errorGeolocationNotSupported: "জিওলোকেশন সমর্থিত নয়।",
+    errorUnableRetrieveLocation: "অবস্থান পুনরুদ্ধার করতে অক্ষম",
+    successLocationRetrieved: "অবস্থান সফলভাবে পুনরুদ্ধার করা হয়েছে!",
+    successLocationUpdated: "মানচিত্র থেকে অবস্থান আপডেট করা হয়েছে!",
+    successRegistration: "নিবন্ধন সফল! পুনর্নির্দেশ করা হচ্ছে..."
+  },
+  th: { // Thailand (Thai)
+    title: "การลงทะเบียนพนักงาน",
+    firstName: "ชื่อ",
+    middleName: "ชื่อกลาง",
+    lastName: "นามสกุล",
+    username: "ชื่อผู้ใช้",
+    email: "อีเมล",
+    dob: "วันเกิด",
+    password: "รหัสผ่าน",
+    confirmPassword: "ยืนยันรหัสผ่าน",
+    department: "แผนก",
+    selectDepartment: "เลือกแผนก",
+    location: "สถานที่",
+    useCurrentLocation: "ใช้ตำแหน่งปัจจุบันของฉัน",
+    profilePicture: "รูปโปรไฟล์",
+    cv: "ประวัติย่อ",
+    certificateFile: "ไฟล์ใบรับรอง",
+    certificateType: "ประเภทใบรับรอง",
+    selectType: "เลือกประเภท (ไม่บังคับ)",
+    experience: "ประสบการณ์",
+    training: "การฝึกอบรม",
+    achievement: "ความสำเร็จ",
+    certificateTitle: "ชื่อใบรับรอง",
+    certificateDescription: "คำอธิบายใบรับรอง",
+    certificateIssueDate: "วันที่ออกใบรับรอง",
+    register: "ลงทะเบียน",
+    alreadyHaveAccount: "มีบัญชีอยู่แล้ว?",
+    loginHere: "เข้าสู่ระบบที่นี่",
+    language: "ภาษา",
+    errorPasswordsNotMatch: "รหัสผ่านไม่ตรงกัน",
+    errorFailedLoadDepartments: "ไม่สามารถโหลดแผนกได้",
+    errorCouldNotRetrieveAddress: "ไม่สามารถดึงที่อยู่ได้",
+    errorGeolocationNotSupported: "ไม่รองรับการระบุตำแหน่ง",
+    errorUnableRetrieveLocation: "ไม่สามารถดึงตำแหน่งได้",
+    successLocationRetrieved: "ดึงตำแหน่งสำเร็จแล้ว!",
+    successLocationUpdated: "อัปเดตตำแหน่งจากแผนที่แล้ว!",
+    successRegistration: "การลงทะเบียนสำเร็จ! กำลังเปลี่ยนเส้นทาง..."
+  },
+  vi: { // Vietnam (Vietnamese)
+    title: "Đăng ký Nhân viên",
+    firstName: "Tên",
+    middleName: "Tên đệm",
+    lastName: "Họ",
+    username: "Tên người dùng",
+    email: "Email",
+    dob: "Ngày sinh",
+    password: "Mật khẩu",
+    confirmPassword: "Xác nhận mật khẩu",
+    department: "Phòng ban",
+    selectDepartment: "Chọn một phòng ban",
+    location: "Vị trí",
+    useCurrentLocation: "Sử dụng vị trí hiện tại của tôi",
+    profilePicture: "Ảnh hồ sơ",
+    cv: "Sơ yếu lý lịch",
+    certificateFile: "Tệp chứng chỉ",
+    certificateType: "Loại chứng chỉ",
+    selectType: "Chọn loại (Tùy chọn)",
+    experience: "Kinh nghiệm",
+    training: "Đào tạo",
+    achievement: "Thành tựu",
+    certificateTitle: "Tiêu đề chứng chỉ",
+    certificateDescription: "Mô tả chứng chỉ",
+    certificateIssueDate: "Ngày cấp chứng chỉ",
+    register: "Đăng ký",
+    alreadyHaveAccount: "Đã có tài khoản?",
+    loginHere: "Đăng nhập tại đây",
+    language: "Ngôn ngữ",
+    errorPasswordsNotMatch: "Mật khẩu không khớp.",
+    errorFailedLoadDepartments: "Không thể tải danh sách phòng ban.",
+    errorCouldNotRetrieveAddress: "Không thể lấy địa chỉ.",
+    errorGeolocationNotSupported: "Định vị địa lý không được hỗ trợ.",
+    errorUnableRetrieveLocation: "Không thể lấy vị trí",
+    successLocationRetrieved: "Lấy vị trí thành công!",
+    successLocationUpdated: "Vị trí đã được cập nhật từ bản đồ!",
+    successRegistration: "Đăng ký thành công! Đang chuyển hướng..."
+  },
+  'pt-PT': { // Portugal (Portuguese)
+    title: "Registo de Funcionário",
+    firstName: "Primeiro Nome",
+    middleName: "Nome do Meio",
+    lastName: "Apelido",
+    username: "Nome de Utilizador",
+    email: "E-mail",
+    dob: "Data de Nascimento",
+    password: "Palavra-passe",
+    confirmPassword: "Confirmar Palavra-passe",
+    department: "Departamento",
+    selectDepartment: "Selecione um departamento",
+    location: "Localização",
+    useCurrentLocation: "Usar a Minha Localização Atual",
+    profilePicture: "Foto de Perfil",
+    cv: "Currículo",
+    certificateFile: "Ficheiro de Certificado",
+    certificateType: "Tipo de Certificado",
+    selectType: "Selecionar Tipo (Opcional)",
+    experience: "Experiência",
+    training: "Formação",
+    achievement: "Conquista",
+    certificateTitle: "Título do Certificado",
+    certificateDescription: "Descrição do Certificado",
+    certificateIssueDate: "Data de Emissão do Certificado",
+    register: "Registar",
+    alreadyHaveAccount: "Já tem uma conta?",
+    loginHere: "Faça login aqui",
+    language: "Idioma",
+    errorPasswordsNotMatch: "As palavras-passe não coincidem.",
+    errorFailedLoadDepartments: "Falha ao carregar departamentos.",
+    errorCouldNotRetrieveAddress: "Não foi possível recuperar o endereço.",
+    errorGeolocationNotSupported: "Geolocalização não suportada.",
+    errorUnableRetrieveLocation: "Não foi possível recuperar a localização",
+    successLocationRetrieved: "Localização recuperada com sucesso!",
+    successLocationUpdated: "Localização atualizada a partir do mapa!",
+    successRegistration: "Registo bem-sucedido! A redirecionar..."
   }
 };
+
+// Language options with flags
+const languageOptions = [
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
+  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
+  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
+  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
+  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
+  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
+  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
+  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
+  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
+  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
+];
 
 function StaffRegistration({ setToken, setIsStaff }) {
   const [language, setLanguage] = useState('en');
@@ -231,7 +512,7 @@ function StaffRegistration({ setToken, setIsStaff }) {
       }
     };
     fetchDepartments();
-  }, [language]); // Added language dependency to refetch if language changes
+  }, [language]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -367,32 +648,18 @@ function StaffRegistration({ setToken, setIsStaff }) {
       <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 items-center">
             <span className="text-white">{t('language')}:</span>
-            <button
-              onClick={() => handleLanguageChange('en')}
-              className={`text-white ${language === 'en' ? 'font-bold' : ''} hover:underline`}
-            >
-              English
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ja')}
-              className={`text-white ${language === 'ja' ? 'font-bold' : ''} hover:underline`}
-            >
-              日本語
-            </button>
-            <button
-              onClick={() => handleLanguageChange('ne')}
-              className={`text-white ${language === 'ne' ? 'font-bold' : ''} hover:underline`}
-            >
-              नेपाली
-            </button>
-            <button
-              onClick={() => handleLanguageChange('hi')}
-              className={`text-white ${language === 'hi' ? 'font-bold' : ''} hover:underline`}
-            >
-              हिंदी
-            </button>
+            {languageOptions.map((option) => (
+              <button
+                key={option.code}
+                onClick={() => handleLanguageChange(option.code)}
+                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
+              >
+                <span className="mr-1">{option.flag}</span>
+                {option.name}
+              </button>
+            ))}
           </div>
         </div>
       </nav>
