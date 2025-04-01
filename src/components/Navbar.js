@@ -11,12 +11,19 @@ function Navbar({ onLogout }) {
   const [isUserOpen, setIsUserOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('English');
 
-  // Supported languages with their codes and display names
+  // Supported languages with their codes, display names, and flags
   const languages = [
     { code: 'en', name: 'English', flag: 'https://flagcdn.com/16x12/gb.png' },
     { code: 'ja', name: '日本語 (Japanese)', flag: 'https://flagcdn.com/16x12/jp.png' },
     { code: 'ne', name: 'नेपाली (Nepali)', flag: 'https://flagcdn.com/16x12/np.png' },
-    { code: 'hi', name: 'हिन्दी (Hindi)', flag: 'https://flagcdn.com/16x12/in.png' }
+    { code: 'hi', name: 'हिन्दी (Hindi)', flag: 'https://flagcdn.com/16x12/in.png' },
+    { code: 'my', name: 'မြန်မာ (Myanmar)', flag: 'https://flagcdn.com/16x12/mm.png' },
+    { code: 'pt-BR', name: 'Português (Brazil)', flag: 'https://flagcdn.com/16x12/br.png' },
+    { code: 'tl', name: 'Filipino (Philippines)', flag: 'https://flagcdn.com/16x12/ph.png' },
+    { code: 'bn', name: 'বাংলা (Bangladesh)', flag: 'https://flagcdn.com/16x12/bd.png' },
+    { code: 'th', name: 'ไทย (Thailand)', flag: 'https://flagcdn.com/16x12/th.png' },
+    { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: 'https://flagcdn.com/16x12/vn.png' },
+    { code: 'pt-PT', name: 'Português (Portugal)', flag: 'https://flagcdn.com/16x12/pt.png' },
   ];
 
   // Load saved language preference on component mount
@@ -35,7 +42,6 @@ function Navbar({ onLogout }) {
   };
 
   const handleLanguageSelect = (language) => {
-    // Find the complete language object
     const selectedLang = languages.find(lang => lang.name === language);
     if (selectedLang) {
       setSelectedLanguage(language);
@@ -75,6 +81,48 @@ function Navbar({ onLogout }) {
       notifications: "सूचनाएं",
       profile: "प्रोफ़ाइल",
       logout: "लॉगआउट"
+    },
+    my: { // Myanmar (Burmese)
+      systemName: "ဝန်ထမ်းစီမံခန့်ခွဲမှုစနစ်",
+      notifications: "အသိပေးချက်များ",
+      profile: "ပရိုဖိုင်",
+      logout: "ထွက်ရန်"
+    },
+    'pt-BR': { // Brazil (Portuguese)
+      systemName: "Sistema de Gestão de Funcionários",
+      notifications: "Notificações",
+      profile: "Perfil",
+      logout: "Sair"
+    },
+    tl: { // Philippines (Filipino/Tagalog)
+      systemName: "Sistema ng Pamamahala ng Staff",
+      notifications: "Mga Notipikasyon",
+      profile: "Profile",
+      logout: "Mag-logout"
+    },
+    bn: { // Bangladesh (Bengali)
+      systemName: "কর্মচারী ব্যবস্থাপনা সিস্টেম",
+      notifications: "বিজ্ঞপ্তি",
+      profile: "প্রোফাইল",
+      logout: "লগআউট"
+    },
+    th: { // Thailand (Thai)
+      systemName: "ระบบการจัดการพนักงาน",
+      notifications: "การแจ้งเตือน",
+      profile: "โปรไฟล์",
+      logout: "ออกจากระบบ"
+    },
+    vi: { // Vietnam (Vietnamese)
+      systemName: "Hệ thống Quản lý Nhân viên",
+      notifications: "Thông báo",
+      profile: "Hồ sơ",
+      logout: "Đăng xuất"
+    },
+    'pt-PT': { // Portugal (Portuguese)
+      systemName: "Sistema de Gestão de Funcionários",
+      notifications: "Notificações",
+      profile: "Perfil",
+      logout: "Sair"
     }
   };
 
