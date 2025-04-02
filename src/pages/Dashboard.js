@@ -4,7 +4,7 @@ import axios from 'axios';
 import API_BASE_URL from '../api';
 import '../assets/css/dashboard.css';
 
-// Translation dictionary
+// Translation dictionary (unchanged)
 const translations = {
   en: {
     title: "Dashboard",
@@ -46,7 +46,7 @@ const translations = {
     fetchError: "डैशबोर्ड डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है या अपने लॉगिन क्रेडेंशियल्स की जाँच करें।",
     language: "भाषा"
   },
-  my: { // Myanmar (Burmese)
+  my: {
     title: "ဒက်ရှ်ဘုတ်",
     totalStaff: "ဝန်ထမ်းစုစုပေါင်း",
     departments: "ဌာနများ",
@@ -56,7 +56,7 @@ const translations = {
     fetchError: "ဒက်ရှ်ဘုတ်ဒေတာကိုဖွင့်ရန်မအောင်မြင်ပါ။ ကျေးဇူးပြု၍ နောက်ကွယ်ဆာဗာလည်ပတ်နေသလား သို့မဟုတ် သင်၏လော့ဂ်အင်အထောက်အထားများကိုစစ်ဆေးပါ။",
     language: "ဘာသာစကား"
   },
-  'pt-BR': { // Brazil (Portuguese)
+  'pt-BR': {
     title: "Painel",
     totalStaff: "Total de Funcionários",
     departments: "Departamentos",
@@ -66,7 +66,7 @@ const translations = {
     fetchError: "Falha ao carregar os dados do painel. Verifique se o servidor backend está em execução ou confira suas credenciais de login.",
     language: "Idioma"
   },
-  tl: { // Philippines (Filipino/Tagalog)
+  tl: {
     title: "Dashboard",
     totalStaff: "Kabuuan ng Kawani",
     departments: "Mga Kagawaran",
@@ -76,7 +76,7 @@ const translations = {
     fetchError: "Nabigo sa pag-load ng datos ng dashboard. Siguraduhing tumatakbo ang backend server o suriin ang iyong mga kredensyal sa pag-login.",
     language: "Wika"
   },
-  bn: { // Bangladesh (Bengali)
+  bn: {
     title: "ড্যাশবোর্ড",
     totalStaff: "মোট কর্মী",
     departments: "বিভাগ",
@@ -86,7 +86,7 @@ const translations = {
     fetchError: "ড্যাশবোর্ড ডেটা লোড করতে ব্যর্থ। অনুগ্রহ করে নিশ্চিত করুন যে ব্যাকএন্ড সার্ভার চলছে বা আপনার লগইন শংসাপত্র পরীক্ষা করুন।",
     language: "ভাষা"
   },
-  th: { // Thailand (Thai)
+  th: {
     title: "แดชบอร์ด",
     totalStaff: "จำนวนพนักงานทั้งหมด",
     departments: "แผนก",
@@ -96,17 +96,17 @@ const translations = {
     fetchError: "ไม่สามารถโหลดข้อมูลแดชบอร์ดได้ กรุณาตรวจสอบว่าเซิร์ฟเวอร์ backend ทำงานอยู่หรือตรวจสอบข้อมูลการเข้าสู่ระบบของคุณ",
     language: "ภาษา"
   },
-  vi: { // Vietnam (Vietnamese)
+  vi: {
     title: "Bảng Điều Khiển",
     totalStaff: "Tổng Nhân Viên",
     departments: "Phòng Ban",
     presentToday: "Có Mặt Hôm Nay",
     monthlySalary: "Lương Hàng Tháng",
     loading: "Đang tải...",
-    fetchError: "Không thể tải dữ liệu bảng điều khiển. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn.",
+    fetchError: "Không thể tải dữ liệu bảng điều khiển. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn。",
     language: "Ngôn ngữ"
   },
-  'pt-PT': { // Portugal (Portuguese)
+  'pt-PT': {
     title: "Painel",
     totalStaff: "Total de Funcionários",
     departments: "Departamentos",
@@ -155,11 +155,13 @@ function Dashboard({ token }) {
   const t = (key) => translations[language][key] || key;
 
   // Handle language change
-  const handleLanguageChange = (lang) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
+  const handleLanguageChange = (e) => {
+    const newLanguage = e.target.value;
+    setLanguage(newLanguage);
+    localStorage.setItem('language', newLanguage);
   };
 
+  // Fetch data
   useEffect(() => {
     if (!token) {
       navigate('/login');
@@ -207,28 +209,33 @@ function Dashboard({ token }) {
   }, [token, navigate, language]);
 
   return (
-    <div className="container mx-auto">
-      {/* Navbar for Language Selection */}
+    <div className="container mx-auto p-4">
+      {/* Navbar with Dropdown */}
       <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4 items-center">
-            <span className="text-white">{t('language')}:</span>
-            {languageOptions.map((option) => (
-              <button
-                key={option.code}
-                onClick={() => handleLanguageChange(option.code)}
-                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
-              >
-                <span className="mr-1">{option.flag}</span>
-                {option.name}
-              </button>
-            ))}
+          <div className="relative">
+            <select
+              value={language}
+              onChange={handleLanguageChange}
+              className="appearance-none bg-gray-700 text-white py-2 px-4 pr-8 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
+            >
+              {languageOptions.map((option) => (
+                <option key={option.code} value={option.code}>
+                  {option.flag} {option.name}
+                </option>
+              ))}
+            </select>
+            {/* Dropdown arrow */}
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+              <svg className="fill-current h-4 w-4" viewBox="0 0 20 20">
+                <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
+              </svg>
+            </div>
           </div>
         </div>
       </nav>
 
-      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <div className="bg-blue-100 p-4 rounded shadow mb-6">
         <h1 className="text-3xl font-extrabold text-blue-800 animate-fadeIn">
           {companyName || t('loading')}

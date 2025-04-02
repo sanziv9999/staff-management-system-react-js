@@ -5,7 +5,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import API_BASE_URL from '../api';
 
-// Translation dictionary
+// Translation dictionary (unchanged)
 const translations = {
   en: {
     title: "Attendance Management",
@@ -127,7 +127,7 @@ const translations = {
     delete: "हटाएं",
     language: "भाषा"
   },
-  my: { // Myanmar (Burmese)
+  my: {
     title: "တက်ရောက်မှုစီမံခန့်ခွဲမှု",
     selectDate: "ရက်စွဲရွေးပါ:",
     searchStaff: "ဝန်ထမ်းရှာဖွေပါ...",
@@ -157,7 +157,7 @@ const translations = {
     delete: "ဖျက်ပါ",
     language: "ဘာသာစကား"
   },
-  'pt-BR': { // Brazil (Portuguese)
+  'pt-BR': {
     title: "Gerenciamento de Presença",
     selectDate: "Selecionar Data:",
     searchStaff: "Pesquisar Funcionário...",
@@ -187,7 +187,7 @@ const translations = {
     delete: "Excluir",
     language: "Idioma"
   },
-  tl: { // Philippines (Filipino/Tagalog)
+  tl: {
     title: "Pamamahala ng Pagdalo",
     selectDate: "Pumili ng Petsa:",
     searchStaff: "Maghanap ng Kawani...",
@@ -217,7 +217,7 @@ const translations = {
     delete: "Tanggalin",
     language: "Wika"
   },
-  bn: { // Bangladesh (Bengali)
+  bn: {
     title: "উপস্থিতি ব্যবস্থাপনা",
     selectDate: "তারিখ নির্বাচন করুন:",
     searchStaff: "কর্মী অনুসন্ধান করুন...",
@@ -247,7 +247,7 @@ const translations = {
     delete: "মুছুন",
     language: "ভাষা"
   },
-  th: { // Thailand (Thai)
+  th: {
     title: "การจัดการการเข้างาน",
     selectDate: "เลือกวันที่:",
     searchStaff: "ค้นหาพนักงาน...",
@@ -277,7 +277,7 @@ const translations = {
     delete: "ลบ",
     language: "ภาษา"
   },
-  vi: { // Vietnam (Vietnamese)
+  vi: {
     title: "Quản lý Điểm danh",
     selectDate: "Chọn Ngày:",
     searchStaff: "Tìm kiếm Nhân viên...",
@@ -293,7 +293,7 @@ const translations = {
     requiredFields: "Nhân viên và trạng thái là bắt buộc.",
     loading: "Đang tải bản ghi điểm danh...",
     noRecords: "Không có bản ghi điểm danh nào cho ngày này.",
-    fetchError: "Không thể lấy dữ liệu. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn.",
+    fetchError: "Không thể lấy dữ liệu. Vui lòng đảm bảo máy chủ backend đang chạy hoặc kiểm tra thông tin đăng nhập của bạn。",
     addError: "Không thể thêm điểm danh",
     updateError: "Không thể cập nhật điểm danh",
     deleteError: "Không thể xóa điểm danh",
@@ -307,7 +307,7 @@ const translations = {
     delete: "Xóa",
     language: "Ngôn ngữ"
   },
-  'pt-PT': { // Portugal (Portuguese)
+  'pt-PT': {
     title: "Gestão de Presenças",
     selectDate: "Selecionar Data:",
     searchStaff: "Pesquisar Funcionário...",
@@ -339,21 +339,6 @@ const translations = {
   }
 };
 
-// Language options with flags
-const languageOptions = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
-  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
-  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
-  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
-  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
-  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
-  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
-  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
-  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
-  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
-];
-
 function Attendance({ token }) {
   const [language, setLanguage] = useState('en');
   const [attendanceRecords, setAttendanceRecords] = useState([]);
@@ -381,12 +366,6 @@ function Attendance({ token }) {
   }, []);
 
   const t = (key) => translations[language][key] || key;
-
-  // Handle language change
-  const handleLanguageChange = (lang) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-  };
 
   useEffect(() => {
     if (!token) {
@@ -535,26 +514,6 @@ function Attendance({ token }) {
 
   return (
     <div className="container mx-auto p-4">
-      {/* Navbar for Language Selection */}
-      <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4 items-center">
-            <span className="text-white">{t('language')}:</span>
-            {languageOptions.map((option) => (
-              <button
-                key={option.code}
-                onClick={() => handleLanguageChange(option.code)}
-                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
-              >
-                <span className="mr-1">{option.flag}</span>
-                {option.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
-
       <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <div className="flex flex-col md:flex-row gap-4 mb-6">
         <div className="bg-white p-4 rounded shadow">

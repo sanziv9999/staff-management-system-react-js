@@ -4,7 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import axios from 'axios';
 import API_BASE_URL from '../api';
 
-// Translation dictionary
+// Translation dictionary (unchanged)
 const translations = {
   en: {
     title: "Schedule Management",
@@ -130,7 +130,7 @@ const translations = {
     },
     language: "भाषा"
   },
-  my: { // Myanmar (Burmese)
+  my: {
     title: "အချိန်ဇယားစီမံခန့်ခွဲမှု",
     searchStaff: "ဝန်ထမ်းရှာဖွေပါ...",
     noStaffFound: "ဝန်ထမ်းမတွေ့ပါ",
@@ -161,7 +161,7 @@ const translations = {
     },
     language: "ဘာသာစကား"
   },
-  'pt-BR': { // Brazil (Portuguese)
+  'pt-BR': {
     title: "Gerenciamento de Horários",
     searchStaff: "Pesquisar Funcionário...",
     noStaffFound: "Nenhum funcionário encontrado",
@@ -192,7 +192,7 @@ const translations = {
     },
     language: "Idioma"
   },
-  tl: { // Philippines (Filipino/Tagalog)
+  tl: {
     title: "Pamamahala ng Iskedyul",
     searchStaff: "Maghanap ng Kawani...",
     noStaffFound: "Walang natagpuang kawani",
@@ -223,7 +223,7 @@ const translations = {
     },
     language: "Wika"
   },
-  bn: { // Bangladesh (Bengali)
+  bn: {
     title: "সূচি ব্যবস্থাপনা",
     searchStaff: "কর্মী খুঁজুন...",
     noStaffFound: "কোনো কর্মী পাওয়া যায়নি",
@@ -254,7 +254,7 @@ const translations = {
     },
     language: "ভাষা"
   },
-  th: { // Thailand (Thai)
+  th: {
     title: "การจัดการตารางงาน",
     searchStaff: "ค้นหาพนักงาน...",
     noStaffFound: "ไม่พบพนักงาน",
@@ -285,7 +285,7 @@ const translations = {
     },
     language: "ภาษา"
   },
-  vi: { // Vietnam (Vietnamese)
+  vi: {
     title: "Quản lý Lịch trình",
     searchStaff: "Tìm kiếm Nhân viên...",
     noStaffFound: "Không tìm thấy nhân viên",
@@ -316,7 +316,7 @@ const translations = {
     },
     language: "Ngôn ngữ"
   },
-  'pt-PT': { // Portugal (Portuguese)
+  'pt-PT': {
     title: "Gestão de Horários",
     searchStaff: "Pesquisar Funcionário...",
     noStaffFound: "Nenhum funcionário encontrado",
@@ -348,21 +348,6 @@ const translations = {
     language: "Idioma"
   }
 };
-
-// Language options with flags
-const languageOptions = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
-  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
-  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
-  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
-  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
-  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
-  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
-  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
-  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
-  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
-];
 
 function Schedule({ token }) {
   const [language, setLanguage] = useState('en');
@@ -541,39 +526,18 @@ function Schedule({ token }) {
     setShowStaffDropdown(false);
   };
 
-  // Handle language change
-  const handleLanguageChange = (lang) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-  };
-
   if (!token) {
     return <p className="text-red-600">{t('loginError')}</p>;
   }
 
   return (
     <div className="container mx-auto p-4">
-      {/* Navbar for Language Selection */}
+      {/* Navbar without Language Selection */}
       <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
         <div className="flex justify-between items-center">
           <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4 items-center">
-            <span className="text-white">{t('language')}:</span>
-            {languageOptions.map((option) => (
-              <button
-                key={option.code}
-                onClick={() => handleLanguageChange(option.code)}
-                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
-              >
-                <span className="mr-1">{option.flag}</span>
-                {option.name}
-              </button>
-            ))}
-          </div>
         </div>
       </nav>
-
-      <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
 
       {/* Form */}
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow mb-6">

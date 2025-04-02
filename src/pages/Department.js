@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import API_BASE_URL from '../api';
 
-// Translation dictionary
+// Translation dictionary (unchanged)
 const translations = {
   en: {
     title: "Department Management",
@@ -79,7 +79,7 @@ const translations = {
     confirmDelete: "क्या आप इस विभाग को हटाने के लिए निश्चित हैं",
     loginError: "इस पृष्ठ तक पहुँचने के लिए कृपया लॉगिन करें।",
     fetchError: "डेटा लोड करने में विफल। कृपया सुनिश्चित करें कि बैकएंड सर्वर चल रहा है या अपने लॉगिन क्रेडेंशियल्स की जाँच करें।",
-    addError: "विभाग जोड़ने में विफल",
+    addError: "विभाग जोड़Vपादन करें",
     updateError: "विभाग अपडेट करने में विफल",
     deleteError: "विभाग हटाने में विफल",
     requiredFields: "सभी क्षेत्र आवश्यक हैं, और कर्मचारी संख्या एक मान्य संख्या होनी चाहिए",
@@ -88,7 +88,7 @@ const translations = {
     actions: "कार्रवाइयाँ",
     language: "भाषा"
   },
-  my: { // Myanmar (Burmese)
+  my: {
     title: "ဌာနစီမံခန့်ခွဲမှု",
     deptName: "ဌာနအမည်",
     manager: "မန်နေဂျာ",
@@ -109,7 +109,7 @@ const translations = {
     actions: "လုပ်ဆောင်ချက်များ",
     language: "ဘာသာစကား"
   },
-  'pt-BR': { // Brazil (Portuguese)
+  'pt-BR': {
     title: "Gerenciamento de Departamentos",
     deptName: "Nome do Departamento",
     manager: "Gerente",
@@ -130,7 +130,7 @@ const translations = {
     actions: "Ações",
     language: "Idioma"
   },
-  tl: { // Philippines (Filipino/Tagalog)
+  tl: {
     title: "Pamamahala ng Kagawaran",
     deptName: "Pangalan ng Kagawaran",
     manager: "Tagapamahala",
@@ -151,7 +151,7 @@ const translations = {
     actions: "Mga Aksyon",
     language: "Wika"
   },
-  bn: { // Bangladesh (Bengali)
+  bn: {
     title: "বিভাগ ব্যবস্থাপনা",
     deptName: "বিভাগের নাম",
     manager: "পরিচালক",
@@ -172,7 +172,7 @@ const translations = {
     actions: "ক্রিয়াকলাপ",
     language: "ভাষা"
   },
-  th: { // Thailand (Thai)
+  th: {
     title: "การจัดการแผนก",
     deptName: "ชื่อแผนก",
     manager: "ผู้จัดการ",
@@ -193,7 +193,7 @@ const translations = {
     actions: "การดำเนินการ",
     language: "ภาษา"
   },
-  vi: { // Vietnam (Vietnamese)
+  vi: {
     title: "Quản lý Phòng Ban",
     deptName: "Tên Phòng Ban",
     manager: "Quản lý",
@@ -214,7 +214,7 @@ const translations = {
     actions: "Hành động",
     language: "Ngôn ngữ"
   },
-  'pt-PT': { // Portugal (Portuguese)
+  'pt-PT': {
     title: "Gestão de Departamentos",
     deptName: "Nome do Departamento",
     manager: "Gestor",
@@ -237,21 +237,6 @@ const translations = {
   }
 };
 
-// Language options with flags
-const languageOptions = [
-  { code: 'en', name: 'English', flag: '🇺🇸' },
-  { code: 'ja', name: '日本語 (Japanese)', flag: '🇯🇵' },
-  { code: 'ne', name: 'नेपाली (Nepali)', flag: '🇳🇵' },
-  { code: 'hi', name: 'हिन्दी (Hindi)', flag: '🇮🇳' },
-  { code: 'my', name: 'မြန်မာ (Myanmar)', flag: '🇲🇲' },
-  { code: 'pt-BR', name: 'Português (Brazil)', flag: '🇧🇷' },
-  { code: 'tl', name: 'Filipino (Philippines)', flag: '🇵🇭' },
-  { code: 'bn', name: 'বাংলা (Bangladesh)', flag: '🇧🇩' },
-  { code: 'th', name: 'ไทย (Thailand)', flag: '🇹🇭' },
-  { code: 'vi', name: 'Tiếng Việt (Vietnam)', flag: '🇻🇳' },
-  { code: 'pt-PT', name: 'Português (Portugal)', flag: '🇵🇹' }
-];
-
 function Department({ token }) {
   const [language, setLanguage] = useState('en');
   const [departments, setDepartments] = useState([]);
@@ -267,12 +252,6 @@ function Department({ token }) {
   }, []);
 
   const t = (key) => translations[language][key] || key;
-
-  // Handle language change
-  const handleLanguageChange = (lang) => {
-    setLanguage(lang);
-    localStorage.setItem('language', lang);
-  };
 
   useEffect(() => {
     if (!token) {
@@ -391,26 +370,6 @@ function Department({ token }) {
 
   return (
     <div className="container mx-auto">
-      {/* Navbar for Language Selection */}
-      <nav className="bg-gray-800 p-4 mb-6 rounded-xl shadow-lg">
-        <div className="flex justify-between items-center">
-          <h1 className="text-white text-xl font-bold">{t('title')}</h1>
-          <div className="flex space-x-4 items-center">
-            <span className="text-white">{t('language')}:</span>
-            {languageOptions.map((option) => (
-              <button
-                key={option.code}
-                onClick={() => handleLanguageChange(option.code)}
-                className={`text-white ${language === option.code ? 'font-bold' : ''} hover:underline flex items-center`}
-              >
-                <span className="mr-1">{option.flag}</span>
-                {option.name}
-              </button>
-            ))}
-          </div>
-        </div>
-      </nav>
-
       <h2 className="text-2xl font-bold mb-4">{t('title')}</h2>
       <form onSubmit={handleSubmit} className="bg-white p-4 rounded shadow mb-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
